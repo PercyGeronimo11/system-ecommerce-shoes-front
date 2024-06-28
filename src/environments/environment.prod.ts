@@ -1,8 +1,7 @@
-/**
- * @license
- * Copyright Akveo. All Rights Reserved.
- * Licensed under the MIT License. See License.txt in the project root for license information.
- */
+import packageInfo from '../../package.json';
+
 export const environment = {
+  appVersion: packageInfo.version,
   production: true,
+  apiUrl: 'http://localhost:4200'
 };

@@ -1,61 +1,65 @@
-import { ExtraOptions, RouterModule, Routes } from '@angular/router';
+// Angular Import
 import { NgModule } from '@angular/core';
-import {
-  NbAuthComponent,
-  NbLoginComponent,
-  NbLogoutComponent,
-  NbRegisterComponent,
-  NbRequestPasswordComponent,
-  NbResetPasswordComponent,
-} from '@nebular/auth';
+import { Routes, RouterModule } from '@angular/router';
 
-export const routes: Routes = [
+// project import
+import { AdminComponent } from './theme/layout/admin/admin.component';
+import { GuestComponent } from './theme/layout/guest/guest.component';
+
+const routes: Routes = [
   {
-    path: 'pages',
-    loadChildren: () => import('./pages/pages.module')
-      .then(m => m.PagesModule),
-  },
-  {
-    path: 'auth',
-    component: NbAuthComponent,
+    path: '',
+    component: AdminComponent,
     children: [
       {
         path: '',
-        component: NbLoginComponent,
+        redirectTo: '/analytics',
+        pathMatch: 'full'
       },
       {
-        path: 'login',
-        component: NbLoginComponent,
+        path: 'analytics',
+        loadComponent: () => import('./demo/dashboard/dash-analytics.component')
       },
       {
-        path: 'register',
-        component: NbRegisterComponent,
+        path: 'component',
+        loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)
       },
       {
-        path: 'logout',
-        component: NbLogoutComponent,
+        path: 'chart',
+        loadComponent: () => import('./demo/chart & map/core-apex.component')
       },
       {
-        path: 'request-password',
-        component: NbRequestPasswordComponent,
+        path: 'forms',
+        loadComponent: () => import('./demo/forms & tables/form-elements/form-elements.component')
       },
       {
-        path: 'reset-password',
-        component: NbResetPasswordComponent,
+        path: 'tables',
+        loadComponent: () => import('./demo/forms & tables/tbl-bootstrap/tbl-bootstrap.component')
       },
-    ],
+      {
+        path: 'sample-page',
+        loadComponent: () => import('./demo/sample-page/sample-page.component')
+      }
+    ]
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
-  { path: '**', redirectTo: 'pages' },
+  {
+    path: '',
+    component: GuestComponent,
+    children: [
+      {
+        path: 'auth/signup',
+        loadComponent: () => import('./demo/authentication/sign-up/sign-up.component')
+      },
+      {
+        path: 'auth/signin',
+        loadComponent: () => import('./demo/authentication/sign-in/sign-in.component')
+      }
+    ]
+  }
 ];
 
-const config: ExtraOptions = {
-  useHash: false,
-};
-
 @NgModule({
-  imports: [RouterModule.forRoot(routes, config)],
-  exports: [RouterModule],
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}
