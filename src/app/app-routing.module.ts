@@ -21,6 +21,14 @@ const routes: Routes = [
         loadComponent: () => import('./demo/dashboard/dash-analytics.component')
       },
       {
+        path: 'materials',
+        loadComponent: () => import('./components/materials/materials-list/materials-list.component').then(m => m.MaterialsListModule)
+      },
+      {
+        path: 'materialCreate',
+        loadComponent: () => import('./components/materials/materials-create/materials-create.component').then(m => m.MaterialCreateModule)
+      },
+      {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)
       },

@@ -1,0 +1,32 @@
+<div class="row">
+
+
+  <div class="col-xl-12">
+    <app-card cardTitle="Materiales" [options]="false" blockClass="table-border-style">
+      <div>
+        <a [routerLink]="['/materialCreate']" class="btn btn-primary mb-3">Nuevo material</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Material</th>
+              <th>Stock</th>
+              <th>Precio unitario</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let material of materials; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ material.name }}</td>
+              <td>{{ material.stock }}{{ material.unit }}</td>
+              <td>{{ material.unitPrice }}</td>
+              <!-- <td>&#64;mdo</td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>
