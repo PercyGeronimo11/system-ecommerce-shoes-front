@@ -1,6 +1,9 @@
 // Angular Import
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+//import { ProductListComponent } from './components/products/product-list/product-list.component';
+import { ProductCreateComponent } from './components/products/product-create/product-create.component';
+import { ProductEditComponent } from './components/products/product-edit/product-edit.component';
 
 // project import
 import { AdminComponent } from './theme/layout/admin/admin.component';
@@ -19,6 +22,10 @@ const routes: Routes = [
       {
         path: 'analytics',
         loadComponent: () => import('./demo/dashboard/dash-analytics.component')
+      },
+      {
+        path: 'products',
+        loadComponent: () => import('./demo/products/product-list.component')
       },
       {
         path: 'component',
@@ -42,6 +49,7 @@ const routes: Routes = [
       }
     ]
   },
+
   {
     path: '',
     component: GuestComponent,
@@ -55,7 +63,7 @@ const routes: Routes = [
         loadComponent: () => import('./demo/authentication/sign-in/sign-in.component')
       }
     ]
-  }
+  },
 ];
 
 @NgModule({

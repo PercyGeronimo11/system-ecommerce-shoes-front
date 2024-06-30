@@ -31,12 +31,19 @@ export const NavigationItems: NavigationItem[] = [
         type: 'item',
         url: '/analytics',
         icon: 'feather icon-home'
+      },
+      {
+        id: 'productsaa',
+        title: 'Productosaaaw',
+        type: 'item',
+        url: '/product',
+        icon: 'feather icon-home'
       }
     ]
   },
   {
     id: 'ui-component',
-    title: 'Ui Component',
+    title: 'Modulos',
     type: 'group',
     icon: 'icon-group',
     children: [
