@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Nuevo Usuario" [options]="false">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="inputUsername">Nombre</label>
+            <input type="text" class="form-control" id="inputUsername" placeholder="Nombre" formControlName="username"/>
+            <div *ngIf="userForm.get('username')?.touched && userForm.get('username')?.invalid">
+              <small *ngIf="userForm.get('username')?.errors?.['required']" class="text-danger">Nombre es requerido.</small>
+              <small *ngIf="userForm.get('username')?.errors?.['minlength']" class="text-danger">Nombre debe tener al menos 3 caracteres.</small>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputEmail">Correo</label>
+            <input type="email" class="form-control" id="inputEmail" placeholder="Correo electrónico" formControlName="email"/>
+            <div *ngIf="userForm.get('email')?.touched && userForm.get('email')?.invalid">
+              <small *ngIf="userForm.get('email')?.errors?.['required']" class="text-danger">Correo es requerido.</small>
+              <small *ngIf="userForm.get('email')?.errors?.['email']" class="text-danger">Correo no es válido.</small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="inputPassword">Contraseña</label>
+            <input type="password" class="form-control" id="inputPassword" placeholder="Contraseña" formControlName="password"/>
+            <div *ngIf="userForm.get('password')?.touched && userForm.get('password')?.invalid">
+              <small *ngIf="userForm.get('password')?.errors?.['required']" class="text-danger">Contraseña es requerida.</small>
+              <small *ngIf="userForm.get('password')?.errors?.['minlength']" class="text-danger">Contraseña debe tener al menos 6 caracteres.</small>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </form>
+    </app-card>
+  </div>
+</div>

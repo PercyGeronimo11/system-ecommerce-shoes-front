@@ -1,6 +1,7 @@
 // Angular Import
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './components/auth/auth.guard';
 //import { ProductListComponent } from './components/products/product-list/product-list.component';
 // import { ProductCreateComponent } from './components/products/product-create/product-create.component';
 // import { ProductEditComponent } from './components/products/product-edit/product-edit.component';
@@ -9,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // project import
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
+import { MaterialEditModule } from './components/materials/materials-edit/materials-edit.component';
 
 const routes: Routes = [
   {
@@ -22,15 +24,27 @@ const routes: Routes = [
       },
       {
         path: 'analytics',
-        loadComponent: () => import('./demo/dashboard/dash-analytics.component')
+        loadComponent: () => import('./demo/dashboard/dash-analytics.component'),canActivate: [AuthGuard]
       },
       {
         path: 'materials',
-        loadComponent: () => import('./components/materials/materials-list/materials-list.component').then(m => m.MaterialsListModule)
+        loadComponent: () => import('./components/materials/materials-list/materials-list.component').then(m => m.MaterialsListModule),canActivate: [AuthGuard]
       },
       {
         path: 'materialCreate',
         loadComponent: () => import('./components/materials/materials-create/materials-create.component').then(m => m.MaterialCreateModule)
+      },
+      {
+        path: 'materialEdit/:id',
+        loadComponent: () => import('./components/materials/materials-edit/materials-edit.component').then(m => m.MaterialEditModule)
+      },
+      {
+        path: 'users',
+        loadComponent: () => import('./components/users/users-list/users-list.component').then(m => m.UsersListModule),canActivate: [AuthGuard]
+      },
+      {
+        path: 'userCreate',
+        loadComponent: () => import('./components/users/users-create/users-create.component').then(m => m.UsersCreateModule)
       },
 
       {
@@ -87,7 +101,7 @@ const routes: Routes = [
       },
       {
         path: 'auth/signin',
-        loadComponent: () => import('./demo/authentication/sign-in/sign-in.component')
+        loadComponent: () => import('./components/auth/sign-in/sign-in.component')
       }
     ]
   },
