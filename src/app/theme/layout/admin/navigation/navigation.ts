@@ -60,7 +60,21 @@ export const NavigationItems: NavigationItem[] = [
         type: 'item',
         url: '/products/list',
         icon: 'feather icon-home'
-      }
+      },
+    ]
+  },  {
+    id: 'Categorias',
+    title: 'Categorias',
+    type: 'group',
+    icon: 'icon-group',
+    children: [
+      {
+        id: 'categoria',
+        title: 'Categorias',
+        type: 'item',
+        url: '/categories',
+        icon: 'feather icon-box'
+      },
     ]
   },
   {

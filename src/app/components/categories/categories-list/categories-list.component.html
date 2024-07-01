@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-xl-12">
+    <app-card cardTitle="Categorias" [options]="false" blockClass="table-border-style">
+      <div>
+        <a [routerLink]="['/categoriaCreate']" class="btn btn-primary mb-3">Nueva categoria</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Estado</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let categoria of categories; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ categoria.cat_name }} %</td>
+              <td>{{ categoria.cat_description }}</td>
+              <td>{{ categoria.cat_status ? 'Activado' : 'Desactivado' }}</td>
+              <td>
+                <button class="btn btn-success" [routerLink]="['/categoriaEdit',categoria.cat_id]">Actualizar</button>
+                <br><br>
+                <button class="btn btn-warning" (click)="openModal(content,categoria)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<!-- Modal -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Confirmar Eliminación</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>¿Estás seguro que deseas eliminar la categoria?</p>
+    <ul>
+      <li><strong>Nombre:</strong> {{ selectedCategory?.cat_name }}%</li>
+      <li><strong>Descripcion:</strong> {{ selectedCategory?.cat_description }}</li>
+      <li><strong>Estado:</strong> {{ selectedCategory?.cat_status }}</li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+    <button type="button" class="btn btn-danger" (click)="deleteCategory(selectedCategory.cat_id)">Eliminar</button>
+  </div>
+</ng-template>
