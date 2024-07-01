@@ -12,6 +12,7 @@ export interface Product {
   proUnitPrice: string;
   proSizePlatform: string | null;
   proSizeTacon: string | null;
+  proUrlImage: String;
 }
 
 
