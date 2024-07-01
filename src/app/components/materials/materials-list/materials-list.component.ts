@@ -23,7 +23,6 @@ export class MaterialsListModule implements OnInit {
   constructor(
     public materialService: MaterialService,
   ) {
-
   }
 
   ngOnInit(): void {

@@ -3,13 +3,14 @@ import { Product } from '../../../models/product/product.model';
 import { ProductService } from '../../../services/products/product.service';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, RouterModule],
   templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.scss'
+  styleUrl: './product-list.component.scss',
 })
 export default class ProductListComponent implements OnInit {
 
@@ -33,14 +34,14 @@ export default class ProductListComponent implements OnInit {
       });
   }
 
-  // deleteProduct(id: number): void {
-  //   this.productService.deleteProduct(id).subscribe(
-  //     () => {
-  //       this.getProducts(); // Refresh the list after deletion
-  //     },
-  //     (error) => {
-  //       console.error('Error deleting product', error);
-  //     }
-  //   );
-  // }
+  deleteProduct(id: number): void {
+    this.productService.deleteProduct(id).subscribe(
+      () => {
+        //this.getProducts(); // Refresh the list after deletion
+      },
+      (error) => {
+        console.error('Error deleting product', error);
+      }
+    );
+  }
 }
