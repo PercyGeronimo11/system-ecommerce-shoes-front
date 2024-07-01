@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { MaterialService } from '../service/materials.service';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tbl-bootstrap',
@@ -22,6 +23,7 @@ export class MaterialsListModule implements OnInit{
   materials:any =[];
   constructor(
     public materialService: MaterialService,
+    private router: Router
   ) {
     
   }
@@ -32,6 +34,10 @@ export class MaterialsListModule implements OnInit{
       this.materials=resp.data;
       console.log(this.materials);
     })
+  }
+
+  selectMaterial(material:any):void{
+    this.router.navigate(['/materialEdit', material.id]);
   }
 
 }

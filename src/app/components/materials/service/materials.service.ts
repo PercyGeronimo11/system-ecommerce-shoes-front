@@ -18,7 +18,19 @@ export class MaterialService {
     }
 
     create(data:any){
-        return this.http.post(this.apiUrl,data);
+        return this.http.post(this.apiUrl, data);
+    }
+
+    get(id:any){
+        return this.http.get(this.apiUrl+"/"+id);
+    }
+
+    edit(id:any, data:any){
+        return this.http.put(this.apiUrl+"/"+id, data);
+    }
+
+    delete(id:any){
+        return this.http.delete(this.apiUrl+"/"+id);
     }
 
     /* registerReview(data:any){
