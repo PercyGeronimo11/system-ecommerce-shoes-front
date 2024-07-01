@@ -1,14 +1,11 @@
 // Angular Import
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-<<<<<<< HEAD
 //import { ProductListComponent } from './components/products/product-list/product-list.component';
 // import { ProductCreateComponent } from './components/products/product-create/product-create.component';
 // import { ProductEditComponent } from './components/products/product-edit/product-edit.component';
 
-=======
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
->>>>>>> crissdev
 // project import
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
@@ -45,21 +42,18 @@ const routes: Routes = [
         loadComponent: () => import('./components/promotions/promotions-create/promotions-create.component').then(p => p.PromocionCreateModule)
       },
       {
-<<<<<<< HEAD
         path: 'products',
         loadChildren: () => import('./components/products/product.module').then(m => m.ProductModule)
       },
-=======
+      {
         path: 'promocionEdit/:id',
-        loadComponent: () => import('./components/promotions/promotions-edit/promotions-edit.component').then(p => p.PromocionEditModule)
+        loadComponent: () => import('./components/promotions/promotions-edit/promotions-edit.component').then(m => m.PromocionEditModule)
       },
-
       {
         path: 'promotions/:id',
         loadComponent: () => import('./components/promotions/promotions-list/promotions-list.component').then(m => m.PromotionsListComponent)
       },
 
->>>>>>> crissdev
       {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)
