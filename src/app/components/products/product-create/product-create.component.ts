@@ -25,6 +25,7 @@ export default class ProductCreateComponent implements OnInit {
   };
   isLoading = false;
   error: string | null = null;
+  selectedFile: File | null = null;
 
   constructor(private productService: ProductService, private router: Router) {}
 
@@ -32,11 +33,26 @@ export default class ProductCreateComponent implements OnInit {
     // Initialize the product object with default values if needed
   }
 
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
   onSubmit() {
     this.isLoading = true;
     this.error = null;
 
-    this.productService.createProduct(this.product)
+    const formData = new FormData();
+    formData.append('id', this.product.id.toString());
+    formData.append('catId', this.product.catId.toString());
+    formData.append('proName', this.product.proName);
+    formData.append('proDescription', this.product.proDescription);
+    formData.append('proUnitPrice', this.product.proUnitPrice.toString());
+    formData.append('proSizePlatform', this.product.proSizePlatform);
+    formData.append('proSizeTacon', this.product.proSizeTacon);
+    if (this.selectedFile) {
+      formData.append('file', this.selectedFile);
+    }
+
+    this.productService.createProduct(formData)
       .subscribe(product => {
         this.isLoading = false;
         this.router.navigate(['products/list']);
