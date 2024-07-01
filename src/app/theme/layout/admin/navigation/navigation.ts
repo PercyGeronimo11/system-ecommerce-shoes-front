@@ -57,6 +57,21 @@ export const NavigationItems: NavigationItem[] = [
     ]
   },
   {
+    id: 'Descuentos',
+    title: 'Descuentos',
+    type: 'group',
+    icon: 'icon-group',
+    children: [
+      {
+        id: 'promocion',
+        title: 'Promociones',
+        type: 'item',
+        url: '/promotions',
+        icon: 'feather icon-box'
+      }
+    ]
+  },
+  {
     id: 'ui-component',
     title: 'Modulos',
     type: 'group',

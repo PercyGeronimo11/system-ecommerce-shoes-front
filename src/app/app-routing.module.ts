@@ -31,6 +31,15 @@ const routes: Routes = [
         path: 'materialCreate',
         loadComponent: () => import('./components/materials/materials-create/materials-create.component').then(m => m.MaterialCreateModule)
       },
+
+      {
+        path: 'promotions',
+        loadComponent: () => import('./components/promotions/promotions-list/promotions-list.component').then(p => p.PromotionsListModule)
+      },
+      {
+        path: 'promocionCreate',
+        loadComponent: () => import('./components/promotions/promotions-create/promotions-create.component').then(p => p.PromocionCreateModule)
+      },
       {
         path: 'products',
         loadChildren: () => import('./components/products/product.module').then(m => m.ProductModule)
