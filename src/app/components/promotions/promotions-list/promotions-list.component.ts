@@ -1,12 +1,9 @@
-// Angular imports
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, } from '@angular/core';
+import { NgbModal, NgbModalRef, } from '@ng-bootstrap/ng-bootstrap'; // Importa las clases necesarias para el modal
+import { PromocionService, } from '../service/promotions.service';
+import { Router,RouterModule } from '@angular/router'; // Asegúrate de importar el Router si no lo has hecho
 // Project imports
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-import { PromocionService } from '../service/promotions.service';
-import { RouterModule } from '@angular/router';
-
-
 @Component({
   selector: 'app-tbl-bootstrap',
   standalone: true,
@@ -14,24 +11,39 @@ import { RouterModule } from '@angular/router';
   templateUrl: './promotions-list.component.html',
   styleUrls: ['./promotions-list.component.scss']
 })
-export class PromotionsListModule implements OnInit {
-  PROMT_percentage: any = null;
-  PROMT_start_date: any = null;
-  PROMT_end_date: any = null;
-  PROMT_description: any = null;
-  PROMT_status: any = null;
+export class PromotionsListComponent implements OnInit {
   promotions: any = [];
+  selectedPromotion: any = null; // Para almacenar la promoción seleccionada
+  modalRef: NgbModalRef | null = null; // Para gestionar el modal
+
   constructor(
     public promocionService: PromocionService,
-  ) {
-
-  }
+    private modalService: NgbModal, // Inyecta el servicio de modales
+    private router: Router // Inyecta el Router
+  ) {}
 
   ngOnInit(): void {
-    // Al inicializar el componente, se solicita la lista de promociones
     this.promocionService.list().subscribe((resp: any) => {
       this.promotions = resp.data;
-      console.log(this.promotions); // Se muestra en consola las promociones recibidas
+      console.log(this.promotions);
+    });
+  }
+
+  openModal(content: any, promotion: any): void {
+    this.selectedPromotion = promotion;
+    this.modalRef = this.modalService.open(content, { centered: true });
+  }
+
+  closeModal(): void {
+    if (this.modalRef) {
+      this.modalRef.close();
+    }
+  }
+
+  deletePromotion(id: number): void {
+    this.promocionService.delete(id).subscribe(() => {
+      this.promotions = this.promotions.filter((promo: any) => promo.promt_id !== id);
+      this.closeModal();
     });
   }
 }
