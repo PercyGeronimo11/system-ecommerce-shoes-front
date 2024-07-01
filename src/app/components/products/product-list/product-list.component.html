@@ -1,4 +1,4 @@
-<div class="container my-5">
+<!-- <div class="container my-5">
     <div class="card">
       <div class="card-header bg-info text-white">
         <div class="d-flex justify-content-between align-items-center">
@@ -31,7 +31,7 @@
               <td>{{ product.proSizeTacon }}</td>
               <td>
                 <a routerLink="['/product/edit', product.id]" class="btn btn-primary">Editar</a>
-                <button (click)="deleteProduct(product.id)" class="btn btn-danger">Eliminar</button>
+                 <button (click)="deleteProduct(product.id)" class="btn btn-danger">Eliminar</button>
               </td>
             </tr>
           </tbody>
@@ -39,4 +39,25 @@
       </div>
     </div>
   </div>
-  
+   -->
+
+
+
+<div *ngIf="isLoading">
+  Loading products...
+</div>
+
+<div *ngIf="error">
+  Error: {{ error }}
+</div>
+
+<div *ngIf="products.length > 0">
+  <h2>Products</h2>
+  <ul>
+    <li *ngFor="let product of products">
+      <h3>{{ product.proName }}</h3>
+      <p>{{ product.proDescription }}</p>
+      <p>Price: {{ product.proUnitPrice }}</p>
+    </li>
+  </ul>
+</div>

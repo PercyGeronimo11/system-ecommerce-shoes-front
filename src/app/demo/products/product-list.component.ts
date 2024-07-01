@@ -17,17 +17,17 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 })
 export default class ProductListComponent {
 
-   products: Product[]=[];
-   error: any;
-   constructor(private productService: ProductService) { }
+  //  products: Product[]=[];
+  //  error: any;
+  //  constructor(private productService: ProductService) { }
 
-   ngOnInit() {
-    this.productService.getProducts()
-      .subscribe(
-        (data) => this.products = data,
-        (error) => this.error = error
-      );
-  }
+  //  ngOnInit() {
+  //   this.productService.getProducts()
+  //     .subscribe(
+  //       (data) => this.products = data,
+  //       (error) => this.error = error
+  //     );
+  // }
 
   //  ngOnInit(): void {
   //    this.productService.getProducts().subscribe(data => {

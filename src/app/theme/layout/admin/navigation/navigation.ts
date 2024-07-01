@@ -42,6 +42,21 @@ export const NavigationItems: NavigationItem[] = [
     ]
   },
   {
+    id: 'inventory',
+    title: 'Inventario',
+    type: 'group',
+    icon: 'icon-group',
+    children: [
+      {
+        id: 'material',
+        title: 'Materiales',
+        type: 'item',
+        url: '/materials',
+        icon: 'feather icon-box'
+      }
+    ]
+  },
+  {
     id: 'ui-component',
     title: 'Modulos',
     type: 'group',

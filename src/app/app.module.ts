@@ -23,8 +23,8 @@ import { NavCollapseComponent } from './theme/layout/admin/navigation/nav-conten
 import { NavGroupComponent } from './theme/layout/admin/navigation/nav-content/nav-group/nav-group.component';
 import { NavItemComponent } from './theme/layout/admin/navigation/nav-content/nav-item/nav-item.component';
 import { SharedModule } from './theme/shared/shared.module';
-import { ProductService } from './services/products/product.service';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -45,16 +45,8 @@ import { HttpClientModule } from '@angular/common/http';
     NavCollapseComponent,
     NavGroupComponent
   ],
-  imports: [
-    BrowserModule, 
-    AppRoutingModule, 
-    SharedModule, 
-    FormsModule, 
-    ReactiveFormsModule, 
-    BrowserAnimationsModule,
-    HttpClientModule,   // para usar las apis
-  ],
-  providers: [ProductService],
+  imports: [BrowserModule, RouterModule, ReactiveFormsModule, HttpClientModule, AppRoutingModule, SharedModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

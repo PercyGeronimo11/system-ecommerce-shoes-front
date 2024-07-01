@@ -24,8 +24,18 @@ const routes: Routes = [
         loadComponent: () => import('./demo/dashboard/dash-analytics.component')
       },
       {
+        // path: 'products',
+        // loadComponent: () => import('./demo/products/product-list.component')
+        path: 'materials',
+        loadComponent: () => import('./components/materials/materials-list/materials-list.component').then(m => m.MaterialsListModule)
+      },
+      {
+        path: 'materialCreate',
+        loadComponent: () => import('./components/materials/materials-create/materials-create.component').then(m => m.MaterialCreateModule)
+      },
+      {
         path: 'products',
-        loadComponent: () => import('./demo/products/product-list.component')
+        loadChildren: () => import('./components/products/product.module').then(m => m.ProductModule)
       },
       {
         path: 'component',

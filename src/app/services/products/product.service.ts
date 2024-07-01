@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Product } from '../../models/product/product.model';
 
 @Injectable({
@@ -8,12 +9,13 @@ import { Product } from '../../models/product/product.model';
 })
 export class ProductService {
 
-  private apiUrl = 'http://127.0.0.1:8080/product/index?search'; // Updated URL
+  private apiUrl = 'http://127.0.0.1:8080/product/index?search'; // Replace with your actual API URL
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrl);
+    console.log("esto viene:",this.http.get<Product[]>(this.apiUrl));
+    return this.http.get<Product[]>(this.apiUrl)
   }
 
   // createProduct(product: Product): Observable<Product> {
