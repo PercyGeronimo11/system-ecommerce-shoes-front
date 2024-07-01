@@ -29,7 +29,6 @@ export class MaterialsListModule implements OnInit{
   }
 
   ngOnInit(): void {
-
     this.materialService.list().subscribe((resp:any) => {
       this.materials=resp.data;
       console.log(this.materials);
@@ -38,6 +37,15 @@ export class MaterialsListModule implements OnInit{
 
   selectMaterial(material:any):void{
     this.router.navigate(['/materialEdit', material.id]);
+  }
+
+  deleteMaterial(id:any):void{
+    this.materialService.delete(id).subscribe((resp:any) => {
+      this.materialService.list().subscribe((resp:any) => {
+        this.materials=resp.data;
+        console.log(this.materials);
+      })
+    })
   }
 
 }

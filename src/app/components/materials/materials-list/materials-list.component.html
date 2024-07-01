@@ -24,11 +24,11 @@
               <td>{{ material.stock }}{{ material.unit }}</td>
               <td>{{ material.unitPrice }}</td>
               <td>
-                <button (click)="selectMaterial(material)" class="btn btn-warning mb-3">
+                <button (click)="selectMaterial(material)" class="btn btn-warning mb-3 me-2">
                   <i class="fa fa-edit"></i>
                 </button>
-                <button (click)="selectMaterial(material)" class="btn btn-danger mb-3">
-                  <i class="fa fa-edit"></i>
+                <button (click)="deleteMaterial(material.id)" class="btn btn-danger mb-3">
+                  <i class="fa fa-trash"></i>
                 </button>
               </td>
             </tr>

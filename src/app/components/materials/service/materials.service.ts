@@ -32,34 +32,4 @@ export class MaterialService {
     delete(id:any){
         return this.http.delete(this.apiUrl+"/"+id);
     }
-
-    /* registerReview(data:any){
-        let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authService.token});
-        let URL = URL_SERVICIOS+"/ecommerce/review";
-        return this.http.post(URL,data,{headers: headers});
-    }
-
-    updateReview(data:any,review_id:any){
-        let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authService.token});
-        let URL = URL_SERVICIOS+"/ecommerce/review/"+review_id;
-        return this.http.put(URL,data,{headers: headers});
-    }
-
-    updateUser(data:any){
-        let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authService.token});
-        let URL = URL_SERVICIOS+"/ecommerce/update_client";
-        return this.http.post(URL,data,{headers: headers});
-    }
-
-    showCourse(slug:any){
-        let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authService.token});
-        let URL = URL_SERVICIOS+"/ecommerce/course_leason/"+slug;
-        return this.http.get(URL,{headers: headers});
-    }
-
-    getPdfUrl(slug:any){
-        let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authService.token});
-        let URL = URL_SERVICIOS+"/ecommerce/salepdf/"+slug;
-        return this.http.get(URL,{headers: headers});
-    } */
 }
