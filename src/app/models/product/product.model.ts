@@ -15,4 +15,15 @@ export interface Product {
 }
 
 
+export interface ProductCreate {
+  id: number;
+  catId: number;
+  proName: string;
+  proDescription: string;
+  proUnitPrice: number;
+  proSizePlatform: string ;
+  proSizeTacon: string;
+}
+
+
 
