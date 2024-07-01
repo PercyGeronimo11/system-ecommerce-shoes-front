@@ -42,14 +42,17 @@ export class PromocionCreateModule implements OnInit{
 
   onSubmit(): void {
     if (this.promocionForm.valid) {
-  this.promocionService.create(this.promocionForm.value).subscribe((resp:any) => {
-        console.log('Promocion created successfully!', resp);
-        this.router.navigate(['/promotions']);
-      }, error => {
-        console.error('Error creating promocion', error);
-      });
+      this.promocionService.create(this.promocionForm.value).subscribe(
+        (resp: any) => {
+          console.log('Promoción creada exitosamente!', resp);
+          this.router.navigate(['/promotions']);
+        },
+        error => {
+          console.error('Error al crear la promoción', error);
+        }
+      );
     } else {
-      console.error('Form is invalid');
+      console.error('El formulario no es válido');
     }
   }
 }

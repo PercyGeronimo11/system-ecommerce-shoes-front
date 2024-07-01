@@ -1,12 +1,8 @@
-// angular import
 import { Component, OnInit } from '@angular/core';
-
-// project import
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { MaterialService } from '../service/materials.service';
 import { Router } from '@angular/router';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-tbl-bootstrap',
@@ -15,42 +11,36 @@ import { RouterModule } from '@angular/router';
   templateUrl: './materials-create.component.html',
   styleUrls: ['./materials-create.component.scss']
 })
-export class MaterialCreateModule implements OnInit{
+export class MaterialCreateModule implements OnInit {
   materialForm: FormGroup;
-  name: any = null;
-  unitPrice: any = null;
-  stock: any = null;
-  unit: any = null;
-  description: any = null;
-  materials:any =[];
+
   constructor(
     public materialService: MaterialService,
     private fb: FormBuilder,
     private router: Router
   ) {
     this.materialForm = this.fb.group({
-      name: ['', Validators.required],
-      unitPrice: [0, Validators.required],
-      stock: [0, Validators.required],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      unitPrice: [0, [Validators.required, Validators.min(0.01)]],
+      stock: [0, [Validators.required, Validators.min(1)]],
       unit: ['', Validators.required],
       description: ['']
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onSubmit(): void {
     if (this.materialForm.valid) {
-      this.materialService.create(this.materialForm.value).subscribe((resp:any) => {
-        console.log('Material created successfully!', resp);
+      this.materialService.create(this.materialForm.value).subscribe((resp: any) => {
+        console.log('Material creado exitosamente!', resp);
         this.router.navigate(['/materials']);
       }, error => {
-        console.error('Error creating material', error);
+        console.error('Error creando el material', error);
       });
     } else {
-      console.error('Form is invalid');
+      this.materialForm.markAllAsTouched();
+      console.error('El formulario es inválido');
     }
   }
-
 }

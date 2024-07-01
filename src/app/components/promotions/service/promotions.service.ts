@@ -19,6 +19,17 @@ export class PromocionService {
         return this.http.post(this.apiUrl,data);
     }
 
+    getById(id: number) {   //extraer un objeto
+      return this.http.get(`${this.apiUrl}/${id}`);
+    }
+
+    edit(id: number, data: any) {
+      return this.http.put(`${this.apiUrl}/${id}`, data);
+    }
+
+    delete(id: number) {
+      return this.http.delete(`${this.apiUrl}/${id}`);
+    }
     /* registerReview(data:any){
         let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authService.token});
         let URL = URL_SERVICIOS+"/ecommerce/review";
