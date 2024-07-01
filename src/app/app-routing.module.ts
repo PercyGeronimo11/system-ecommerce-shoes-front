@@ -1,6 +1,7 @@
 // Angular Import
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './components/auth/auth.guard';
 
 // project import
 import { AdminComponent } from './theme/layout/admin/admin.component';
@@ -19,11 +20,11 @@ const routes: Routes = [
       },
       {
         path: 'analytics',
-        loadComponent: () => import('./demo/dashboard/dash-analytics.component')
+        loadComponent: () => import('./demo/dashboard/dash-analytics.component'),canActivate: [AuthGuard]
       },
       {
         path: 'materials',
-        loadComponent: () => import('./components/materials/materials-list/materials-list.component').then(m => m.MaterialsListModule)
+        loadComponent: () => import('./components/materials/materials-list/materials-list.component').then(m => m.MaterialsListModule),canActivate: [AuthGuard]
       },
       {
         path: 'materialCreate',
@@ -65,7 +66,7 @@ const routes: Routes = [
       },
       {
         path: 'auth/signin',
-        loadComponent: () => import('./demo/authentication/sign-in/sign-in.component')
+        loadComponent: () => import('./components/auth/sign-in/sign-in.component')
       }
     ]
   }

@@ -1,6 +1,8 @@
 // Angular Import
 import { Component } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../../../components/auth/service/auth.service';
 
 // bootstrap
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -28,7 +30,7 @@ export class NavRightComponent {
   friendId!: number;
 
   // constructor
-  constructor() {
+  constructor(private authService: AuthService,private router: Router) {
     this.visibleUserList = false;
     this.chatMessage = false;
   }
@@ -37,5 +39,9 @@ export class NavRightComponent {
   onChatToggle(friendID: number) {
     this.friendId = friendID;
     this.chatMessage = !this.chatMessage;
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }
