@@ -28,11 +28,13 @@ export class NavRightComponent {
   visibleUserList: boolean;
   chatMessage: boolean;
   friendId!: number;
+  username:any;
 
   // constructor
   constructor(private authService: AuthService,private router: Router) {
     this.visibleUserList = false;
     this.chatMessage = false;
+    this.username=localStorage.getItem('username');
   }
 
   // public method

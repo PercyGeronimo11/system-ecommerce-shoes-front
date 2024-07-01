@@ -31,6 +31,7 @@ export default class SignInComponent {
       this.authService.login(this.loginForm.value).subscribe(
         (resp: any) => {
           localStorage.setItem('token', resp.token);
+          localStorage.setItem('username', resp.username);
           this.router.navigate(['/materials']);
         },
         (error) => {

@@ -1,18 +1,16 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { AuthService } from '../../auth/service/auth.service';
 
 @Injectable({
     providedIn: 'root'
   })
-export class MaterialService {
+export class UserService {
 
-    private apiUrl= environment.apiUrl+"/api/material";
+    private apiUrl= environment.apiUrl+"/api/user";
 
     constructor(
-        private http: HttpClient,
-        public authService: AuthService
+        private http: HttpClient
     ) { }
 
     list() {
@@ -20,7 +18,7 @@ export class MaterialService {
     }
 
     create(data:any){
-        return this.http.post(this.apiUrl, data);
+        return this.http.post(environment.apiUrl+"/auth/register", data);
     }
 
     get(id:any){

@@ -35,6 +35,14 @@ const routes: Routes = [
         loadComponent: () => import('./components/materials/materials-edit/materials-edit.component').then(m => m.MaterialEditModule)
       },
       {
+        path: 'users',
+        loadComponent: () => import('./components/users/users-list/users-list.component').then(m => m.UsersListModule),canActivate: [AuthGuard]
+      },
+      {
+        path: 'userCreate',
+        loadComponent: () => import('./components/users/users-create/users-create.component').then(m => m.UsersCreateModule)
+      },
+      {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)
       },

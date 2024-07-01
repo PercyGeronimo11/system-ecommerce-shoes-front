@@ -4,33 +4,47 @@
       <form [formGroup]="materialForm" (ngSubmit)="onSubmit()">
         <div class="row">
           <div class="form-group col-md-6">
-            <label for="inputEmail4">Nombre</label>
-            <input type="email" class="form-control" id="inputEmail4" placeholder="nombre" formControlName="name"/>
-          </div>
-          <div class="form-group col-md-6">
-            <label for="inputPassword4">Stock</label>
-            <input type="number" class="form-control" id="inputPassword4" placeholder="stock" formControlName="stock"/>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-md-6">
-            <label for="inputAddress">Precio unitario</label>
-          <input type="number" class="form-control" id="inputAddress" placeholder="precio unitario" formControlName="unitPrice"/>
-          </div>
-          <div class="form-group col-md-6">
-            <label for="exampleFormControlSelect1">Unidad</label>
-              <select class="form-control" id="exampleFormControlSelect1" formControlName="unit">
-                <option value="m">Metros</option>
-                <option value="cm">Centimetros</option>
-              </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-md-6">
-            <label for="exampleFormControlTextarea1">Descripción</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-              <input type="text" class="form-control hidden" id="inputPassword4" placeholder="stock" formControlName="status"/>
+            <label for="inputName">Nombre</label>
+            <input type="text" class="form-control" id="inputName" placeholder="Nombre" formControlName="name"/>
+            <div *ngIf="materialForm.get('name')?.touched && materialForm.get('name')?.invalid">
+              <small *ngIf="materialForm.get('name')?.errors?.['required']" class="text-danger">Nombre es requerido.</small>
+              <small *ngIf="materialForm.get('name')?.errors?.['minlength']" class="text-danger">Nombre debe tener al menos 3 caracteres.</small>
             </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputStock">Stock</label>
+            <input type="number" class="form-control" id="inputStock" placeholder="Stock" formControlName="stock"/>
+            <div *ngIf="materialForm.get('stock')?.touched && materialForm.get('stock')?.invalid">
+              <small *ngIf="materialForm.get('stock')?.errors?.['required']" class="text-danger">Stock es requerido.</small>
+              <small *ngIf="materialForm.get('stock')?.errors?.['min']" class="text-danger">Stock debe ser al menos 1.</small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="inputUnitPrice">Precio unitario</label>
+            <input type="number" class="form-control" id="inputUnitPrice" placeholder="Precio unitario" formControlName="unitPrice"/>
+            <div *ngIf="materialForm.get('unitPrice')?.touched && materialForm.get('unitPrice')?.invalid">
+              <small *ngIf="materialForm.get('unitPrice')?.errors?.['required']" class="text-danger">Precio unitario es requerido.</small>
+              <small *ngIf="materialForm.get('unitPrice')?.errors?.['min']" class="text-danger">Precio unitario debe ser al menos 0.01.</small>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputUnit">Unidad</label>
+            <select class="form-control" id="inputUnit" formControlName="unit">
+              <option value="m">Metros</option>
+              <option value="cm">Centímetros</option>
+            </select>
+            <div *ngIf="materialForm.get('unit')?.touched && materialForm.get('unit')?.invalid">
+              <small *ngIf="materialForm.get('unit')?.errors?.['required']" class="text-danger">Unidad es requerida.</small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12">
+            <label for="inputDescription">Descripción</label>
+            <textarea class="form-control" id="inputDescription" rows="3" placeholder="Descripción" formControlName="description"></textarea>
+          </div>
         </div>
         <button type="submit" class="btn btn-primary">Guardar</button>
       </form>

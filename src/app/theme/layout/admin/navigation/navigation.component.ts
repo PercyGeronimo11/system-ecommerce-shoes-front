@@ -7,6 +7,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent {
+  userRole:any;
   // public props
   windowWidth = window.innerWidth;
   @Output() NavMobCollapse = new EventEmitter();
@@ -17,4 +18,5 @@ export class NavigationComponent {
       this.NavMobCollapse.emit();
     }
   }
+  
 }
