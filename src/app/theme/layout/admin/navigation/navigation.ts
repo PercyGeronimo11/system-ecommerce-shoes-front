@@ -31,13 +31,6 @@ export const NavigationItems: NavigationItem[] = [
         type: 'item',
         url: '/analytics',
         icon: 'feather icon-home'
-      },
-      {
-        id: 'productsaa',
-        title: 'Productosaaaw',
-        type: 'item',
-        url: '/product',
-        icon: 'feather icon-home'
       }
     ]
   },
@@ -53,6 +46,13 @@ export const NavigationItems: NavigationItem[] = [
         type: 'item',
         url: '/materials',
         icon: 'feather icon-box'
+      },
+      {
+        id: 'products',
+        title: 'Productos',
+        type: 'item',
+        url: '/products/list',
+        icon: 'feather icon-home'
       }
     ]
   },

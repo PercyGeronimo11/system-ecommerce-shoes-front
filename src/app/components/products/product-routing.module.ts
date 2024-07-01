@@ -6,7 +6,7 @@ const routes: Routes = [
         path: '',
         children: [
             {
-                path: 'products',
+                path: 'list',
                 loadComponent: () => import('./product-list/product-list.component')
             },
         ]

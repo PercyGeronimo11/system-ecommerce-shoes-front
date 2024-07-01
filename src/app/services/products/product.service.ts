@@ -13,8 +13,8 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  getProducts(): Observable<Product[]> {
-    console.log("esto viene:",this.http.get<Product[]>(this.apiUrl));
+  getProducts() {
+    console.log("esto viene:",this.http.get(this.apiUrl));
     return this.http.get<Product[]>(this.apiUrl)
   }
 

@@ -24,8 +24,6 @@ const routes: Routes = [
         loadComponent: () => import('./demo/dashboard/dash-analytics.component')
       },
       {
-        // path: 'products',
-        // loadComponent: () => import('./demo/products/product-list.component')
         path: 'materials',
         loadComponent: () => import('./components/materials/materials-list/materials-list.component').then(m => m.MaterialsListModule)
       },

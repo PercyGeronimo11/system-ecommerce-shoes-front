@@ -22,8 +22,8 @@ export default class ProductListComponent implements OnInit {
   ngOnInit() {
     this.isLoading = true;
     this.productService.getProducts()
-      .subscribe(products => {
-        this.products = products;
+      .subscribe((products: any )=> {
+        this.products = products.data.content;
         this.isLoading = false;
         console.log("data:", products);
       }, error => {
