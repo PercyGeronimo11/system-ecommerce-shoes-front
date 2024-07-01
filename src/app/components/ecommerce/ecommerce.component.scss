@@ -1,0 +1,251 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .navbar {
+    background-color: #5e3c58;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+  
+    .navbar-brand {
+      font-size: 1.8rem;
+      color: white;
+      text-decoration: none;
+      margin-right: 2rem;
+    }
+  
+    .search-bar {
+      flex-grow: 1;
+      padding: 0.5rem 1rem;
+      margin: 0 2rem;
+      border: none;
+      border-radius: 5px;
+    }
+  
+    .navbar-nav {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      margin: 0;
+      padding: 0;
+  
+      .nav-item {
+        .nav-link {
+          color: white;
+          text-decoration: none;
+          font-size: 1rem;
+          padding: 0.5rem 1rem;
+          border-radius: 5px;
+          transition: background-color 0.3s;
+  
+          &:hover {
+            background-color: #ffd700;
+            color: #5e3c58;
+          }
+        }
+      }
+    }
+  
+    .navbar-icons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+  
+      a {
+        color: white;
+        text-decoration: none;
+  
+        img {
+          width: 20px;
+          height: 20px;
+        }
+  
+        &:hover {
+          color: #ffd700;
+        }
+      }
+    }
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.container {
+    background-color: black;
+    color: pink;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.input-text {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+.icon-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+.icon {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.icon i {
+    color: pink;
+}
+.navbar {
+    background-color: #d3d3d3; /* Color plomo */
+    padding: 10px 20px;
+}
+.navbar a {
+    color: #333; /* Color que combina */
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+.navbar a:hover {
+    color: #000; /* Color más oscuro al pasar el mouse */
+}
+.banner {
+    text-align: center;
+    margin: 20px 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+.ecommerce-container {
+    padding: 20px;
+    background-color: #fafafa;
+}
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+.product-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    width: 200px;
+}
+.product-card img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.product-card .price {
+    color: #333;
+    font-weight: bold;
+    margin-top: 10px;
+}
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+  .banner {
+    background-size: cover;
+    text-align: center;
+    padding: 5rem 1rem;
+    color: white;
+  
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+  
+    p {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .ecommerce-container {
+    padding: 2rem 1rem;
+  
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+  
+      .product-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        width: 30%;
+        margin-bottom: 30px;
+        text-align: center;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+        img {
+          max-width: 100%;
+          height: auto;
+          margin-bottom: 15px;
+        }
+  
+        h2 {
+          font-size: 1.5rem;
+          margin-bottom: 10px;
+        }
+  
+        p {
+          font-size: 1rem;
+          color: #6c757d;
+          margin-bottom: 15px;
+        }
+  
+        .price {
+          font-size: 1.2rem;
+          color: #28a745;
+          margin-bottom: 15px;
+        }
+  
+        .btn {
+          background-color: #007bff;
+          border: none;
+          color: white;
+          padding: 10px 20px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          cursor: pointer;
+          border-radius: 16px;
+  
+          &:hover {
+            background-color: #0056b3;
+          }
+        }
+      }
+    }
+  }

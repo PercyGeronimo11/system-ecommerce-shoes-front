@@ -1,0 +1,37 @@
+<div class="container">
+    <input type="text" class="input-text" placeholder="Escribe aquí...">
+    <div class="icon-container">
+        <div class="icon">
+            <i class="fas fa-user"></i>
+            <span>Register</span>
+        </div>
+        <div class="icon">
+            <i class="fas fa-shopping-bag"></i>
+            <span>Bag</span>
+        </div>
+    </div>
+</div>
+
+<!-- Navbar -->
+<div class="navbar">
+    <a href="#home">Home</a>
+    <a href="#shop">Shop</a>
+    <a href="#contact">Contact</a>
+</div>
+
+<div class="banner">
+    <h1>PRIMAVERA-VERANO</h1>
+    <p>Todos tus modelos favoritos en un solo lugar</p>
+</div>
+
+<div class="ecommerce-container">
+    <div class="products">
+        <div class="product-card" *ngFor="let product of products">
+            <img [src]="product.image" alt="{{product.name}}" />
+            <h2>{{product.name}}</h2>
+            <p>{{product.description}}</p>
+            <span class="price">${{product.price}}</span>
+            <button class="btn btn-primary" (click)="addToCart(product)">Agregar al carrito</button>
+        </div>
+    </div>
+</div>

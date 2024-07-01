@@ -1,6 +1,6 @@
 // Angular Import
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 //import { ProductListComponent } from './components/products/product-list/product-list.component';
 // import { ProductCreateComponent } from './components/products/product-create/product-create.component';
 // import { ProductEditComponent } from './components/products/product-edit/product-edit.component';
@@ -40,6 +40,7 @@ const routes: Routes = [
         path: 'promocionCreate',
         loadComponent: () => import('./components/promotions/promotions-create/promotions-create.component').then(p => p.PromocionCreateModule)
       },
+      
       {
         path: 'products',
         loadChildren: () => import('./components/products/product.module').then(m => m.ProductModule)
@@ -81,6 +82,9 @@ const routes: Routes = [
       }
     ]
   },
+  {  path: 'ecommerce',
+    loadComponent: () => import('./components/ecommerce/ecommerce.component').then(p => p.EcommerceComponent) } // Ruta independiente para EcommerceComponent
+
 ];
 
 @NgModule({
