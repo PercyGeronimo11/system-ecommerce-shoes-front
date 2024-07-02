@@ -27,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './components/auth/auth.interceptor';
+import ProductCreateComponent from './components/products/product-create/product-create.component';
 
 @NgModule({
   declarations: [
@@ -45,9 +46,20 @@ import { AuthInterceptor } from './components/auth/auth.interceptor';
     NavContentComponent,
     NavItemComponent,
     NavCollapseComponent,
-    NavGroupComponent
+    NavGroupComponent,
+    //ProductCreateComponent
   ],
-  imports: [BrowserModule, RouterModule, ReactiveFormsModule, HttpClientModule, AppRoutingModule, SharedModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule],
+  imports: [
+    BrowserModule, 
+    RouterModule, 
+    ReactiveFormsModule, 
+    HttpClientModule, 
+    AppRoutingModule, 
+    SharedModule, 
+    FormsModule,  //Para formularios
+    ReactiveFormsModule, 
+    BrowserAnimationsModule
+  ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
