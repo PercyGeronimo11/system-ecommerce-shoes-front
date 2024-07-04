@@ -1,7 +1,6 @@
 // Angular Import
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './components/auth/auth.guard';
 //import { ProductListComponent } from './components/products/product-list/product-list.component';
 // import { ProductCreateComponent } from './components/products/product-create/product-create.component';
 // import { ProductEditComponent } from './components/products/product-edit/product-edit.component';
@@ -23,11 +22,11 @@ const routes: Routes = [
       },
       {
         path: 'analytics',
-        loadComponent: () => import('./demo/dashboard/dash-analytics.component'),canActivate: [AuthGuard]
+        loadComponent: () => import('./demo/dashboard/dash-analytics.component')
       },
       {
         path: 'materials',
-        loadComponent: () => import('./components/materials/materials-list/materials-list.component').then(m => m.MaterialsListModule),canActivate: [AuthGuard]
+        loadComponent: () => import('./components/materials/materials-list/materials-list.component').then(m => m.MaterialsListModule)
       },
       {
         path: 'materialCreate',
@@ -39,7 +38,7 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        loadComponent: () => import('./components/users/users-list/users-list.component').then(m => m.UsersListModule),canActivate: [AuthGuard]
+        loadComponent: () => import('./components/users/users-list/users-list.component').then(m => m.UsersListModule)
       },
       {
         path: 'userCreate',

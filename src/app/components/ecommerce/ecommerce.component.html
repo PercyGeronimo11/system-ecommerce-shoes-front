@@ -1,37 +1,91 @@
-<div class="container">
-    <input type="text" class="input-text" placeholder="Escribe aquí...">
-    <div class="icon-container">
-        <div class="icon">
-            <i class="fas fa-user"></i>
-            <span>Register</span>
-        </div>
-        <div class="icon">
-            <i class="fas fa-shopping-bag"></i>
-            <span>Bag</span>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="row inicio">
+    <div class="col logo-container">
+      <img src="assets/images/logo-ecommerce.jpeg" alt="Logo" class="logo">
     </div>
-</div>
-
-<!-- Navbar -->
-<div class="navbar">
-    <a href="#home">Home</a>
-    <a href="#shop">Shop</a>
-    <a href="#contact">Contact</a>
-</div>
-
-<div class="banner">
-    <h1>PRIMAVERA-VERANO</h1>
-    <p>Todos tus modelos favoritos en un solo lugar</p>
-</div>
-
-<div class="ecommerce-container">
-    <div class="products">
-        <div class="product-card" *ngFor="let product of products">
-            <img [src]="product.image" alt="{{product.name}}" />
-            <h2>{{product.name}}</h2>
-            <p>{{product.description}}</p>
-            <span class="price">${{product.price}}</span>
-            <button class="btn btn-primary" (click)="addToCart(product)">Agregar al carrito</button>
-        </div>
+    <div class="col">
+      <input type="text" class="input-text" placeholder="Escribe aquí...">
     </div>
-</div>
+    <div class="col icon-container">
+      <div class="icon">
+        <i class="fas fa-user"></i>
+        <span>Ingresar</span>
+      </div>
+      <div class="icon">
+        <i class="fas fa-shopping-cart"></i>
+        <span>Carrito</span>
+      </div>
+      <div class="icon">
+        <i class="fas fa-train"></i>
+        <span>Envios</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="navbar">
+    <a href="#home">Inicio</a>
+    <a href="#shop">Tienda</a>
+    <a href="#contact">Contactanos</a>
+  </div>
+
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="assets/images/baner1.jpg" class="d-block w-100" alt="Banner 1">
+      </div>
+      <div class="carousel-item">
+        <img src="assets/images/baner2.jpg" class="d-block w-100" alt="Banner 2">
+      </div>
+      <div class="carousel-item">
+        <img src="assets/images/baner3.jpg" class="d-block w-100" alt="Banner 3">
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+    <div class="ecommerce-container">
+        <div class="products">
+            <div class="product-card" *ngFor="let product of products">
+                <img [src]="product.proUrlImage" alt="Producto" class="product-image">
+                <h2>{{ product.proName }}</h2>
+                <p>{{ product.proDescription }}</p>
+                <span class="price">{{ product.proUnitPrice }}</span>
+                <button class="btn btn-primary" (click)="addToCart(product)">Agregar al carrito</button>
+            </div>
+        </div>
+ 
+
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('.carousel').carousel({
+        interval: 2000 // Cambia la imagen cada 2 segundos
+      });
+    });
+  </script>
+</body>
+</html>
