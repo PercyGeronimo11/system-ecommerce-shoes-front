@@ -43,8 +43,8 @@ export const NavigationItems: NavigationItem[] = [
 
   },
   {
-    id: 'inventory',
-    title: 'Inventario',
+    id: 'users',
+    title: 'Usuario',
     type: 'group',
     icon: 'icon-group',
     children: [
@@ -54,7 +54,15 @@ export const NavigationItems: NavigationItem[] = [
         type: 'item',
         url: '/users',
         icon: 'feather icon-box'
-      },
+      }
+    ]
+  },
+  {
+    id: 'inventory',
+    title: 'Inventario',
+    type: 'group',
+    icon: 'icon-group',
+    children: [
       {
         id: 'material',
         title: 'Materiales',
@@ -68,7 +76,21 @@ export const NavigationItems: NavigationItem[] = [
         type: 'item',
         url: '/products/list',
         icon: 'feather icon-home'
-      }
+      },
+    ]
+  },  {
+    id: 'Categorias',
+    title: 'Categorias',
+    type: 'group',
+    icon: 'icon-group',
+    children: [
+      {
+        id: 'categoria',
+        title: 'Categorias',
+        type: 'item',
+        url: '/categories',
+        icon: 'feather icon-box'
+      },
     ]
   },
   {

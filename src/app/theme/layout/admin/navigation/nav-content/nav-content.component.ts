@@ -5,6 +5,7 @@ import { Location, LocationStrategy } from '@angular/common';
 // project import
 import { environment } from 'src/environments/environment';
 import { NavigationItem, NavigationItems } from '../navigation';
+import { AuthService } from '../../../../../components/auth/service/auth.service';
 
 @Component({
   selector: 'app-nav-content',
@@ -25,7 +26,8 @@ export class NavContentComponent implements OnInit {
   // constructor
   constructor(
     private location: Location,
-    private locationStrategy: LocationStrategy
+    private locationStrategy: LocationStrategy,
+    private authService: AuthService
   ) {
     this.windowWidth = window.innerWidth;
     this.navigations = NavigationItems;
@@ -33,9 +35,21 @@ export class NavContentComponent implements OnInit {
 
   // life cycle event
   ngOnInit() {
+    const role = this.authService.getRole();
+    this.navigations = NavigationItems.map(group => ({
+      ...group,
+      children: group.children?.filter(item => this.shouldShowItem(item, role))
+    }));
     if (this.windowWidth < 992) {
       document.querySelector('.pcoded-navbar')?.classList.add('menupos-static');
     }
+  }
+
+  shouldShowItem(item: NavigationItem, role: string | null): boolean {
+    if (item.id === 'user' && role !== 'ADMIN') {
+      return false;
+    }
+    return true;
   }
 
   // public method
@@ -70,4 +84,6 @@ export class NavContentComponent implements OnInit {
       }
     }
   }
+
+
 }

@@ -32,7 +32,8 @@ export default class SignInComponent {
         (resp: any) => {
           localStorage.setItem('token', resp.token);
           localStorage.setItem('username', resp.username);
-          this.router.navigate(['/materials']);
+          localStorage.setItem('role', resp.rol);
+          this.router.navigate(['/analytics']);
         },
         (error) => {
           console.error('Error logging in', error);

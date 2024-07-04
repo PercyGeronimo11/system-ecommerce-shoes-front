@@ -55,6 +55,14 @@ const routes: Routes = [
       },
       
       {
+        path: 'categoriaCreate',
+        loadComponent: () => import('./components/categories/categories-create/categories-create.component').then(c => c.CategoriaCreateModule)
+      },
+      {
+        path: 'categories',
+        loadComponent: () => import('./components/categories/categories-list/categories-list.component').then(c => c.CategoriesListComponent)
+      },
+      {
         path: 'products',
         loadChildren: () => import('./components/products/product.module').then(m => m.ProductModule)
       },
@@ -66,7 +74,14 @@ const routes: Routes = [
         path: 'promotions/:id',
         loadComponent: () => import('./components/promotions/promotions-list/promotions-list.component').then(m => m.PromotionsListComponent)
       },
-
+      {
+        path: 'categoriaEdit/:id',
+        loadComponent: () => import('./components/categories/categories-edit/categories-edit.component').then(c => c.CategoriaEditModule)
+      },
+      {
+        path: 'categories/:id',
+        loadComponent: () => import('./components/categories/categories-list/categories-list.component').then(c => c.CategoriesListComponent)
+      },
       {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)
