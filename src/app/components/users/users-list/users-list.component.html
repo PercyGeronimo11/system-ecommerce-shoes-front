@@ -42,7 +42,7 @@
   <div class="modal-content modal-content-delete">
     <span class="close" (click)="closeDeleteModal()">&times;</span>
     <h4>Confirmación de eliminación</h4>
-    <p>¿Estás seguro de que deseas eliminar al usuario {{ selectedUser?.name }}?</p>
+    <p>¿Estás seguro de que deseas eliminar al usuario <b>{{ selectedUser?.name }}</b>?</p>
     <div class="modal-buttons">
       <button (click)="deleteUser()" class="btn btn-warning">Eliminar</button>
       <button (click)="closeDeleteModal()" class="btn btn-danger">Cancelar</button>

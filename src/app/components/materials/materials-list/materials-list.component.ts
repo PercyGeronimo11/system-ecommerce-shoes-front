@@ -15,12 +15,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./materials-list.component.scss']
 })
 export class MaterialsListModule implements OnInit {
-  name: any = null;
-  unitPrice: any = null;
-  stock: any = null;
-  unit: any = null;
-  description: any = null;
   materials: any = [];
+  modalDeleteVisible: boolean = false;
+  selectedMaterial: any = null;
   constructor(
     public materialService: MaterialService,
     private router: Router
@@ -28,23 +25,41 @@ export class MaterialsListModule implements OnInit {
   }
 
   ngOnInit(): void {
-    this.materialService.list().subscribe((resp:any) => {
-      this.materials=resp.data;
-      console.log(this.materials);
-    })
+    this.listMaterials();
   }
 
   selectMaterial(material:any):void{
     this.router.navigate(['/materialEdit', material.id]);
   }
 
-  deleteMaterial(id:any):void{
-    this.materialService.delete(id).subscribe((resp:any) => {
-      this.materialService.list().subscribe((resp:any) => {
-        this.materials=resp.data;
-        console.log(this.materials);
-      })
+  listMaterials() {
+    this.materialService.list().subscribe((resp:any) => {
+      this.materials=resp.data;
     })
+  }
+
+  deleteMaterialApi(id:any):void{
+    this.materialService.delete(id).subscribe((resp:any) => {
+      this.listMaterials();
+    })
+  }
+
+  // Modal de eliminar usuario
+  openDeleteModal(material: any) {
+    this.selectedMaterial = material;
+    this.modalDeleteVisible = true;
+  }
+
+  closeDeleteModal() {
+    this.modalDeleteVisible = false;
+    this.selectedMaterial = null;
+  }
+
+  deleteMaterial() {
+    if (this.selectedMaterial) {
+      this.deleteMaterialApi(this.selectedMaterial.id);
+      this.closeDeleteModal();
+    }
   }
 
 }
