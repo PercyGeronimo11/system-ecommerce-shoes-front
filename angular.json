@@ -104,5 +104,10 @@
   "cli": {
     "analytics": "add15f09-9029-4c0f-82d1-1471de99ba6f",
     "schematicCollections": ["@angular-eslint/schematics"]
-  }
+  },
+  "styles": [
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "src/styles.css"
+]
+
 }
