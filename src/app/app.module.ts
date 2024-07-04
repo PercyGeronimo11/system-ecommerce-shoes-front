@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-// project import
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminComponent } from './theme/layout/admin/admin.component';
@@ -27,7 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './components/auth/auth.interceptor';
-import ProductCreateComponent from './components/products/product-create/product-create.component';
+import { ProductCreateComponent } from './components/products/product-create/product-create.component';
 
 @NgModule({
   declarations: [
@@ -47,17 +45,16 @@ import ProductCreateComponent from './components/products/product-create/product
     NavItemComponent,
     NavCollapseComponent,
     NavGroupComponent,
-    //ProductCreateComponent
+    ProductCreateComponent,
   ],
   imports: [
     BrowserModule, 
     RouterModule, 
-    ReactiveFormsModule, 
     HttpClientModule, 
     AppRoutingModule, 
     SharedModule, 
-    FormsModule,  //Para formularios
-    ReactiveFormsModule, 
+    FormsModule,      //Para formularios
+    ReactiveFormsModule,    //Para Forms en HTML
     BrowserAnimationsModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
