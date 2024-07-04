@@ -35,8 +35,8 @@ export const NavigationItems: NavigationItem[] = [
     ]
   },
   {
-    id: 'inventory',
-    title: 'Inventario',
+    id: 'users',
+    title: 'Usuario',
     type: 'group',
     icon: 'icon-group',
     children: [
@@ -46,7 +46,15 @@ export const NavigationItems: NavigationItem[] = [
         type: 'item',
         url: '/users',
         icon: 'feather icon-box'
-      },
+      }
+    ]
+  },
+  {
+    id: 'inventory',
+    title: 'Inventario',
+    type: 'group',
+    icon: 'icon-group',
+    children: [
       {
         id: 'material',
         title: 'Materiales',
