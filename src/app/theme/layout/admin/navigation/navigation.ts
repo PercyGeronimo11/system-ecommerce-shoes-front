@@ -31,8 +31,16 @@ export const NavigationItems: NavigationItem[] = [
         type: 'item',
         url: '/analytics',
         icon: 'feather icon-home'
+      },
+      {
+        id: 'Ecommerce',
+        title: 'Ecommerce',
+        type: 'item',
+        url: '/ecommerce',
+        icon: 'feather icon-home'
       }
     ]
+
   },
   {
     id: 'users',
