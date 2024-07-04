@@ -2,7 +2,7 @@
   <div class="col-xl-12">
     <app-card cardTitle="Promociones" [options]="false" blockClass="table-border-style">
       <div>
-        <a [routerLink]="['/promocionCreate']" class="btn btn-primary mb-3">Nueva promocion</a>
+        <button class="btn btn-primary mb-3" (click)="openModal(createContent, null, 'create')">Nueva promoción</button>
       </div>
       <div class="table-responsive">
         <table class="table table-striped">
@@ -12,7 +12,7 @@
               <th>Descuento</th>
               <th>Fecha Inicio</th>
               <th>Fecha Fin</th>
-              <th>Descripcion</th>
+              <th>Descripción</th>
               <th>Estado</th>
               <th>Opciones</th>
             </tr>
@@ -20,15 +20,14 @@
           <tbody>
             <tr *ngFor="let promotion of promotions; let i = index">
               <th scope="row">{{ i + 1 }}</th>
-              <td>{{ promotion.promt_percentage }} %</td>
-              <td>{{ promotion.promt_start_date }}</td>
-              <td>{{ promotion.promt_end_date }}</td>
-              <td>{{ promotion.promt_description }}</td>
-              <td>{{ promotion.promt_status ? 'Activado' : 'Desactivado' }}</td>
+              <td>{{ promotion.promPercentage }} %</td>
+              <td>{{ promotion.promStartdate }}</td>
+              <td>{{ promotion.promEnddate }}</td>
+              <td>{{ promotion.promDescription }}</td>
+              <td>{{ promotion.promStatus ? 'Activado' : 'Desactivado' }}</td>
               <td>
-                <button class="btn btn-success" [routerLink]="['/promocionEdit', promotion.promt_id]">Actualizar</button>
-                <br><br>
-                <button class="btn btn-warning" (click)="openModal(content, promotion)">Eliminar</button>
+                <button type="button" class="btn btn-primary me-2 mb-2" (click)="openModal(updateContent, promotion, 'update')">Actualizar</button>
+                <button type="button" class="btn btn-danger mb-2" (click)="openModal(deleteContent, promotion, 'delete')">Eliminar</button>
               </td>
             </tr>
           </tbody>
@@ -38,8 +37,8 @@
   </div>
 </div>
 
-<!-- Modal -->
-<ng-template #content let-modal>
+<!-- Modal para eliminación -->
+<ng-template #deleteContent let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Confirmar Eliminación</h4>
     <button type="button" class="close" aria-label="Close" (click)="closeModal()">
@@ -49,14 +48,97 @@
   <div class="modal-body">
     <p>¿Estás seguro que deseas eliminar la promoción?</p>
     <ul>
-      <li><strong>Descuento:</strong> {{ selectedPromotion?.promt_percentage }}%</li>
-      <li><strong>Fecha Inicio:</strong> {{ selectedPromotion?.promt_start_date }}</li>
-      <li><strong>Fecha Fin:</strong> {{ selectedPromotion?.promt_end_date }}</li>
-      <li><strong>Descripción:</strong> {{ selectedPromotion?.promt_description }}</li>
+      <li><strong>Descuento:</strong> {{ selectedPromotion?.promPercentage }}%</li>
+      <li><strong>Fecha Inicio:</strong> {{ selectedPromotion?.promStartdate }}</li>
+      <li><strong>Fecha Fin:</strong> {{ selectedPromotion?.promEnddate }}</li>
+      <li><strong>Descripción:</strong> {{ selectedPromotion?.promDescription }}</li>
     </ul>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
-    <button type="button" class="btn btn-danger" (click)="deletePromotion(selectedPromotion.promt_id)">Eliminar</button>
+    <button type="button" class="btn btn-danger" (click)="deletePromotion(selectedPromotion.id)">Eliminar</button>
+  </div>
+</ng-template>
+
+<!-- Modal para actualización -->
+<ng-template #updateContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Actualizar Promoción</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="promocionForm">
+      <div class="form-group">
+        <label for="percentage">Descuento</label>
+        <input type="number" class="form-control" id="percentage" formControlName="promPercentage" name="percentage">
+      </div>
+      <div class="form-group">
+        <label for="startDate">Fecha Inicio</label>
+        <input type="date" class="form-control" id="startDate" formControlName="promStartdate" name="startDate">
+      </div>
+      <div class="form-group">
+        <label for="endDate">Fecha Fin</label>
+        <input type="date" class="form-control" id="endDate" formControlName="promEnddate" name="endDate">
+      </div>
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <textarea class="form-control" id="description" formControlName="promDescription" name="description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="status">Estado</label>
+        <select class="form-control" id="status" formControlName="promStatus" name="status">
+          <option [value]="true">Activado</option>
+          <option [value]="false">Desactivado</option>
+        </select>
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="updatePromotion()">Actualizar</button>
+  </div>
+</ng-template>
+
+<!-- Modal para creación -->
+<ng-template #createContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Nueva Promoción</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="promocionForm">
+      <div class="form-group">
+        <label for="percentage">Descuento</label>
+        <input type="number" class="form-control" id="percentage" formControlName="promPercentage" name="percentage">
+      </div>
+      <div class="form-group">
+        <label for="startDate">Fecha Inicio</label>
+        <input type="date" class="form-control" id="startDate" formControlName="promStartdate" name="startDate">
+      </div>
+      <div class="form-group">
+        <label for="endDate">Fecha Fin</label>
+        <input type="date" class="form-control" id="endDate" formControlName="promEnddate" name="endDate">
+      </div>
+      <div class="form-group">
+        <label for="description">Descripción</label>
+        <textarea class="form-control" id="description" formControlName="promDescription" name="description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="status">Estado</label>
+        <select class="form-control" id="status" formControlName="promStatus" name="status">
+          <option [value]="true">Activado</option>
+          <option [value]="false">Desactivado</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="createPromotion()">Crear</button>
   </div>
 </ng-template>

@@ -49,39 +49,23 @@ const routes: Routes = [
 
       {
         path: 'promotions',
-        loadComponent: () => import('./components/promotions/promotions-list/promotions-list.component').then(m => m.PromotionsListComponent)
+        loadComponent: () => import('./components/promotions/promotions-list/promotions-list.component').then(p => p.PromotionsListComponent)
       },
       {
-        path: 'promocionCreate',
-        loadComponent: () => import('./components/promotions/promotions-create/promotions-create.component').then(p => p.PromocionCreateModule)
-      },
-      {
-        path: 'categoriaCreate',
-        loadComponent: () => import('./components/categories/categories-create/categories-create.component').then(c => c.CategoriaCreateModule)
+        path: 'promotions/:id',
+        loadComponent: () => import('./components/promotions/promotions-list/promotions-list.component').then(p => p.PromotionsListComponent)
       },
       {
         path: 'categories',
         loadComponent: () => import('./components/categories/categories-list/categories-list.component').then(c => c.CategoriesListComponent)
       },
       {
-        path: 'products',
-        loadChildren: () => import('./components/products/product.module').then(m => m.ProductModule)
-      },
-      {
-        path: 'promocionEdit/:id',
-        loadComponent: () => import('./components/promotions/promotions-edit/promotions-edit.component').then(m => m.PromocionEditModule)
-      },
-      {
-        path: 'promotions/:id',
-        loadComponent: () => import('./components/promotions/promotions-list/promotions-list.component').then(m => m.PromotionsListComponent)
-      },
-      {
-        path: 'categoriaEdit/:id',
-        loadComponent: () => import('./components/categories/categories-edit/categories-edit.component').then(c => c.CategoriaEditModule)
-      },
-      {
         path: 'categories/:id',
         loadComponent: () => import('./components/categories/categories-list/categories-list.component').then(c => c.CategoriesListComponent)
+      },
+      {
+        path: 'products',
+        loadChildren: () => import('./components/products/product.module').then(m => m.ProductModule)
       },
       {
         path: 'component',

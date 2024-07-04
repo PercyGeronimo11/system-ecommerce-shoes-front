@@ -2,7 +2,7 @@
   <div class="col-xl-12">
     <app-card cardTitle="Categorias" [options]="false" blockClass="table-border-style">
       <div>
-        <a [routerLink]="['/categoriaCreate']" class="btn btn-primary mb-3">Nueva categoria</a>
+        <button class="btn btn-primary mb-3" (click)="openModal(createContent, null, 'create')">Nueva categoria</button>
       </div>
       <div class="table-responsive">
         <table class="table table-striped">
@@ -11,20 +11,17 @@
               <th>N°</th>
               <th>Nombre</th>
               <th>Descripcion</th>
-              <th>Estado</th>
               <th>Opciones</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let categoria of categories; let i = index">
               <th scope="row">{{ i + 1 }}</th>
-              <td>{{ categoria.cat_name }} %</td>
+              <td>{{ categoria.cat_name }} </td>
               <td>{{ categoria.cat_description }}</td>
-              <td>{{ categoria.cat_status ? 'Activado' : 'Desactivado' }}</td>
               <td>
-                <button class="btn btn-success" [routerLink]="['/categoriaEdit',categoria.cat_id]">Actualizar</button>
-                <br><br>
-                <button class="btn btn-warning" (click)="openModal(content,categoria)">Eliminar</button>
+                <button type="button" class="btn btn-primary me-2 mb-2" (click)="openModal(updateContent, categoria, 'update')">Actualizar</button>
+                <button type="button" class="btn btn-danger mb-2" (click)="openModal(deleteContent, categoria,'delete')">Eliminar</button>
               </td>
             </tr>
           </tbody>
@@ -34,8 +31,8 @@
   </div>
 </div>
 
-<!-- Modal -->
-<ng-template #content let-modal>
+<!-- Modal para eliminación -->
+<ng-template #deleteContent let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Confirmar Eliminación</h4>
     <button type="button" class="close" aria-label="Close" (click)="closeModal()">
@@ -45,7 +42,7 @@
   <div class="modal-body">
     <p>¿Estás seguro que deseas eliminar la categoria?</p>
     <ul>
-      <li><strong>Nombre:</strong> {{ selectedCategory?.cat_name }}%</li>
+      <li><strong>Nombre:</strong> {{ selectedCategory?.cat_name }}</li>
       <li><strong>Descripcion:</strong> {{ selectedCategory?.cat_description }}</li>
       <li><strong>Estado:</strong> {{ selectedCategory?.cat_status }}</li>
     </ul>
@@ -53,5 +50,57 @@
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
     <button type="button" class="btn btn-danger" (click)="deleteCategory(selectedCategory.cat_id)">Eliminar</button>
+  </div>
+</ng-template>
+
+<!-- Modal para actualización -->
+<ng-template #updateContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Actualizar Categoria</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="categoryForm">
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input type="text" class="form-control" id="name" formControlName="cat_name" name="name">
+      </div>
+      <div class="form-group">
+        <label for="description">Descripcion</label>
+        <input type="text" class="form-control" id="description" formControlName="cat_description" name="description">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="updateCategory()">Actualizar</button>
+  </div>
+</ng-template>
+
+<!-- Modal para creación -->
+<ng-template #createContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Nueva Categoria</h4>
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="categoryForm">
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input type="text" class="form-control" id="name" formControlName="cat_name" name="name">
+      </div>
+      <div class="form-group">
+        <label for="description">Descripcion</label>
+        <input type="text" class="form-control" id="description" formControlName="cat_description" name="description">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="createCategory()">Crear</button>
   </div>
 </ng-template>
