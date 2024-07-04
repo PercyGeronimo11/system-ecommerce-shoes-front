@@ -82,6 +82,5 @@ export class ProductCreateComponent implements OnInit {
           this.error = error.message;
         });
     }
-
   }
 }
