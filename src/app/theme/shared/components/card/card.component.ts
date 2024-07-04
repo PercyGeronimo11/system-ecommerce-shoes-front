@@ -139,3 +139,4 @@ export class CardComponent implements OnInit {
     this.cardRemove = this.cardRemove === 'closed' ? 'open' : 'closed';
   }
 }
+

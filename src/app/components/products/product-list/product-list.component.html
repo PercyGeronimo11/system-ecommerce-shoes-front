@@ -1,43 +1,37 @@
-<div class="container my-5">
-  <div class="card">
-      <div class="card-header bg-info text-white">
-          <div class="d-flex justify-content-between align-items-center">
-              <h1 class="card-title">LISTA DE PRODUCTOS</h1>
-              <a [routerLink]="['/products/create']" class="btn btn-primary mb-3">Nuevo</a>
-          </div>
-      </div>
-      <div class="card-body">
-          <table class="table table-bordered">
-              <thead>
-                  <tr>
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="Lista de Productos" [options]="false" blockClass="table-border-style">
+      <a  [routerLink]="['/products/create']" type="button"  class="btn btn-primary">Nuevo</a>
+      <div class="table-responsive">
+        <table class="table">
+                  <thead>
+                    <tr>
                       <th>N°</th>
                       <th>Producto</th>
                       <th>Descripción</th>
                       <th>Precio Unitario</th>
                       <th>Tamaño Plataforma</th>
                       <th>Tamaño Tacón</th>
-                      <th>Imagen</th>
                       <th>Opciones</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr *ngFor="let product of products; let i = index">
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let product of products; let i = index">
                       <td>{{ i + 1 }}</td>
                       <td>{{ product.proName }}</td>
                       <td>{{ product.proDescription }}</td>
                       <td>{{ product.proUnitPrice }}</td>
                       <td>{{ product.proSizePlatform }}</td>
                       <td>{{ product.proSizeTacon }}</td>
+                      <!-- <td><img [src]="product.proUrlImage" alt="Producto"></td> -->
                       <td>
-                          <img [src]="product.proUrlImage" alt="Producto" class="product-image">
+                        <a routerLink="['/product/edit', product.id]" class="btn btn-primary">Editar</a>
+                        <!-- <button (click)="deleteProduct(product.id)" class="btn btn-danger">Eliminar</button> -->
                       </td>
-                      <td>
-                          <a [routerLink]="['/product/edit', product.id]" class="btn btn-primary">Editar</a>
-                          <!-- <button (click)="deleteProduct(product.id)" class="btn btn-danger">Eliminar</button> -->
-                      </td>
-                  </tr>
-              </tbody>
-          </table>
+                    </tr>
+                  </tbody>
+        </table>
       </div>
+    </app-card>
   </div>
 </div>

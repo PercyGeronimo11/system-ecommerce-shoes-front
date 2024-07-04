@@ -16,7 +16,7 @@ export interface Product {
 }
 
 
-export interface ProductCreate {
+export interface ProductCreateReq {
   id: number;
   catId: number;
   proName: string;

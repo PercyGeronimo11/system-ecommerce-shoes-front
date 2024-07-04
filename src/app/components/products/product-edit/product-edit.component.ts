@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-product-edit',
@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
   templateUrl: './product-edit.component.html',
   styleUrl: './product-edit.component.scss'
 })
-export class ProductEditComponent {
+export class ProductEditComponent{
 
 }
