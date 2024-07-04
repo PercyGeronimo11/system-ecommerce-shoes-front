@@ -18,7 +18,7 @@
           <tbody>
             <tr *ngFor="let categoria of categories; let i = index">
               <th scope="row">{{ i + 1 }}</th>
-              <td>{{ categoria.cat_name }} %</td>
+              <td>{{ categoria.cat_name }}</td>
               <td>{{ categoria.cat_description }}</td>
               <td>{{ categoria.cat_status ? 'Activado' : 'Desactivado' }}</td>
               <td>

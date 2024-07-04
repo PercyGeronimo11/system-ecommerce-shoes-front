@@ -54,19 +54,19 @@ export class ProductCreateComponent implements OnInit {
     this.isLoading = true;
     this.error = null;
     const formData = new FormData();
-    // formData.append('catId', this.formGroupProduct.value.catId)
-    // formData.append('proName', this.formGroupProduct.value.proName);
-    // formData.append('proDescription', this.formGroupProduct.value.proDescription);
-    // formData.append('proUnitPrice', this.formGroupProduct.value.proUnitPrice.toString());
-    // formData.append('proSizePlatform', this.formGroupProduct.value.proSizePlatform);
-    // formData.append('proSizeTacon', this.formGroupProduct.value.proSizeTacon);
+    formData.append('catId', this.formGroupProduct.value.catId)
+    formData.append('proName', this.formGroupProduct.value.proName);
+    formData.append('proDescription', this.formGroupProduct.value.proDescription);
+    formData.append('proUnitPrice', this.formGroupProduct.value.proUnitPrice.toString());
+    formData.append('proSizePlatform', this.formGroupProduct.value.proSizePlatform);
+    formData.append('proSizeTacon', this.formGroupProduct.value.proSizeTacon);
 
-    formData.append('catId', this.formGroupProduct.get('catId')!.value);
-    formData.append('proName', this.formGroupProduct.get('proName')!.value);
-    formData.append('proDescription', this.formGroupProduct.get('proDescription')!.value);
-    formData.append('proUnitPrice', this.formGroupProduct.get('proUnitPrice')!.value.toString());
-    formData.append('proSizePlatform', this.formGroupProduct.get('proSizePlatform')!.value);
-    formData.append('proSizeTacon', this.formGroupProduct.get('proSizeTacon')!.value);
+    // formData.append('catId', this.formGroupProduct.get('catId')!.value);
+    // formData.append('proName', this.formGroupProduct.get('proName')!.value);
+    // formData.append('proDescription', this.formGroupProduct.get('proDescription')!.value);
+    // formData.append('proUnitPrice', this.formGroupProduct.get('proUnitPrice')!.value.toString());
+    // formData.append('proSizePlatform', this.formGroupProduct.get('proSizePlatform')!.value);
+    // formData.append('proSizeTacon', this.formGroupProduct.get('proSizeTacon')!.value);
 
     console.log("se lleno form-data");
     if (this.selectedFile) {

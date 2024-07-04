@@ -34,6 +34,7 @@
             <select class="form-control" id="inputUnit" formControlName="unit">
               <option value="m">Metros</option>
               <option value="cm">Centímetros</option>
+              <option value="ft">pies</option>
             </select>
             <div *ngIf="materialForm.get('unit')?.touched && materialForm.get('unit')?.invalid">
               <small *ngIf="materialForm.get('unit')?.errors?.['required']" class="text-danger">Unidad es requerida.</small>
