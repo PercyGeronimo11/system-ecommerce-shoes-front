@@ -77,6 +77,13 @@ export const NavigationItems: NavigationItem[] = [
         url: '/products/list',
         icon: 'feather icon-home'
       },
+      {
+        id: 'lots',
+        title: 'lotes',
+        type: 'item',
+        url: '/lots/list',
+        icon: 'feather icon-home'
+      },
     ]
   },  {
     id: 'Categorias',

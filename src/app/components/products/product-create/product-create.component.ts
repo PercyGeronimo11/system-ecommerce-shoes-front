@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductCreateReq } from '../../../models/product/product.model';
-import { ProductService } from '../../../services/products/product.service';
+import { ProductCreateReq } from '../../../models/product.model';
+import { ProductService } from '../../../services/product.service';
 import { CategoriaService } from '../../categories/service/categories.service';
 import { Router } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -60,13 +60,6 @@ export class ProductCreateComponent implements OnInit {
     formData.append('proUnitPrice', this.formGroupProduct.value.proUnitPrice.toString());
     formData.append('proSizePlatform', this.formGroupProduct.value.proSizePlatform);
     formData.append('proSizeTacon', this.formGroupProduct.value.proSizeTacon);
-
-    // formData.append('catId', this.formGroupProduct.get('catId')!.value);
-    // formData.append('proName', this.formGroupProduct.get('proName')!.value);
-    // formData.append('proDescription', this.formGroupProduct.get('proDescription')!.value);
-    // formData.append('proUnitPrice', this.formGroupProduct.get('proUnitPrice')!.value.toString());
-    // formData.append('proSizePlatform', this.formGroupProduct.get('proSizePlatform')!.value);
-    // formData.append('proSizeTacon', this.formGroupProduct.get('proSizeTacon')!.value);
 
     console.log("se lleno form-data");
     if (this.selectedFile) {

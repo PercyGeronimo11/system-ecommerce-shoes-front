@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { Product } from '../../../models/product/product.model';
-import { ProductService } from '../../../services/products/product.service';
+import { Product } from '../../../models/product.model';
+import { ProductService } from '../../../services/product.service';
 import { RouterModule, Router } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import {ProductCreateComponent} from '../product-create/product-create.component';

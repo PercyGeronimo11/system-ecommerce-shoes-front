@@ -66,6 +66,10 @@ const routes: Routes = [
         loadChildren: () => import('./components/products/product.module').then(m => m.ProductModule)
       },
       {
+        path: 'lots',
+        loadChildren: () => import('./components/lots/lot.module').then(m => m.LotModule)
+      },
+      {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)
       },

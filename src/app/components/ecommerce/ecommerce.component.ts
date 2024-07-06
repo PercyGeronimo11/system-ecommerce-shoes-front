@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Product } from '../../.../../models/product/product.model';
-import { ProductService } from '../../.../../services/products/product.service';
+import { Product } from '../../models/product.model';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'app-ecommerce',
