@@ -82,7 +82,7 @@ export class MaterialsListModule implements OnInit {
       stock: material.stock,
       unitPrice: material.unitPrice,
       unit: material.unit,
-      description: material.descripcion
+      description: material.description
     });
     this.modalMaterialVisible = true;
   }
