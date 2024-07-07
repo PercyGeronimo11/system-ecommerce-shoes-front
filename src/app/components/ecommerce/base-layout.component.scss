@@ -190,3 +190,66 @@ body {
     max-width: 100%; /* Ajuste de ancho para pantallas pequeñas */
   }
 }
+.header {
+  background-color: black;
+  padding: 10px 0;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 80px; /* Ajusta la altura según sea necesario */
+}
+
+.icon-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.icon i {
+  color: rgb(255, 255, 255);
+  margin-right: 5px;
+}
+
+.btn-primary {
+  background-color: #000000;
+  border-color: #ff0000;
+  color: rgb(255, 255, 255);
+}
+
+.btn-primary:hover {
+  background-color: #ffffff;
+  border-color: #fc55ff;
+}
+
+@media (max-width: 768px) {
+  .row.align-items-center {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .logo-container {
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .icon-container {
+    justify-content: center;
+  }
+
+  .icon {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+}
