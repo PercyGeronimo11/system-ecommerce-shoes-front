@@ -103,17 +103,25 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'ecommerce',
-    loadComponent: () => import('./components/ecommerce/ecommerce.component').then(p => p.EcommerceComponent)
+    path: 'ecommers',
+    loadComponent: () => import('./components/ecommerce/base-layout.component').then(p => p.EcommercePlantilla)
   } // Ruta independiente para EcommerceComponent
   ,{
     path: 'ecommersCreate',
-    loadComponent: () => import('./components/ecommerce/users-eco-create/users-eco-create.component').then(e => e.EcommersCreateModule)
+    loadComponent: () => import('./components/ecommerce/users-eco-ingreso/users-eco-ingreso.component').then(e => e.EcommersIngresoModule)
+  }
+  ,{
+    path: 'ecommersCliente',
+    loadComponent: () => import('./components/ecommerce/users-eco-create/users-eco-create.component').then(e => e.UsersEcoCreateComponent)
   }
 ];
 
 @NgModule({
-  imports: [NgbModule, RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+    NgbModule,
+    RouterModule.forRoot(routes)],
+  exports: [RouterModule,]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+
+ }

@@ -1,48 +1,50 @@
+//import { CommonModule } from '@angular/common';
+//import { RouterModule } from '@angular/router';
+//  imports: [SharedModule,RouterModule,CommonModule,EcommercePlantilla],
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { ecommerceService } from '../service/ecomer.service';
+import { EcommercePlantilla } from '../base-layout.component';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 @Component({
-  selector: 'app-tbl-bootstrap',
+  selector: 'app-users-eco-create',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule,RouterModule,CommonModule,EcommercePlantilla],
   templateUrl: './users-eco-create.component.html',
   styleUrls: ['./users-eco-create.component.scss']
 })
-export class EcommersCreateModule implements OnInit {
-  userecoForm: FormGroup;
-
-  constructor(
-    public userService: ecommerceService,
-    private fb: FormBuilder,
-    private router: Router
-  ) {
-    this.userecoForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
+export class UsersEcoCreateComponent implements OnInit {
+  createAccountForm: FormGroup;
+  passwordFieldType: string = 'password';
+  constructor(private fb: FormBuilder) {
+    this.createAccountForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      dni: ['', Validators.required],
+      department: ['', Validators.required],
+      birthDate: ['', Validators.required],
+      city: ['', Validators.required],
+      province: ['', Validators.required],
+      cellphone: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      role: ['', Validators.required]
-    });
-
-    this.userecoForm.patchValue({
-      role: 3
+      status: [1], // Valor por defecto para status
+      use_register_date: [new Date().toISOString()], // Fecha del sistema
+      rol_id: [3] // Valor por defecto para rol_id
     });
   }
-
-  ngOnInit(): void {}
+  togglePasswordVisibility(): void {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
+  }
+  ngOnInit(): void { }
 
   onSubmit(): void {
-    if (this.userecoForm.valid) {
-      this.userService.create(this.userecoForm.value).subscribe((resp: any) => {
-        console.log('Usuario creado exitosamente!', resp);
-        this.router.navigate(['/users']);
-      }, error => {
-        console.error('Error creando el usuario', error);
-      });
-    } else {
-      this.userecoForm.markAllAsTouched();
-      console.error('El formulario es inválido');
+    if (this.createAccountForm.valid) {
+      console.log('Formulario enviado', this.createAccountForm.value);
+      // Aquí puedes manejar el envío del formulario, como hacer una petición HTTP
     }
   }
 }

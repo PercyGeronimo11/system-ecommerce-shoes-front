@@ -1,58 +1,116 @@
-<div class="row">
-  <div class="container text-center mt-5">
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="border rounded p-4">
-          <h4 class="mb-4">Ingresar:</h4>
-          <form [formGroup]="userecoForm" (ngSubmit)="onSubmit()">
-            <div class="row">
-              <div class="form-group col-md-6">
-                <label for="inputUsername">Nombre</label>
-                <input type="text" class="form-control" id="inputUsername" placeholder="Nombre"
-                  formControlName="username" />
-                <div *ngIf="userecoForm.get('username')?.touched && userecoForm.get('username')?.invalid">
-                  <small *ngIf="userecoForm.get('username')?.errors?.['required']" class="text-danger">Nombre es
-                    requerido.</small>
-                  <small *ngIf="userecoForm.get('username')?.errors?.['minlength']" class="text-danger">Nombre debe
-                    tener al menos 3 caracteres.</small>
+<app-base-layout>
+  <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="container text-center mt-5">
+      <div class="row justify-content-center">
+        <div class="container col-sm-12 col-md-10 col-lg-12">
+          <div class="border rounded p-4 shadow-sm bg-white">
+            <h4 class="mb-4"><b>Crear Cuenta</b></h4>
+            <form [formGroup]="createAccountForm" (ngSubmit)="onSubmit()">
+              <div class="form-row">
+                <div class="col-sm-12 col-md-6 col-lg-4 form-group">
+                  <label for="inputFirstName">Nombre</label>
+                  <input type="text" class="form-control form-control-lg" id="inputFirstName" placeholder="Nombre" formControlName="firstName" />
+                  <div *ngIf="createAccountForm.get('firstName')?.touched && createAccountForm.get('firstName')?.invalid">
+                    <small *ngIf="createAccountForm.get('firstName')?.errors?.['required']" class="text-danger">Nombre es requerido.</small>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 form-group">
+                  <label for="inputLastName">Apellido</label>
+                  <input type="text" class="form-control form-control-lg" id="inputLastName" placeholder="Apellido" formControlName="lastName" />
+                  <div *ngIf="createAccountForm.get('lastName')?.touched && createAccountForm.get('lastName')?.invalid">
+                    <small *ngIf="createAccountForm.get('lastName')?.errors?.['required']" class="text-danger">Apellido es requerido.</small>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 form-group">
+                  <label for="inputDNI">DNI</label>
+                  <input type="text" class="form-control form-control-lg" id="inputDNI" placeholder="DNI" formControlName="dni" />
+                  <div *ngIf="createAccountForm.get('dni')?.touched && createAccountForm.get('dni')?.invalid">
+                    <small *ngIf="createAccountForm.get('dni')?.errors?.['required']" class="text-danger">DNI es requerido.</small>
+                  </div>
                 </div>
               </div>
-              <div class="form-group col-md-6">
-                <label for="inputEmail">Correo</label>
-                <input type="email" class="form-control" id="inputEmail" placeholder="Correo electrónico"
-                  formControlName="email" />
-                <div *ngIf="userecoForm.get('email')?.touched && userecoForm.get('email')?.invalid">
-                  <small *ngIf="userecoForm.get('email')?.errors?.['required']" class="text-danger">Correo es
-                    requerido.</small>
-                  <small *ngIf="userecoForm.get('email')?.errors?.['email']" class="text-danger">Correo no es
-                    válido.</small>
+
+              <div class="form-row">
+                <div class="col-sm-12 col-md-6 col-lg-4 form-group">
+                  <label for="inputDepartment">Departamento</label>
+                  <input type="text" class="form-control form-control-lg" id="inputDepartment" placeholder="Departamento" formControlName="department" />
+                  <div *ngIf="createAccountForm.get('department')?.touched && createAccountForm.get('department')?.invalid">
+                    <small *ngIf="createAccountForm.get('department')?.errors?.['required']" class="text-danger">Departamento es requerido.</small>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 form-group">
+                  <label for="inputBirthDate">Fecha de Nacimiento</label>
+                  <input type="date" class="form-control form-control-lg" id="inputBirthDate" formControlName="birthDate" />
+                  <div *ngIf="createAccountForm.get('birthDate')?.touched && createAccountForm.get('birthDate')?.invalid">
+                    <small *ngIf="createAccountForm.get('birthDate')?.errors?.['required']" class="text-danger">Fecha de Nacimiento es requerida.</small>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 form-group">
+                  <label for="inputCity">Ciudad</label>
+                  <input type="text" class="form-control form-control-lg" id="inputCity" placeholder="Ciudad" formControlName="city" />
+                  <div *ngIf="createAccountForm.get('city')?.touched && createAccountForm.get('city')?.invalid">
+                    <small *ngIf="createAccountForm.get('city')?.errors?.['required']" class="text-danger">Ciudad es requerida.</small>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="form-group col-md-6">
-                <label for="inputPassword">Contraseña</label>
-                <input type="password" class="form-control" id="inputPassword" placeholder="Contraseña"
-                  formControlName="password" />
-                <div *ngIf="userecoForm.get('password')?.touched && userecoForm.get('password')?.invalid">
-                  <small *ngIf="userecoForm.get('password')?.errors?.['required']" class="text-danger">Contraseña es
-                    requerida.</small>
-                  <small *ngIf="userecoForm.get('password')?.errors?.['minlength']" class="text-danger">Contraseña debe
-                    tener al menos 6 caracteres.</small>
+
+              <div class="form-row">
+                <div class="col-sm-12 col-md-6 col-lg-4 form-group">
+                  <label for="inputProvince">Provincia</label>
+                  <input type="text" class="form-control form-control-lg" id="inputProvince" placeholder="Provincia" formControlName="province" />
+                  <div *ngIf="createAccountForm.get('province')?.touched && createAccountForm.get('province')?.invalid">
+                    <small *ngIf="createAccountForm.get('province')?.errors?.['required']" class="text-danger">Provincia es requerida.</small>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 form-group">
+                  <label for="inputCellphone">Celular</label>
+                  <input type="text" class="form-control form-control-lg" id="inputCellphone" placeholder="Celular" formControlName="cellphone" />
+                  <div *ngIf="createAccountForm.get('cellphone')?.touched && createAccountForm.get('cellphone')?.invalid">
+                    <small *ngIf="createAccountForm.get('cellphone')?.errors?.['required']" class="text-danger">Celular es requerido.</small>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 form-group">
+                  <label for="inputEmail">Correo</label>
+                  <input type="email" class="form-control form-control-lg" id="inputEmail" placeholder="Correo electrónico" formControlName="email" />
+                  <div *ngIf="createAccountForm.get('email')?.touched && createAccountForm.get('email')?.invalid">
+                    <small *ngIf="createAccountForm.get('email')?.errors?.['required']" class="text-danger">Correo es requerido.</small>
+                    <small *ngIf="createAccountForm.get('email')?.errors?.['email']" class="text-danger">Correo no es válido.</small>
+                  </div>
                 </div>
               </div>
-              <div class="form-group col-md-6">
-                <label for="rolUnit">Rol</label>
-                <select class="form-control" id="rolUnit" formControlName="role">
-                  <option value="3">Cliente</option>
-                </select>
+
+              <div class="form-row">
+                <div class="col-sm-12 col-md-6 col-lg-4 form-group">
+                  <label for="inputPassword">Contraseña</label>
+                  <div class="input-group">
+                    <input [type]="passwordFieldType" class="form-control form-control-lg" id="inputPassword" placeholder="Contraseña" formControlName="password" />
+                    <div class="input-group-append">
+                      <button type="button" class="btn btn-outline-secondary" (click)="togglePasswordVisibility()">Mostrar</button>
+                    </div>
+                  </div>
+                  <div *ngIf="createAccountForm.get('password')?.touched && createAccountForm.get('password')?.invalid">
+                    <small *ngIf="createAccountForm.get('password')?.errors?.['required']" class="text-danger">Contraseña es requerida.</small>
+                    <small *ngIf="createAccountForm.get('password')?.errors?.['minlength']" class="text-danger">Contraseña debe tener al menos 6 caracteres.</small>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4 form-group">
+                  <label for="inputConfirmPassword">Verificar Contraseña</label>
+                  <input type="password" class="form-control form-control-lg" id="inputConfirmPassword" placeholder="Verificar Contraseña" formControlName="confirmPassword" />
+                  <div *ngIf="createAccountForm.get('confirmPassword')?.touched && createAccountForm.get('confirmPassword')?.invalid">
+                    <small *ngIf="createAccountForm.get('confirmPassword')?.errors?.['required']" class="text-danger">Verificación de contraseña es requerida.</small>
+                    <small *ngIf="createAccountForm.hasError('passwordMismatch')" class="text-danger">Las contraseñas no coinciden.</small>
+                  </div>
+                </div>
               </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="/ecommerce" class="btn btn-danger ml-2">Cancelar</a>
-          </form>
+
+              <div class="d-flex justify-content-between mt-4">
+                <button type="submit" class="btn btn-primary btn-lg px-5">Crear</button>
+                <a href="/ecommers" class="btn btn-secondary btn-lg px-5">Volver a la tienda</a>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</app-base-layout>

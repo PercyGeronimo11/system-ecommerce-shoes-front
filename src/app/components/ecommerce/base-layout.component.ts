@@ -5,15 +5,15 @@ import { ProductService } from '../../services/products/product.service';
 import { Router } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { RouterModule } from '@angular/router';
-@Component({
-  selector: 'app-ecommerce',
-  standalone: true,
-  imports: [CommonModule,SharedModule, RouterModule],
 
-  templateUrl: './ecommerce.component.html',
-  styleUrls: ['./ecommerce.component.scss']
+@Component({
+  selector: 'app-base-layout',
+  standalone: true,
+  imports: [RouterModule,CommonModule,SharedModule],
+  templateUrl: './base-layout.component.html',
+  styleUrls: ['./base-layout.component.scss']
 })
-export class EcommerceComponent implements OnInit, OnDestroy {
+export class EcommercePlantilla implements OnInit, OnDestroy {
   products: Product[] = [];
   isLoading = false;
   error: string | null = null;

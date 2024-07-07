@@ -26,8 +26,9 @@
               <td>{{ promotion.promEnddate }}</td>
               <td>{{ promotion.promDescription }}</td>
               <td>
-                <img *ngIf="promotion.promUrlImage" [src]="'http://localhost:8080' + promotion.promUrlImage"  width="100">
-
+              <!-- <img *ngIf="promotion.promUrlImage"  [src]="promotion.promUrlImage" />-->
+               <img [src]="promotion.promUrlImage">
+               <span *ngIf="!promotion.promUrlImage">No hay</span>
               </td>
               <td>{{ promotion.promStatus ? 'Activado' : 'Desactivado' }}</td>
               <td>
@@ -144,8 +145,8 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="file">Imagen</label>
-        <input type="file" class="form-control" id="file" (change)="onFileChange($event)">
+        <label for="promUrlImage">Imagen</label>
+        <input type="file" class="form-control" id="promUrlImage" (change)="onFileChange($event)">
       </div>
     </form>
   </div>

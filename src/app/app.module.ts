@@ -26,7 +26,6 @@ import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './components/auth/auth.interceptor';
 import { ProductCreateComponent } from './components/products/product-create/product-create.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,11 +47,11 @@ import { ProductCreateComponent } from './components/products/product-create/pro
     ProductCreateComponent,
   ],
   imports: [
-    BrowserModule, 
-    RouterModule, 
-    HttpClientModule, 
-    AppRoutingModule, 
-    SharedModule, 
+    BrowserModule,
+    RouterModule,
+    HttpClientModule,
+    AppRoutingModule,
+    SharedModule,
     FormsModule,      //Para formularios
     ReactiveFormsModule,    //Para Forms en HTML
     BrowserAnimationsModule

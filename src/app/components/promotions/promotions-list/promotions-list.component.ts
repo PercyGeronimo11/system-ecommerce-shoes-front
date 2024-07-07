@@ -17,8 +17,8 @@ export class PromotionsListComponent implements OnInit {
   promotions: any = [];
   selectedPromotion: any = null;
   modalRef: NgbModalRef | null = null;
-  isCreating: boolean = false; // Flag to differentiate between create and update actions
-  selectedFile: File | null = null; // Variable to hold the selected file
+  isCreating: boolean = false;
+  selectedFile: File | null = null;
 
   constructor(
     public promocionService: PromocionService,
@@ -32,7 +32,6 @@ export class PromotionsListComponent implements OnInit {
       promStartdate: ['', Validators.required],
       promEnddate: ['', Validators.required],
       promDescription: ['', Validators.required],
-
       promStatus: [false, Validators.required]
     }, {
       validators: this.dateLessThan('promStartdate', 'promEnddate')
