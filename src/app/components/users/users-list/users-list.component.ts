@@ -78,6 +78,9 @@ export class UsersListModule implements OnInit {
     this.userForm.reset({ role: 'USUARIO' });
     this.userForm.get('password')?.setValidators([Validators.required, Validators.minLength(6)]);
     this.userForm.get('password')?.updateValueAndValidity();
+    this.userForm.reset({
+      role: 1
+    });
     this.modalUserVisible = true;
   }
 
