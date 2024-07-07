@@ -1,12 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Product } from '../../.../../models/product/product.model';
-import { ProductService } from '../../.../../services/products/product.service';
-
+import { Product } from '../../models/product/product.model';
+import { ProductService } from '../../services/products/product.service';
+import { Router } from '@angular/router';
+import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-ecommerce',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,SharedModule, RouterModule],
+
   templateUrl: './ecommerce.component.html',
   styleUrls: ['./ecommerce.component.scss']
 })
@@ -22,7 +25,10 @@ export class EcommerceComponent implements OnInit, OnDestroy {
   currentSlide = 0;
   slideInterval: any;
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService,
+
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.isLoading = true;

@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="container text-center mt-5">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="border rounded p-4">
+          <h4 class="mb-4">Ingresar:</h4>
+          <form [formGroup]="userecoForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="inputUsername">Nombre</label>
+                <input type="text" class="form-control" id="inputUsername" placeholder="Nombre"
+                  formControlName="username" />
+                <div *ngIf="userecoForm.get('username')?.touched && userecoForm.get('username')?.invalid">
+                  <small *ngIf="userecoForm.get('username')?.errors?.['required']" class="text-danger">Nombre es
+                    requerido.</small>
+                  <small *ngIf="userecoForm.get('username')?.errors?.['minlength']" class="text-danger">Nombre debe
+                    tener al menos 3 caracteres.</small>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputEmail">Correo</label>
+                <input type="email" class="form-control" id="inputEmail" placeholder="Correo electrónico"
+                  formControlName="email" />
+                <div *ngIf="userecoForm.get('email')?.touched && userecoForm.get('email')?.invalid">
+                  <small *ngIf="userecoForm.get('email')?.errors?.['required']" class="text-danger">Correo es
+                    requerido.</small>
+                  <small *ngIf="userecoForm.get('email')?.errors?.['email']" class="text-danger">Correo no es
+                    válido.</small>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="inputPassword">Contraseña</label>
+                <input type="password" class="form-control" id="inputPassword" placeholder="Contraseña"
+                  formControlName="password" />
+                <div *ngIf="userecoForm.get('password')?.touched && userecoForm.get('password')?.invalid">
+                  <small *ngIf="userecoForm.get('password')?.errors?.['required']" class="text-danger">Contraseña es
+                    requerida.</small>
+                  <small *ngIf="userecoForm.get('password')?.errors?.['minlength']" class="text-danger">Contraseña debe
+                    tener al menos 6 caracteres.</small>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="rolUnit">Rol</label>
+                <select class="form-control" id="rolUnit" formControlName="role">
+                  <option value="3">Cliente</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="/ecommerce" class="btn btn-danger ml-2">Cancelar</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

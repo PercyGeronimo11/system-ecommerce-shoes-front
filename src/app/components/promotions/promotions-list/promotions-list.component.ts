@@ -18,6 +18,7 @@ export class PromotionsListComponent implements OnInit {
   selectedPromotion: any = null;
   modalRef: NgbModalRef | null = null;
   isCreating: boolean = false; // Flag to differentiate between create and update actions
+  selectedFile: File | null = null; // Variable to hold the selected file
 
   constructor(
     public promocionService: PromocionService,
@@ -31,13 +32,13 @@ export class PromotionsListComponent implements OnInit {
       promStartdate: ['', Validators.required],
       promEnddate: ['', Validators.required],
       promDescription: ['', Validators.required],
+
       promStatus: [false, Validators.required]
     }, {
-      validators: this.dateLessThan('promStartdate', 'promEnddate'),
-
-    }
-    );
+      validators: this.dateLessThan('promStartdate', 'promEnddate')
+    });
   }
+
   // Validador personalizado para las fechas
   dateLessThan(startDate: string, endDate: string) {
     return (formGroup: FormGroup) => {
@@ -51,6 +52,7 @@ export class PromotionsListComponent implements OnInit {
       }
     };
   }
+
   ngOnInit(): void {
     this.promocionService.list().subscribe((resp: any) => {
       this.promotions = resp.data;
@@ -61,6 +63,7 @@ export class PromotionsListComponent implements OnInit {
   openModal(content: any, promotion: any = null, action: string): void {
     this.isCreating = action === 'create';
     this.selectedPromotion = promotion ? { ...promotion } : null;
+    this.selectedFile = null; // Reset the selected file
     this.promocionForm.reset({
       promPercentage: promotion?.promPercentage || 0,
       promStartdate: promotion?.promStartdate || '',
@@ -77,6 +80,12 @@ export class PromotionsListComponent implements OnInit {
     }
   }
 
+  onFileChange(event: any): void {
+    if (event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+    }
+  }
+
   deletePromotion(id: number): void {
     this.promocionService.delete(id).subscribe(() => {
       this.promotions = this.promotions.filter((promo: any) => promo.id !== id);
@@ -86,7 +95,13 @@ export class PromotionsListComponent implements OnInit {
 
   updatePromotion(): void {
     if (this.promocionForm.valid) {
-      this.promocionService.edit(this.selectedPromotion.id, this.promocionForm.value).subscribe((resp: any) => {
+      const formData = new FormData();
+      formData.append('promotion', new Blob([JSON.stringify(this.promocionForm.value)], { type: 'application/json' }));
+      if (this.selectedFile) {
+        formData.append('file', this.selectedFile);
+      }
+
+      this.promocionService.edit(this.selectedPromotion.id, formData).subscribe((resp: any) => {
         const index = this.promotions.findIndex((promo: any) => promo.id === this.selectedPromotion.id);
         if (index !== -1) {
           this.promotions[index] = { ...this.promotions[index], ...this.promocionForm.value };
@@ -102,7 +117,13 @@ export class PromotionsListComponent implements OnInit {
 
   createPromotion(): void {
     if (this.promocionForm.valid) {
-      this.promocionService.create(this.promocionForm.value).subscribe((resp: any) => {
+      const formData = new FormData();
+      formData.append('promotion', new Blob([JSON.stringify(this.promocionForm.value)], { type: 'application/json' }));
+      if (this.selectedFile) {
+        formData.append('file', this.selectedFile);
+      }
+
+      this.promocionService.create(formData).subscribe((resp: any) => {
         this.promotions.push(resp.data);
         this.closeModal();
       }, error => {
