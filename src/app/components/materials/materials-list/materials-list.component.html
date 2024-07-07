@@ -2,7 +2,7 @@
   <div class="col-xl-12">
     <app-card cardTitle="Materiales" [options]="false" blockClass="table-border-style">
       <div>
-        <a [routerLink]="['/materialCreate']" class="btn btn-primary mb-3">Nuevo material</a>
+        <button (click)="openMaterialModal()" class="btn btn-primary mb-3">Nuevo material</button>
       </div>
       <div class="table-responsive">
         <table class="table table-striped">
@@ -37,7 +37,68 @@
   </div>
 </div>
 
-<!-- Modal para eliminar usuario -->
+<!-- Modal para crear o editar material -->
+<div id="materialModal" class="modal" [ngStyle]="{'display': modalMaterialVisible ? 'block' : 'none'}">
+  <div class="modal-content modal-content-create">
+    <span class="close" (click)="closeMaterialModal()">&times;</span>
+    <h4>{{ isEditMode ? 'Editar Material' : 'Nuevo Material' }}</h4>
+    <form [formGroup]="materialForm" (ngSubmit)="onSubmitMaterial()">
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="inputMaterialName">Nombre del Material</label>
+          <input type="text" class="form-control" id="inputMaterialName" placeholder="Nombre del Material" formControlName="name"/>
+          <div *ngIf="materialForm.get('name')?.touched && materialForm.get('name')?.invalid">
+            <small *ngIf="materialForm.get('name')?.errors?.['required']" class="text-danger">Nombre es requerido.</small>
+            <small *ngIf="materialForm.get('name')?.errors?.['minlength']" class="text-danger">Nombre debe tener al menos 3 caracteres.</small>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputStock">Stock</label>
+          <input type="number" class="form-control" id="inputStock" placeholder="Stock" formControlName="stock"/>
+          <div *ngIf="materialForm.get('stock')?.touched && materialForm.get('stock')?.invalid">
+            <small *ngIf="materialForm.get('stock')?.errors?.['required']" class="text-danger">Stock es requerido.</small>
+            <small *ngIf="materialForm.get('stock')?.errors?.['min']" class="text-danger">Stock debe ser un número positivo.</small>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="inputUnitPrice">Precio Unitario</label>
+          <input type="number" class="form-control" id="inputUnitPrice" placeholder="Precio Unitario" formControlName="unitPrice"/>
+          <div *ngIf="materialForm.get('unitPrice')?.touched && materialForm.get('unitPrice')?.invalid">
+            <small *ngIf="materialForm.get('unitPrice')?.errors?.['required']" class="text-danger">Precio es requerido.</small>
+            <small *ngIf="materialForm.get('unitPrice')?.errors?.['min']" class="text-danger">Precio debe ser un número positivo.</small>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputUnit">Unidad</label>
+          <select class="form-control" id="inputUnit" formControlName="unit">
+            <option value="m">Metros</option>
+            <option value="cm">Centímetros</option>
+            <option value="ft">Pies</option>
+            <option value="unidades">Unidades</option>
+          </select>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12">
+            <label for="inputDescription">Descripción</label>
+            <textarea class="form-control" id="inputDescription" placeholder="Descripción del material" formControlName="description"></textarea>
+            <div *ngIf="materialForm.get('description')?.touched && materialForm.get('description')?.invalid">
+              <small *ngIf="materialForm.get('description')?.errors?.['required']" class="text-danger">Descripción es requerida.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-buttons">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-danger" (click)="closeMaterialModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- Modal para eliminar material -->
 <div id="deleteModal" class="modal" [ngStyle]="{'display': modalDeleteVisible ? 'block' : 'none'}">
   <div class="modal-content modal-content-delete">
     <span class="close" (click)="closeDeleteModal()">&times;</span>
