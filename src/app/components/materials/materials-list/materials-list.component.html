@@ -10,8 +10,8 @@
             <tr>
               <th>N°</th>
               <th>Material</th>
-              <th>Stock</th>
-              <th>Precio unitario</th>
+              <th>Cantidad</th>
+              <th>Precio</th>
               <th>Opciones</th>
             </tr>
           </thead>
@@ -19,8 +19,8 @@
             <tr *ngFor="let material of materials; let i = index">
               <th scope="row">{{ i + 1 }}</th>
               <td>{{ material.name }}</td>
-              <td>{{ material.stock }} unidades</td>
-              <td>{{ material.unitPrice }}</td>
+              <td>{{ material.quantity }} {{material.unit}}</td>
+              <td>S/{{ material.price }}</td>
               <td>
                 <button (click)="selectMaterial(material)" class="btn btn-warning mb-3 me-2">
                   <i class="fa fa-edit"></i>
@@ -53,29 +53,29 @@
           </div>
         </div>
         <div class="form-group col-md-6">
-          <label for="inputStock">Stock</label>
-          <input type="number" class="form-control" id="inputStock" placeholder="Stock" formControlName="stock"/>
-          <div *ngIf="materialForm.get('stock')?.touched && materialForm.get('stock')?.invalid">
-            <small *ngIf="materialForm.get('stock')?.errors?.['required']" class="text-danger">Stock es requerido.</small>
-            <small *ngIf="materialForm.get('stock')?.errors?.['min']" class="text-danger">Stock debe ser un número positivo.</small>
+          <label for="inputPrice">Precio</label>
+          <input type="number" class="form-control" id="inputPrice" placeholder="Precio" formControlName="price"/>
+          <div *ngIf="materialForm.get('price')?.touched && materialForm.get('price')?.invalid">
+            <small *ngIf="materialForm.get('price')?.errors?.['required']" class="text-danger">Precio es requerido.</small>
+            <small *ngIf="materialForm.get('price')?.errors?.['min']" class="text-danger">Precio debe ser mayor a 0.1</small>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="form-group col-md-6">
-          <label for="inputUnitPrice">Precio Unitario</label>
-          <input type="number" class="form-control" id="inputUnitPrice" placeholder="Precio Unitario" formControlName="unitPrice"/>
-          <div *ngIf="materialForm.get('unitPrice')?.touched && materialForm.get('unitPrice')?.invalid">
-            <small *ngIf="materialForm.get('unitPrice')?.errors?.['required']" class="text-danger">Precio es requerido.</small>
-            <small *ngIf="materialForm.get('unitPrice')?.errors?.['min']" class="text-danger">Precio debe ser un número positivo.</small>
+          <label for="inputStock">Cantidad</label>
+          <input type="number" class="form-control" id="inputStock" placeholder="Cantidad" formControlName="quantity"/>
+          <div *ngIf="materialForm.get('quantity')?.touched && materialForm.get('quantity')?.invalid">
+            <small *ngIf="materialForm.get('quantity')?.errors?.['required']" class="text-danger">Cantidad es requerido.</small>
+            <small *ngIf="materialForm.get('quantity')?.errors?.['min']" class="text-danger">Cantidad debe ser mayor a 0.1</small>
           </div>
         </div>
         <div class="form-group col-md-6">
           <label for="inputUnit">Unidad</label>
           <select class="form-control" id="inputUnit" formControlName="unit">
-            <option value="m">Metros</option>
-            <option value="cm">Centímetros</option>
-            <option value="ft">Pies</option>
+            <option value="metros">Metros</option>
+            <option value="centimetros">Centímetros</option>
+            <option value="pies">Pies</option>
             <option value="unidades">Unidades</option>
           </select>
         </div>

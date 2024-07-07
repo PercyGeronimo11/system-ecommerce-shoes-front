@@ -29,8 +29,8 @@ export class MaterialsListModule implements OnInit {
   ) {
     this.materialForm = this.fb.group({
       name: ['', [Validators.required]],
-      stock: ['', [Validators.required]],
-      unitPrice: ['', [Validators.required]],
+      quantity: ['', [Validators.required,Validators.min(0.1)]],
+      price: ['', [Validators.required,Validators.min(0.1)]],
       unit: ['', [Validators.required]],
       description: ['', []],
     });
@@ -79,8 +79,8 @@ export class MaterialsListModule implements OnInit {
     this.selectedMaterial = material;
     this.materialForm.patchValue({
       name: material.name,
-      stock: material.stock,
-      unitPrice: material.unitPrice,
+      quantity: material.quantity,
+      price: material.price,
       unit: material.unit,
       description: material.description
     });
@@ -90,7 +90,7 @@ export class MaterialsListModule implements OnInit {
   openMaterialModal() {
     this.isEditMode = false;
     this.materialForm.reset({
-      unit: 'm'
+      unit: 'metros'
     });
     this.modalMaterialVisible = true;
   }
