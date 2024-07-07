@@ -34,7 +34,10 @@ export class ProductCreateComponent implements OnInit {
     proDescription: ['', [Validators.required]],
     proUnitPrice: ['', [Validators.required]],
     proSizePlatform: ['', [Validators.required]],
-    proSizeTacon: ['', [Validators.required]],
+    proSizeTaco: ['', [Validators.required]],
+    proSize: [null, [Validators.required]],
+    proColor: [null, [Validators.required]],
+    proStock: [null, [Validators.required]],
     proUrlImage: ['', [Validators.required]]
   });
 

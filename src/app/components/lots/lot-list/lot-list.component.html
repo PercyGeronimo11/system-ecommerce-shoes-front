@@ -17,10 +17,10 @@
                     <tbody>
                       <tr *ngFor="let lot of lots; let i = index">
                         <td>{{ i + 1 }}</td>
-                        <td>{{ lot.proName }}</td>
-                        <td>{{ lot.proDescription }}</td>
-                        <td>20</td>
-                        <td>{{ lot.lotTotalCost }}</td>
+                        <td>{{ lot.product.proName }}</td>
+                        <td>{{lot.product.category.catName}}</td>
+                        <td>{{lot.lotQuantityProducts}} pares</td>
+                        <td> S/. {{ lot.lotTotalCost }}</td>
                         <td>
                           <a routerLink="['/lot/edit', lot.id]" class="btn btn-primary">Editar</a>
                           <!-- <button (click)="deleteLot(lot.id)" class="btn btn-danger">Eliminar</button> -->

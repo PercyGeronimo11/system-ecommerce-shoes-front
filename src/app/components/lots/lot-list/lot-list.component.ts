@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { Lot } from '../../../models/lot.model';
+import { LotModel } from '../../../models/lot.model';
 import { LotService } from '../../../services/lot.service';
 import { RouterModule, Router } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
@@ -22,7 +22,7 @@ import {CategoryModel} from '../../../models/category.model';
 })
 
 export class LotListComponent implements OnInit{
-  lots: Lot[] = [];
+  lots: LotModel[] = [];
   isLoading = false;
   error: string | null = null;
 //  modalRef: NgbModal | null=null;
@@ -46,7 +46,7 @@ export class LotListComponent implements OnInit{
       .subscribe((lots: any )=> {
         this.lots = lots.data.content;
         this.isLoading = false;
-        console.log("data:", lots);
+        //console.log("data:", lots);
       }, error => {
         this.error = error.message;
         this.isLoading = false;

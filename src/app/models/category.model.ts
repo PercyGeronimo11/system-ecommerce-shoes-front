@@ -1,6 +1,6 @@
 export interface CategoryModel {
-    cat_id: number;
-    cat_name: string;
+    id: number;
+    catName: string;
     description: string;
     status: boolean;
 }
