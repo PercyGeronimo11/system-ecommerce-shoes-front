@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { Product } from '../../../models/product.model';
+import { ProductModel } from '../../../models/product.model';
 import { ProductService } from '../../../services/product.service';
 import { RouterModule, Router } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
@@ -16,7 +16,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class ProductListComponent implements OnInit {
-  products: Product[] = [];
+  products: ProductModel[] = [];
   isLoading = false;
   error: string | null = null;
   modalRef: NgbModal | null=null;

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Product, ProductCreateReq } from '../models/product.model';
+import { ProductModel, ProductCreateReq } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +14,15 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   getProducts() {
-    return this.http.get<Product[]>(`${this.apiUrl}/list?search`)
+    return this.http.get<ProductModel[]>(`${this.apiUrl}/list?search`)
   }
 
   createProduct(product: FormData) {
     return this.http.post<ProductCreateReq>(`${this.apiUrl}/store`, product);
   }
   
-  updateProduct(id: number, product: Product): Observable<Product> {
-    return this.http.put<Product>(`${this.apiUrl}/edit/${id}`, product);
+  updateProduct(id: number, product: ProductModel): Observable<ProductModel> {
+    return this.http.put<ProductModel>(`${this.apiUrl}/edit/${id}`, product);
   }
 
   deleteProduct(id: number): Observable<void> {

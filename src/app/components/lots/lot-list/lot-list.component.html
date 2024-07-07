@@ -7,26 +7,23 @@
                     <thead>
                       <tr>
                         <th>N°</th>
-                        <th>Loto</th>
+                        <th>Producto</th>
                         <th>Descripción</th>
-                        <th>Precio Unitario</th>
-                        <th>Tamaño Plataforma</th>
-                        <th>Tamaño Tacón</th>
+                        <th>Cantidad</th>
+                        <th>Costo Total</th>
                         <th>Opciones</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let product of lots; let i = index">
+                      <tr *ngFor="let lot of lots; let i = index">
                         <td>{{ i + 1 }}</td>
-                        <td>{{ product.proName }}</td>
-                        <td>{{ product.proDescription }}</td>
-                        <td>{{ product.proUnitPrice }}</td>
-                        <td>{{ product.proSizePlatform }}</td>
-                        <td>{{ product.proSizeTacon }}</td>
-                        <!-- <td><img [src]="product.proUrlImage" alt="Loto"></td> -->
+                        <td>{{ lot.proName }}</td>
+                        <td>{{ lot.proDescription }}</td>
+                        <td>20</td>
+                        <td>{{ lot.lotTotalCost }}</td>
                         <td>
-                          <a routerLink="['/product/edit', product.id]" class="btn btn-primary">Editar</a>
-                          <!-- <button (click)="deleteLot(product.id)" class="btn btn-danger">Eliminar</button> -->
+                          <a routerLink="['/lot/edit', lot.id]" class="btn btn-primary">Editar</a>
+                          <!-- <button (click)="deleteLot(lot.id)" class="btn btn-danger">Eliminar</button> -->
                         </td>
                       </tr>
                     </tbody>

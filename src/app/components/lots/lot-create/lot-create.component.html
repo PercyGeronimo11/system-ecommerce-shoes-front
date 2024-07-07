@@ -1,1 +1,115 @@
-<p>lot-create works!</p>
+<div class="row">
+    <div class="col-sm-12">
+        <app-card cardTitle="Crear Lote" [options]="false" blockClass="table-border-style">
+            <h5 class="card-header bg-primary text-white">Nuevo Lote</h5>
+            <div class="card-body">
+                <form [formGroup]="lotForm" (ngSubmit)="submitFormSaveLot()" class="mt-3">
+                    <div class="row">
+                        <div class="form-group col-lg-8">
+                            <label>Producto</label>
+                            <select formControlName="proName" class="form-control" [(ngModel)]="selectedProduct">
+                                <option *ngFor="let product of products" [value]="product.id">
+                                    {{ product.proName }} - {{ product.category.cat_name }} - {{ product.proColor}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-lg-4">
+                            <label>Cantidad del lote:</label>
+                            <input formControlName="lotQuantity" type="number" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label for="" class="col col-lg-8">Materiales Usados</label>
+                        <button type="button" class="btn btn-primary mb-2 col-lg-2"
+                            (click)="openModalMaterial()">Agregar</button>
+                    </div>
+
+                    <div class="row">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>N°</th>
+                                    <th>Material</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Subtotal</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody formArrayName="lotMaterials">
+                                <tr *ngFor="let material of lotMaterialsArray.controls; let i=index"
+                                    [formGroupName]="i">
+
+                                    <td>{{ i + 1 }}</td>
+                                    <td><input formControlName="name" type="text" class="form-control" readonly>
+                                    </td>
+                                    <td><input formControlName="detPriceUnit" type="number" class="form-control"
+                                            readonly></td>
+                                    <td><input formControlName="detQuantity" type="number" class="form-control"
+                                            readonly></td>
+                                    <td><input formControlName="detSubTotal" type="number" class="form-control"
+                                            readonly></td>
+                                    <td>
+                                        <button class="btn btn-warning me-1" (click)="editMaterial(i)">Editar</button>
+                                        <button class="btn btn-danger me-1"
+                                            (click)="removeLotMaterial(i)">Eliminar</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-group col-4">
+                        <label>Costo Total:</label>
+                        <input formControlName="lotTotalCost" type="number" class="form-control" readonly>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </form>
+            </div>
+
+            <!-- Modal de Agregar Material -->
+            <div class="modal" *ngIf="isShowMaterialModal" style="display: block;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Agregar Material</h5>
+                            <button type="button" class="btn-close" (click)="closeModalMaterial()"></button>
+                        </div>
+                        <div class="modal-body">
+                            <select class="form-control" [(ngModel)]="selectedMaterial" (change)="onMaterialSelect()">
+                                <option *ngFor="let material of materials" [value]="material.id">
+                                    {{ material.name }}
+                                </option>
+                            </select>
+                            <div class="row mt-3">
+                                <div class="form-group col-4">
+                                    <label for="">Cantidad</label>
+                                    <input [(ngModel)]="materialForm.quantity" type="number" class="form-control"
+                                        (input)="onQuantityRead()">
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="">Precio Unitario</label>
+                                    <input [(ngModel)]="materialForm.priceUnit" type="number" class="form-control"
+                                        (input)="onPriceUnitRead()">
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="">Sub Total</label>
+                                    <input [(ngModel)]="materialForm.subTotal" type="number" class="form-control"
+                                        disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" (click)="addMaterial()">Agregar</button>
+                            <button type="button" class="btn btn-secondary"
+                                (click)="closeModalMaterial()">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </app-card>
+    </div>
+</div>

@@ -21,13 +21,23 @@ export interface Lot {
   
   
   export interface LotCreateReq {
-    categoryId: number;
     productId: number;
+    lotQuantityProducts: number;
+    lotDetail: LotDetailCreateReq[];
     lotTotalCost: number;
-    lotProductsAmount: number;
-    proName: string;
-    proDescription: string;
-    proUnitPrice: number;
-    proSizePlatform: string ;
-    proSizeTacon: string;
+  }
+
+ export interface LotDetailCreateReq{
+    name: String;
+    detPriceUnit: number;
+    detQuantity: number;
+    detSubTotal: number;
+  }
+
+  export interface materialForm{
+    id:number;
+    name: string;
+    quantity: number;
+    priceUnit: number;
+    subTotal: number;
   }

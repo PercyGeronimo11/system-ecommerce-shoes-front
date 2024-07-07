@@ -16,8 +16,8 @@ export class LotService {
     return this.http.get<Lot[]>(`${this.apiUrl}/list?search`)
   }
 
-  createLot(lot: FormData) {
-    return this.http.post<LotCreateReq>(`${this.apiUrl}/store`, lot);
+  createLot(lot: LotCreateReq) {
+    return this.http.post<void>(`${this.apiUrl}/store`, lot);
   }
   
   updateLot(id: number, lot: Lot): Observable<Lot> {

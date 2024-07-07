@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Product } from '../../models/product.model';
+import { ProductModel } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { ProductService } from '../../services/product.service';
   styleUrls: ['./ecommerce.component.scss']
 })
 export class EcommerceComponent implements OnInit, OnDestroy {
-  products: Product[] = [];
+  products: ProductModel[] = [];
   isLoading = false;
   error: string | null = null;
 

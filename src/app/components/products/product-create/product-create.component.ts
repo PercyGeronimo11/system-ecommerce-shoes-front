@@ -30,7 +30,7 @@ export class ProductCreateComponent implements OnInit {
 
   formGroupProduct: FormGroup = this.formBuilder.group({
     proName: ['', [Validators.required]],
-    catId: 2,
+    catId: ['', [Validators.required, Validators.nullValidator]],
     proDescription: ['', [Validators.required]],
     proUnitPrice: ['', [Validators.required]],
     proSizePlatform: ['', [Validators.required]],
@@ -54,7 +54,9 @@ export class ProductCreateComponent implements OnInit {
     this.isLoading = true;
     this.error = null;
     const formData = new FormData();
-    formData.append('catId', this.formGroupProduct.value.catId)
+    const catIdValue = parseInt(this.formGroupProduct.value.catId, 10);
+
+    formData.append('catId', this.formGroupProduct.value.catId);
     formData.append('proName', this.formGroupProduct.value.proName);
     formData.append('proDescription', this.formGroupProduct.value.proDescription);
     formData.append('proUnitPrice', this.formGroupProduct.value.proUnitPrice.toString());
@@ -76,4 +78,5 @@ export class ProductCreateComponent implements OnInit {
         });
     }
   }
+
 }

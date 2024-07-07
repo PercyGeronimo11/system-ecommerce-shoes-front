@@ -1,9 +1,9 @@
 
-export interface Product {
+export interface ProductModel {
   id: number;
   category: {
     id: number;
-    name: string;
+    cat_name: string;
     description: string;
     status: boolean;
   };
@@ -12,6 +12,8 @@ export interface Product {
   proUnitPrice: string;
   proSizePlatform: string | null;
   proSizeTacon: string | null;
+  proColor: string | null;
+  proSize: string | null;
   proUrlImage: String;
 }
 
