@@ -26,9 +26,9 @@ export class CategoriesListComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.categoryForm = this.fb.group({
-      cat_name: ['', Validators.required],
-      cat_description: ['', Validators.required],
-      cat_status: [false, Validators.required]
+      catName: ['', Validators.required],
+      catDescription: ['', Validators.required],
+      catStatus: [false, Validators.required]
     });
   }
 
@@ -43,9 +43,9 @@ export class CategoriesListComponent implements OnInit {
     this.isCreating = action === 'create';
     this.selectedCategory = category ? { ...category } : null;
     this.categoryForm.reset({
-      cat_name: category?.cat_name || '',
-      cat_description: category?.cat_description || '',
-      cat_status: true
+      catName: category?.catName || '',
+      catDescription: category?.catDescription || '',
+      catStatus: true
     });
     this.modalRef = this.modalService.open(content, { centered: true });
   }
