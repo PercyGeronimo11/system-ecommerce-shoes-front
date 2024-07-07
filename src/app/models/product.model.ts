@@ -9,14 +9,15 @@ export interface ProductModel {
   };
   proName: string;
   proDescription: string;
-  proUnitPrice: string;
+  proUnitPrice: number;
+  proUnitCost: number;
   proSizePlatform: string | null;
   proSizeTacon: string | null;
   proColor: string | null;
   proSize: string | null;
+  proStock: number;
   proUrlImage: String;
 }
-
 
 export interface ProductCreateReq {
   id: number;
@@ -27,6 +28,4 @@ export interface ProductCreateReq {
   proSizePlatform: string ;
   proSizeTacon: string;
 }
-
-
 
