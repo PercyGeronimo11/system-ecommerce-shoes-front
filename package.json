@@ -4,7 +4,7 @@
   "author": "CodedThemes",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4200",
+    "percy": "ng serve --port 4200",
     "build": "ng build",
     "build-prod": "ng build --configuration production --base-href /demos/admin-templates/gradient-able/angular/free/",
     "watch": "ng build --watch --configuration development",
@@ -50,6 +50,7 @@
     "@angular/cli": "18.0.0-next.3",
     "@angular/compiler-cli": "^18.0.0-next.3",
     "@types/jasmine": "~5.1.4",
+    "@types/jquery": "^3.5.30",
     "@types/lodash": "^4.17.0",
     "@types/node": "^20.12.7",
     "@typescript-eslint/eslint-plugin": "7.7.1",

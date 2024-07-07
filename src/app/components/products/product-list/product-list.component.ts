@@ -1,24 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { Product } from '../../../models/product/product.model';
-import { ProductService } from '../../../services/products/product.service';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Product } from '../../../models/product.model';
+import { ProductService } from '../../../services/product.service';
+import { RouterModule, Router } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-import { Router } from '@angular/router';
+import {ProductCreateComponent} from '../product-create/product-create.component';
+import { ProductEditComponent } from '../product-edit/product-edit.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-product-list',
-  standalone: true,
-  imports: [SharedModule, RouterModule],
+  standalone:true,
+  imports: [RouterModule,SharedModule],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
 })
-export default class ProductListComponent implements OnInit {
 
+export class ProductListComponent implements OnInit {
   products: Product[] = [];
   isLoading = false;
   error: string | null = null;
+  modalRef: NgbModal | null=null;
 
-  constructor(private productService: ProductService) {}
+  constructor( 
+    private productService: ProductService,
+    private modalService: NgbModal,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -44,4 +51,16 @@ export default class ProductListComponent implements OnInit {
       }
     );
   }
+
+  // redirectToProductCreate(){
+  //   console.log("redireccionnn");
+  //   this.router.navigate(['/products/create']);
+  // }
+
+  openModalCreateProduct(){
+    this.modalService.open(ProductCreateComponent);
+  }
+
+
+
 }
