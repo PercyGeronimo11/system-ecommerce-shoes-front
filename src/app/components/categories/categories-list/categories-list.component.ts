@@ -58,15 +58,15 @@ export class CategoriesListComponent implements OnInit {
 
   deleteCategory(id: number): void {
     this.categoriaService.delete(id).subscribe(() => {
-      this.categories = this.categories.filter((cat: any) => cat.cat_id !== id);
+      this.categories = this.categories.filter((cat: any) => cat.id !== id);
       this.closeModal();
     });
   }
 
   updateCategory(): void {
     if (this.categoryForm.valid) {
-      this.categoriaService.edit(this.selectedCategory.cat_id, this.categoryForm.value).subscribe((resp: any) => {
-        const index = this.categories.findIndex((cat: any) => cat.cat_id === this.selectedCategory.cat_id);
+      this.categoriaService.edit(this.selectedCategory.id, this.categoryForm.value).subscribe((resp: any) => {
+        const index = this.categories.findIndex((cat: any) => cat.id === this.selectedCategory.id);
         if (index !== -1) {
           this.categories[index] = { ...this.categories[index], ...this.categoryForm.value };
         }
