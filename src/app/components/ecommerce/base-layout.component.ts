@@ -5,6 +5,7 @@ import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { RouterModule } from '@angular/router';
+//import { PromocionService } from '../promotions/service/promotions.service';
 
 @Component({
   selector: 'app-base-layout',
@@ -26,6 +27,7 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
   slideInterval: any;
 
   constructor(private productService: ProductService,
+    //private promotionService:PromocionService,
 
     private router: Router
   ) {}
@@ -33,6 +35,7 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
     this.productService.getProducts()
+    //this.promotionService.getPromotions(),
       .subscribe((products: any) => {
         this.products = products.data.content;
         this.isLoading = false;

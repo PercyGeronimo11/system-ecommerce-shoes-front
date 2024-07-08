@@ -19,7 +19,7 @@ export class PromotionsListComponent implements OnInit {
   modalRef: NgbModalRef | null = null;
   isCreating: boolean = false;
   selectedFile: File | null = null;
-
+  imageToShow: any;
   constructor(
     public promocionService: PromocionService,
     private modalService: NgbModal,
@@ -32,6 +32,7 @@ export class PromotionsListComponent implements OnInit {
       promStartdate: ['', Validators.required],
       promEnddate: ['', Validators.required],
       promDescription: ['', Validators.required],
+    //  promUrlImage: ['', Validators.required],
       promStatus: [false, Validators.required]
     }, {
       validators: this.dateLessThan('promStartdate', 'promEnddate')
@@ -68,6 +69,7 @@ export class PromotionsListComponent implements OnInit {
       promStartdate: promotion?.promStartdate || '',
       promEnddate: promotion?.promEnddate || '',
       promDescription: promotion?.promDescription || '',
+    //  promUrlImage: promotion?.promUrlImage || '',
       promStatus: promotion?.promStatus || false
     });
     this.modalRef = this.modalService.open(content, { centered: true });
@@ -79,9 +81,14 @@ export class PromotionsListComponent implements OnInit {
     }
   }
 
-  onFileChange(event: any): void {
-    if (event.target.files.length > 0) {
+  onFileSelected(event: any) {
+    if (event.target.files && event.target.files[0]) {
       this.selectedFile = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imageToShow = e.target.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
     }
   }
 
