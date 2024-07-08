@@ -1,7 +1,7 @@
 export interface MaterialModel {
     id:number;
     name: string;
-    unitPrice: number;
+    price: number;
     stock: number;
     unit: string;
     description: string;

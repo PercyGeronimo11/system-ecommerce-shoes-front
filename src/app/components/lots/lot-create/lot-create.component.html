@@ -7,9 +7,9 @@
                     <div class="row">
                         <div class="form-group col-lg-8">
                             <label>Producto</label>
-                            <select formControlName="proName" class="form-control" [(ngModel)]="selectedProduct">
+                            <select formControlName="proName" class="form-control" >
                                 <option *ngFor="let product of products" [value]="product.id">
-                                    {{ product.proName }} - {{ product.category.cat_name }} - {{ product.proColor}}
+                                    {{ product.proName }} - {{ product.category.catName }} - {{ product.proColor}}
                                 </option>
                             </select>
                         </div>
@@ -41,7 +41,6 @@
                             <tbody formArrayName="lotMaterials">
                                 <tr *ngFor="let material of lotMaterialsArray.controls; let i=index"
                                     [formGroupName]="i">
-
                                     <td>{{ i + 1 }}</td>
                                     <td><input formControlName="name" type="text" class="form-control" readonly>
                                     </td>
@@ -79,8 +78,8 @@
                             <button type="button" class="btn-close" (click)="closeModalMaterial()"></button>
                         </div>
                         <div class="modal-body">
-                            <select class="form-control" [(ngModel)]="selectedMaterial" (change)="onMaterialSelect()">
-                                <option *ngFor="let material of materials" [value]="material.name">
+                            <select class="form-control" [(ngModel)]="selectedIdMaterial" (change)="onMaterialSelect()">
+                                <option *ngFor="let material of materials" [value]="material.id">
                                     {{ material.name }}
                                 </option>
                             </select>

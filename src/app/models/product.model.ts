@@ -3,7 +3,7 @@ export interface ProductModel {
   id: number;
   category: {
     id: number;
-    cat_name: string;
+    catName: string;
     description: string;
     status: boolean;
   };

@@ -16,16 +16,13 @@ import { LotService } from 'src/app/services/lot.service';
   templateUrl: './lot-create.component.html',
   styleUrl: './lot-create.component.scss'
 })
+
 export class LotCreateComponent implements OnInit {
   products: ProductModel[] = [];
   materials: MaterialModel[] = [];
   error: string | null = null;
-  selectedProduct: number | null = null;
-  selectedMaterial: number | null = null;
+  selectedIdMaterial: number = 0;
   isShowMaterialModal: boolean = false;
-  quantity: number = 0;
-  unitPrice: number = 0;
-  totalCost: number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -141,10 +138,13 @@ export class LotCreateComponent implements OnInit {
   }
 
   onMaterialSelect() {
-    const selectedMaterialId = this.selectedMaterial !== null ? Number(this.selectedMaterial) : null;
-    const selectedMaterial = this.materials.find(material => material.id === selectedMaterialId);
+    //const selectedMaterialId = this.selectedMaterial !== null ? Number(this.selectedMaterial) : null;
+    const selectedMaterial = this.materials.find(material => material.id == this.selectedIdMaterial);
+    console.log("id",this.selectedIdMaterial);
+    console.log("maerial:",selectedMaterial);
+    console.log("lista",this.materials);
     if (selectedMaterial) {
-      this.materialForm.priceUnit = selectedMaterial.unitPrice;
+      this.materialForm.priceUnit = selectedMaterial.price;
       this.materialForm.name = selectedMaterial.name;
     }
   }
