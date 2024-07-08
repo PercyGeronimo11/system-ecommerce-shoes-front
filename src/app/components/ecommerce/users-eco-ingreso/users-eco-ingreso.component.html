@@ -1,0 +1,49 @@
+<app-base-layout>
+  <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="container text-center mt-5">
+      <div class="row justify-content-center">
+        <div class="container col-md-8 col-lg-6">
+          <div class="border rounded p-4 shadow-sm bg-white">
+            <h4 class="mb-4"><b>Ingresar</b></h4>
+            <form [formGroup]="userecoForm" (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <label for="inputEmail">Correo</label>
+                <input type="email" class="form-control form-control-lg" id="inputEmail"
+                  placeholder="Correo electrónico" formControlName="email" />
+                <div *ngIf="userecoForm.get('email')?.touched && userecoForm.get('email')?.invalid">
+                  <small *ngIf="userecoForm.get('email')?.errors?.['required']" class="text-danger">Correo es
+                    requerido.</small>
+                  <small *ngIf="userecoForm.get('email')?.errors?.['email']" class="text-danger">Correo no es
+                    válido.</small>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputPassword">Contraseña</label>
+                <input type="password" class="form-control form-control-lg" id="inputPassword" placeholder="Contraseña"
+                  formControlName="password" />
+                <div *ngIf="userecoForm.get('password')?.touched && userecoForm.get('password')?.invalid">
+                  <small *ngIf="userecoForm.get('password')?.errors?.['required']" class="text-danger">Contraseña es
+                    requerida.</small>
+                  <small *ngIf="userecoForm.get('password')?.errors?.['minlength']" class="text-danger">Contraseña debe
+                    tener al menos 6 caracteres.</small>
+                </div>
+              </div>
+              <div class="d-flex justify-content-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg px-5">Continuar</button>
+              </div>
+            </form>
+            <a href="#" class="d-block mt-3">¿Olvidó su contraseña?</a>
+            <p class="mt-3">Al continuar, aceptas nuestra <a href="#">Política de Privacidad y Cookies</a> y <a
+                href="#">Términos y Condiciones</a></p>
+            <div class="d-flex justify-content-between mt-4">
+              <a [routerLink]="['/ecommersCliente']">
+                Crear cuenta
+              </a>
+              <a  href="/ecommers" >Volver a la tienda</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-base-layout>

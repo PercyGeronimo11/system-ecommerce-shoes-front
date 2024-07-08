@@ -42,14 +42,14 @@
   <div class="modal-body">
     <p>¿Estás seguro que deseas eliminar la categoria?</p>
     <ul>
-      <li><strong>Nombre:</strong> {{ selectedCategory?.cat_name }}</li>
-      <li><strong>Descripcion:</strong> {{ selectedCategory?.cat_description }}</li>
-      <li><strong>Estado:</strong> {{ selectedCategory?.cat_status }}</li>
+      <li><strong>Nombre:</strong> {{ selectedCategory?.catName }}</li>
+      <li><strong>Descripcion:</strong> {{ selectedCategory?.catDescription }}</li>
+      <li><strong>Estado:</strong> {{ selectedCategory?.catStatus }}</li>
     </ul>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
-    <button type="button" class="btn btn-danger" (click)="deleteCategory(selectedCategory.cat_id)">Eliminar</button>
+    <button type="button" class="btn btn-danger" (click)="deleteCategory(selectedCategory.id)">Eliminar</button>
   </div>
 </ng-template>
 
@@ -65,11 +65,11 @@
     <form [formGroup]="categoryForm">
       <div class="form-group">
         <label for="name">Nombre</label>
-        <input type="text" class="form-control" id="name" formControlName="cat_name" name="name">
+        <input type="text" class="form-control" id="name" formControlName="catName" name="name">
       </div>
       <div class="form-group">
         <label for="description">Descripcion</label>
-        <input type="text" class="form-control" id="description" formControlName="cat_description" name="description">
+        <input type="text" class="form-control" id="description" formControlName="catDescription" name="description">
       </div>
     </form>
   </div>
@@ -91,11 +91,11 @@
     <form [formGroup]="categoryForm">
       <div class="form-group">
         <label for="name">Nombre</label>
-        <input type="text" class="form-control" id="name" formControlName="cat_name" name="name">
+        <input type="text" class="form-control" id="name" formControlName="catName" name="name">
       </div>
       <div class="form-group">
         <label for="description">Descripcion</label>
-        <input type="text" class="form-control" id="description" formControlName="cat_description" name="description">
+        <input type="text" class="form-control" id="description" formControlName="catDescription" name="description">
       </div>
     </form>
   </div>

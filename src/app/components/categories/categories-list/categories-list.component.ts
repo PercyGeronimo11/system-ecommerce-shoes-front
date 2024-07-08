@@ -26,9 +26,9 @@ export class CategoriesListComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.categoryForm = this.fb.group({
-      cat_name: ['', Validators.required],
-      cat_description: ['', Validators.required],
-      cat_status: [false, Validators.required]
+      catName: ['', Validators.required],
+      catDescription: ['', Validators.required],
+      catStatus: [false, Validators.required]
     });
   }
 
@@ -43,9 +43,9 @@ export class CategoriesListComponent implements OnInit {
     this.isCreating = action === 'create';
     this.selectedCategory = category ? { ...category } : null;
     this.categoryForm.reset({
-      cat_name: category?.cat_name || '',
-      cat_description: category?.cat_description || '',
-      cat_status: true
+      catName: category?.catName || '',
+      catDescription: category?.catDescription || '',
+      catStatus: true
     });
     this.modalRef = this.modalService.open(content, { centered: true });
   }
@@ -58,15 +58,15 @@ export class CategoriesListComponent implements OnInit {
 
   deleteCategory(id: number): void {
     this.categoriaService.delete(id).subscribe(() => {
-      this.categories = this.categories.filter((cat: any) => cat.cat_id !== id);
+      this.categories = this.categories.filter((cat: any) => cat.id !== id);
       this.closeModal();
     });
   }
 
   updateCategory(): void {
     if (this.categoryForm.valid) {
-      this.categoriaService.edit(this.selectedCategory.cat_id, this.categoryForm.value).subscribe((resp: any) => {
-        const index = this.categories.findIndex((cat: any) => cat.cat_id === this.selectedCategory.cat_id);
+      this.categoriaService.edit(this.selectedCategory.id, this.categoryForm.value).subscribe((resp: any) => {
+        const index = this.categories.findIndex((cat: any) => cat.id === this.selectedCategory.id);
         if (index !== -1) {
           this.categories[index] = { ...this.categories[index], ...this.categoryForm.value };
         }

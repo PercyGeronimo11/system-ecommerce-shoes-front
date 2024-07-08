@@ -13,6 +13,7 @@
               <th>Fecha Inicio</th>
               <th>Fecha Fin</th>
               <th>Descripción</th>
+              <th>Imagen</th>
               <th>Estado</th>
               <th>Opciones</th>
             </tr>
@@ -24,6 +25,11 @@
               <td>{{ promotion.promStartdate }}</td>
               <td>{{ promotion.promEnddate }}</td>
               <td>{{ promotion.promDescription }}</td>
+              <td>
+              <!-- <img *ngIf="promotion.promUrlImage"  [src]="promotion.promUrlImage" />-->
+               <img [src]="promotion.promUrlImage">
+               <span *ngIf="!promotion.promUrlImage">No hay</span>
+              </td>
               <td>{{ promotion.promStatus ? 'Activado' : 'Desactivado' }}</td>
               <td>
                 <button type="button" class="btn btn-primary me-2 mb-2" (click)="openModal(updateContent, promotion, 'update')">Actualizar</button>
@@ -93,7 +99,10 @@
           <option [value]="false">Desactivado</option>
         </select>
       </div>
-
+      <div class="form-group">
+        <label for="file">Imagen</label>
+        <input type="file" class="form-control" id="file" (change)="onFileChange($event)">
+      </div>
     </form>
   </div>
   <div class="modal-footer">
@@ -134,6 +143,10 @@
           <option [value]="true">Activado</option>
           <option [value]="false">Desactivado</option>
         </select>
+      </div>
+      <div class="form-group">
+        <label for="promUrlImage">Imagen</label>
+        <input type="file" class="form-control" id="promUrlImage" (change)="onFileChange($event)">
       </div>
     </form>
   </div>
