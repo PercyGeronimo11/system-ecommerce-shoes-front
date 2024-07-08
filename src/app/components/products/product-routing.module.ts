@@ -5,23 +5,6 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
   
 const routes: Routes = [
-    // {
-    //     path: '',
-    //     children: [
-    //         {
-    //             path: 'create',
-    //             loadComponent:()=> ProductCreateComponent
-    //         },
-    //         {
-    //             path: 'list',
-    //             loadComponent: () => ProductListComponent
-    //         },
-    //         {
-    //             path: 'edit',
-    //             loadComponent: () => ProductEditComponent
-    //         },
-    //     ]
-    // }
     {
         path: '',
         redirectTo: 'list',
@@ -36,7 +19,7 @@ const routes: Routes = [
         component: ProductCreateComponent
     },
     {
-        path: 'edit',
+        path: 'edit/:id',
         component: ProductEditComponent
     }
 ];

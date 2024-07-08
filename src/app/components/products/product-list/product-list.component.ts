@@ -60,7 +60,4 @@ export class ProductListComponent implements OnInit {
   openModalCreateProduct(){
     this.modalService.open(ProductCreateComponent);
   }
-
-
-
 }

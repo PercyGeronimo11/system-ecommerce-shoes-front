@@ -25,7 +25,8 @@
                       <td>{{ product.proSizeTacon }}</td>
                        <!-- <td><img [src]="product.proUrlImage" alt="Producto"></td> -->
                       <td>
-                        <a routerLink="['/product/edit', product.id]" class="btn btn-primary">Editar</a>
+                        <a [routerLink]="['/products/edit/', product.id]" class="btn btn-primary">Editar</a>
+                       
                         <!-- <button (click)="deleteProduct(product.id)" class="btn btn-danger">Eliminar</button> -->
                       </td>
                     </tr>

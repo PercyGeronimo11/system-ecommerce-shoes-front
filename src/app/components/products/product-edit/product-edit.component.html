@@ -1,1 +1,90 @@
-<p>product-edit works!</p>
+<div class="row">
+    <div class="col-sm-12">
+      <app-card cardTitle="Editar Producto" [options]="false" blockClass="table-border-style">
+        <form [formGroup]="formGroupProduct" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col col-lg-6">
+              <div class="row">
+                <div class="form-group col-12">
+                  <label for="proName" class="col-sm-3 col-form-label">Nombre:</label>
+                  <input type="text" class="form-control" id="proName" formControlName="proName" name="proName" required>
+                </div>
+                <div class="form-group col-6">
+                  <label for="proUnitPrice" class="col-form-label">Precio unitario:</label>
+                  <input type="number" class="form-control" id="proUnitPrice" formControlName="proUnitPrice" required>
+                </div>
+                <div class="form-group col-6">
+                  <label for="categorySelect">Seleccionar Categoría</label>
+                  <select formControlName="catId" id="categorySelect" class="col-sm-3 form-select">
+                    <option *ngFor="let category of categories" [value]="category.id">{{ category.catName }}</option>
+                  </select>
+                </div>
+                <div class="form-group col-6">
+                  <label for="proTalla" class="col-sm-3 col-form-label">Talla</label>
+                  <select formControlName="proSize" id="proTalla" class="col-sm-3 form-select" required>
+                    <option> 35 </option>
+                    <option> 36 </option>
+                    <option> 37 </option>
+                    <option> 38 </option>
+                    <option> 39 </option>
+                    <option> 40 </option>
+                  </select>
+                </div>
+                <div class="form-group col-6">
+                  <label for="proColor" class="col-sm-3 col-form-label">Color</label>
+                  <select formControlName="proColor" id="proColor" class="col-sm-3 form-select" required>
+                    <option> Negro </option>
+                    <option> Blanco</option>
+                    <option> Marron </option>
+                  </select>
+                </div>
+                <div class="form-group col-6">
+                  <label for="proSizePlatform" class="col-form-label">Numero Plataforma</label>
+                  <select formControlName="proSizePlatform" id="proSizePlatform" class="col-sm-3 form-select" required>
+                    <option> 0</option>
+                    <option> 2</option>
+                    <option> 4</option>
+                  </select>
+                </div>
+                <div class="form-group col-6">
+                  <label for="proSizeTaco" class="col-form-label">Numero taco</label>
+                  <select formControlName="proSizeTaco" id="proSizeTacon" class="col-sm-3 form-select" required>
+                    <option>2</option>
+                    <option>4</option>
+                    <option>6</option>
+                    <option>8</option>
+                  </select>
+                </div>
+                <div class="form-group col-6">
+                  <label for="prostock" class="col-sm-3 col-form-label">Stock</label>
+                  <input type="text" class="form-control" id="proName" formControlName="proStock" name="prostock"
+                    required>
+                </div>
+              </div>
+            </div>
+            <div class="col col-lg-6">
+              <div class="row">
+                <div class="form-group">
+                  <label for="proDescription" class="col-form-label">Descripción:</label>
+                  <input class="form-control" id="proDescription" formControlName="proDescription" required>
+                </div>
+                <div class="form-group">
+                  <label for="proUrlImage" class="col-form-label">Imagen</label>
+                  <input type="file" class="form-control" id="proUrlImage" (change)="onFileSelected2($event)">
+                </div>
+                <div class="form-group">
+                  <img *ngIf="imageToShow" [src]="imageToShow" class="img-thumbnail mt-2" style="max-width: 300px;">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-12 text-center">
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </div>
+        </form>
+      </app-card>
+    </div>
+  </div>
+  
