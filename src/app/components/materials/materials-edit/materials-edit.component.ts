@@ -34,7 +34,9 @@ export class MaterialEditModule implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.materialId = +params['id'];
-      this.materialService.get(this.materialId).subscribe((resp: any) => {
+      
+      this.materialService.get(this.materialId)
+      .subscribe((resp: any) => {
         this.materialForm.patchValue(resp.data);
       }, error => {
         console.error('Error fetching material', error);
