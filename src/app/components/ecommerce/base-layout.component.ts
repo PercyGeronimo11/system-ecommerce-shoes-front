@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './base-layout.component.html',
   styleUrls: ['./base-layout.component.scss']
 })
-export class EcommerceComponent implements OnInit, OnDestroy {
+export class EcommercePlantilla implements OnInit, OnDestroy {
   products: ProductModel[] = [];
   isLoading = false;
   error: string | null = null;
