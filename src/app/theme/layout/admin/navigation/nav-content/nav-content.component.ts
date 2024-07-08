@@ -46,7 +46,7 @@ export class NavContentComponent implements OnInit {
   }
 
   shouldShowItem(item: NavigationItem, role: string | null): boolean {
-    if (item.id === 'user' && role !== 'ADMIN') {
+    if (item.id === 'user' && role !== 'Administrador') {
       return false;
     }
     return true;

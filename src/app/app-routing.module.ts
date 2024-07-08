@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
+import { AuthGuard } from './components/auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -16,23 +17,23 @@ const routes: Routes = [
       },
       {
         path: 'analytics',
-        loadComponent: () => import('./demo/dashboard/dash-analytics.component')
+        loadComponent: () => import('./demo/dashboard/dash-analytics.component'),canActivate: [AuthGuard]
       },
       {
         path: 'materials',
-        loadComponent: () => import('./components/materials/materials-list/materials-list.component').then(m => m.MaterialsListModule)
+        loadComponent: () => import('./components/materials/materials-list/materials-list.component').then(m => m.MaterialsListModule),canActivate: [AuthGuard]
       },
       {
         path: 'materialCreate',
-        loadComponent: () => import('./components/materials/materials-create/materials-create.component').then(m => m.MaterialCreateModule)
+        loadComponent: () => import('./components/materials/materials-create/materials-create.component').then(m => m.MaterialCreateModule),canActivate: [AuthGuard]
       },
       {
         path: 'materialEdit/:id',
-        loadComponent: () => import('./components/materials/materials-edit/materials-edit.component').then(m => m.MaterialEditModule)
+        loadComponent: () => import('./components/materials/materials-edit/materials-edit.component').then(m => m.MaterialEditModule),canActivate: [AuthGuard]
       },
       {
         path: 'users',
-        loadComponent: () => import('./components/users/users-list/users-list.component').then(m => m.UsersListModule)
+        loadComponent: () => import('./components/users/users-list/users-list.component').then(m => m.UsersListModule),canActivate: [AuthGuard]
       },
       {
         path: 'userCreate',
@@ -41,27 +42,27 @@ const routes: Routes = [
 
       {
         path: 'promotions',
-        loadComponent: () => import('./components/promotions/promotions-list/promotions-list.component').then(p => p.PromotionsListComponent)
+        loadComponent: () => import('./components/promotions/promotions-list/promotions-list.component').then(p => p.PromotionsListComponent),canActivate: [AuthGuard]
       },
       {
         path: 'promotions/:id',
-        loadComponent: () => import('./components/promotions/promotions-list/promotions-list.component').then(p => p.PromotionsListComponent)
+        loadComponent: () => import('./components/promotions/promotions-list/promotions-list.component').then(p => p.PromotionsListComponent),canActivate: [AuthGuard]
       },
       {
         path: 'categories',
-        loadComponent: () => import('./components/categories/categories-list/categories-list.component').then(c => c.CategoriesListComponent)
+        loadComponent: () => import('./components/categories/categories-list/categories-list.component').then(c => c.CategoriesListComponent),canActivate: [AuthGuard]
       },
       {
         path: 'categories/:id',
-        loadComponent: () => import('./components/categories/categories-list/categories-list.component').then(c => c.CategoriesListComponent)
+        loadComponent: () => import('./components/categories/categories-list/categories-list.component').then(c => c.CategoriesListComponent),canActivate: [AuthGuard]
       },
       {
         path: 'products',
-        loadChildren: () => import('./components/products/product.module').then(m => m.ProductModule)
+        loadChildren: () => import('./components/products/product.module').then(m => m.ProductModule),canActivate: [AuthGuard]
       },
       {
         path: 'lots',
-        loadChildren: () => import('./components/lots/lot.module').then(m => m.LotModule)
+        loadChildren: () => import('./components/lots/lot.module').then(m => m.LotModule),canActivate: [AuthGuard]
       },
       {
         path: 'component',

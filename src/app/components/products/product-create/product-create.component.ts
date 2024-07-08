@@ -54,6 +54,7 @@ export class ProductCreateComponent implements OnInit {
   // }
 
   onFileSelected2(event: any) {
+    this.imageToShow='';
     if (event.target.files && event.target.files[0]) {
       this.selectedFile = event.target.files[0];
       const reader = new FileReader();
