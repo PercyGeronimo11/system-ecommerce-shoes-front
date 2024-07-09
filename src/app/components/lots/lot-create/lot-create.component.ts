@@ -144,7 +144,7 @@ export class LotCreateComponent implements OnInit {
     console.log("maerial:",selectedMaterial);
     console.log("lista",this.materials);
     if (selectedMaterial) {
-      this.materialForm.priceUnit = selectedMaterial.price;
+      this.materialForm.priceUnit = Number((selectedMaterial.price / selectedMaterial.quantity).toFixed(2));
       this.materialForm.name = selectedMaterial.name;
     }
   }

@@ -52,11 +52,6 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  // redirectToProductCreate(){
-  //   console.log("redireccionnn");
-  //   this.router.navigate(['/products/create']);
-  // }
-
   openModalCreateProduct(){
     this.modalService.open(ProductCreateComponent);
   }

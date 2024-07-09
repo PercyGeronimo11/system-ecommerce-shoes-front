@@ -18,7 +18,7 @@ export class ProductService {
   }
 
   getProductById(id: string) {
-    return this.http.get<ProductModel>(`${this.apiUrl}/get/${id}`)
+    return this.http.get<any>(`${this.apiUrl}/get/${id}`)
   }
 
   createProduct(product: FormData) {

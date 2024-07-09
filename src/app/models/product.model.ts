@@ -12,7 +12,7 @@ export interface ProductModel {
   proUnitPrice: number;
   proUnitCost: number;
   proSizePlatform: string | null;
-  proSizeTacon: string | null;
+  proSizeTaco: string | null;
   proColor: string | null;
   proSize: string | null;
   proStock: number;
