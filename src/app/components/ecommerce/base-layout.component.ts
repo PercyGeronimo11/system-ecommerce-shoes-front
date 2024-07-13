@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { RouterModule } from '@angular/router';
 //import { PromocionService } from '../promotions/service/promotions.service';
-
+import { AuthService } from '../../components/auth/service/auth.service';
 @Component({
   selector: 'app-base-layout',
   standalone: true,
@@ -26,7 +26,9 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
   currentSlide = 0;
   slideInterval: any;
 
-  constructor(private productService: ProductService,
+  constructor(
+    private authService: AuthService,
+    private productService: ProductService,
     //private promotionService:PromocionService,
 
     private router: Router
@@ -71,5 +73,8 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
     this.slideInterval = setInterval(() => {
       this.currentSlide = (this.currentSlide === this.slides.length - 1) ? 0 : this.currentSlide + 1;
     }, 3000); // Cambia la imagen cada 5 segundos
+  }
+  logout(): void {
+    this.authService.logout();
   }
 }
