@@ -96,7 +96,7 @@ const routes: Routes = [
         loadComponent: () => import('./demo/authentication/sign-up/sign-up.component')
       },
       {
-        path: 'ecommers/login',
+        path: 'login',
         loadComponent: () => import('./components/auth/sign-in/sign-in.component')
       }
     ]
