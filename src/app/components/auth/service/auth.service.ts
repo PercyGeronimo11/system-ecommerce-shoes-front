@@ -13,12 +13,12 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   login(credentials: any) {
-    return this.http.post(`${this.apiUrl}/auth/ecommers/login`, credentials);
+    return this.http.post(`${this.apiUrl}/auth/login`, credentials);
   }
 
   logout() {
     localStorage.removeItem('token');
-    this.router.navigate(['/ecommers/login']);
+    this.router.navigate(['/login']);
   }
 
   isLoggedIn(): boolean {
