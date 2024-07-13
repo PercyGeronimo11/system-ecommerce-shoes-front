@@ -26,8 +26,7 @@
               <td>{{ promotion.promEnddate }}</td>
               <td>{{ promotion.promDescription }}</td>
               <td>
-              <!-- <img *ngIf="promotion.promUrlImage"  [src]="promotion.promUrlImage" />-->
-               <img [src]="promotion.promUrlImage">
+              <img [src]="promotion.promUrlImage" style="max-width: 90px;" class="card-img-top promotion-image" alt="Promocion">
                <span *ngIf="!promotion.promUrlImage">No hay</span>
               </td>
               <td>{{ promotion.promStatus ? 'Activado' : 'Desactivado' }}</td>
@@ -58,6 +57,7 @@
       <li><strong>Fecha Inicio:</strong> {{ selectedPromotion?.promStartdate }}</li>
       <li><strong>Fecha Fin:</strong> {{ selectedPromotion?.promEnddate }}</li>
       <li><strong>Descripción:</strong> {{ selectedPromotion?.promDescription }}</li>
+      <li><strong>URL:</strong> {{ selectedPromotion?.promUrlImage }}</li>
     </ul>
   </div>
   <div class="modal-footer">
@@ -78,7 +78,7 @@
     <form [formGroup]="promocionForm">
       <div class="form-group">
         <label for="percentage">Descuento</label>
-        <input type="number" class="form-control" id="percentage" formControlName="promPercentage" name="percentage">
+        <input type="number" class="form-control" id="percentage"  formControlName="promPercentage" name="percentage">
       </div>
       <div class="form-group">
         <label for="startDate">Fecha Inicio</label>
@@ -101,12 +101,18 @@
       </div>
       <div class="form-group">
         <label for="promUrlImage">Imagen</label>
-        <input type="file" class="form-control" id="promUrlImage" (change)="onFileSelected($event)">
       </div>
-    </form>
+        <img [src]="selectedPromotion?.promUrlImage " class="img-thumbnail mt-2" style="max-width: 100px;">
+      <div class="form-group">
+        <label for="promUrlImage">Nueva Imagen</label>
+        <input type="file" class="form-control" id="promUrlImage"  (click)="clearImageToShow()" (change)="onFileSelected($event)">
+      </div>
+        <img *ngIf="imageToShow" [src]="imageToShow" class="img-thumbnail mt-2" style="max-width: 100px;" >
+
+</form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+    <button type="button"  class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
     <button type="button" class="btn btn-primary" (click)="updatePromotion()">Actualizar</button>
   </div>
 </ng-template>
