@@ -186,7 +186,7 @@ export const NavigationItems: NavigationItem[] = [
         id: 'signin',
         title: 'Sign in',
         type: 'item',
-        url: '/auth/signin',
+        url: '/ecommers/login',
         icon: 'feather icon-log-in',
         target: true,
         breadcrumbs: false
