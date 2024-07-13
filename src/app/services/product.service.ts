@@ -16,6 +16,9 @@ export class ProductService {
   getProducts() {
     return this.http.get<ProductModel[]>(`${this.apiUrl}/list?search`)
   }
+  getProductsByCategory(idcategoria: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/listaxcate/${idcategoria}`);
+}
 
   getProductById(id: string) {
     return this.http.get<any>(`${this.apiUrl}/get/${id}`)
@@ -24,7 +27,7 @@ export class ProductService {
   createProduct(product: FormData) {
     return this.http.post<ProductCreateReq>(`${this.apiUrl}/store`, product);
   }
-  
+
   updateProduct(id: string, product: FormData): Observable<ProductModel> {
     return this.http.put<ProductModel>(`${this.apiUrl}/edit/${id}`, product);
   }
