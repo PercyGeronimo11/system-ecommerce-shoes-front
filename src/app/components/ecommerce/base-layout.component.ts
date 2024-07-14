@@ -19,6 +19,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class EcommercePlantilla implements OnInit, OnDestroy {
   products: ProductModel[] = [];
   categories: any = [];
+  NameCate: any = [];
   isLoading = false;
   error: string | null = null;
   categoria: number = 0;
@@ -69,6 +70,8 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
           (products: any) => {
             this.products = products.data.content;
             this.isLoading = false;
+            this.NameCate="Productos";
+            console.log("Productos filtrados por categoría:", this.NameCate);
             console.log("Todos los productos cargados:", products);
           },
           error => {
@@ -83,6 +86,8 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
           (products: any) => {
             this.products = products.data.content;
             this.isLoading = false;
+           // this.NameCate=this.categoriaService.getById(this.categoria);
+            console.log("Productos filtrados por categoría:", this.NameCate);
             console.log("Productos filtrados por categoría:", products);
           },
           error => {
