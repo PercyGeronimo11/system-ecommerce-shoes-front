@@ -18,17 +18,18 @@
             <img src="assets/images/logo-ecommerce.jpeg" alt="Logo" class="logo">
           </div>
           <div class="col icon-container">
+
             <div class="icon d-inline-block">
               <i class="fas fa-user"></i>
               <span>
-                <a href="javascript:" (click)="logout()" class="btn btn-primary"> <span>Ingresar</span></a>
+                <a href="javascript:" [routerLink]="['/ecommersCreate']"  class="btn btn-primary"> <span>Ingresar</span></a>
               </span>
             </div>
             <div class="icon d-inline-block ml-3">
               <i class="fas fa-shopping-cart"></i>
               <span>
-                <a [routerLink]="['/ecommersCliente']" class="btn btn-primary">
-                  <span>Registrar</span>
+                <a  href="/ecommers"  class="btn btn-primary">
+                  <span>Productos</span>
                 </a>
               </span>
             </div>
@@ -59,14 +60,14 @@
             <li class="nav-item ms-3">
               <a class="nav-link" href="/ecommers">Nosotros</a>
             </li>
-            <ul class="nav-item ms-3 dropdown" [formGroup]="numberForm" (ngSubmit)="onSubmit()">
-                <select class="form-control" formControlName="idcategoria" name="idcategoria" (change)="onSubmit()">
-                  <option [value]="null" selected disabled>Seleccione</option>
-                  <option [value]="0">Ver todo</option>
-                  <option *ngFor="let category of categories; let i = index" [value]="category.id">
-                    {{ category.catName }}
-                  </option>
-                </select>
+            <ul class="nav-item ms-3 dropdown " [formGroup]="numberForm" (ngSubmit)="onSubmit()">
+              <select class="form-control me-2" formControlName="idcategoria" name="idcategoria" (change)="onSubmit()">
+                <option [value]="null" selected disabled>Seleccione</option>
+                <option [value]="0">Ver todo</option>
+                <option *ngFor="let category of categories; let i = index" [value]="category.id">
+                  {{ category.catName }}
+                </option>
+              </select>
             </ul>
             <li class="nav-item ms-3">
               <a class="nav-link" href="#contact">Contáctanos</a>
@@ -75,6 +76,7 @@
         </div>
       </div>
     </nav>
+
     <section class="row justify-content-center">
       <!-- contenido dinámico -->
       <ng-content>
@@ -106,8 +108,7 @@
         </div>
         <div class="container">
           <div class="col-12" style="text-align: center;">
-            <h1><b>TENDENCIA</b></h1>
-            <h6><a href="#"><u>VER TODO</u></a></h6><br>
+            <h1><b>{{NameCate}}</b></h1>
           </div>
           <div class="container">
             <div class="row mt-4">

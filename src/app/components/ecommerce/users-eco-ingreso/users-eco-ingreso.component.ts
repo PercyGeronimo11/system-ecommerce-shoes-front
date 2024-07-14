@@ -39,7 +39,15 @@ export class EcommersIngresoModule implements OnInit {
     if (this.userecoForm.valid) {
       this.userService.create(this.userecoForm.value).subscribe((resp: any) => {
         console.log('Usuario creado exitosamente!', resp);
-        this.router.navigate(['/users']);
+
+        //this.router.navigate(['/users']);
+
+         this.router.navigate(['/ecommers']);
+
+
+
+
+
       }, error => {
         console.error('Error creando el usuario', error);
       });
