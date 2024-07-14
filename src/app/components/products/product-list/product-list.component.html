@@ -11,9 +11,9 @@
               <th>Talla</th>
               <th>Color</th>
               <th>Precio Unitario</th>
+              <th>stock</th>
               <th>N° Plataforma</th>
               <th>N° Taco</th>
-              <th>stock</th>
               <th>Opciones</th>
             </tr>
           </thead>
@@ -24,10 +24,9 @@
               <td>{{ product.proSize }}</td>
               <td>{{ product.proColor }}</td>
               <td>{{ product.proUnitPrice }}</td>
+              <td>{{ product.proStock }}</td>
               <td>{{ product.proSizePlatform }}</td>
               <td>{{ product.proSizeTaco }}</td>
-              <td>{{ product.proStock }}</td>
-              <!-- <td><img [src]="product.proUrlImage" alt="Producto"></td> -->
               <td>
                 <a [routerLink]="['/products/edit/', product.id]" class="btn btn-primary">Editar</a>
 

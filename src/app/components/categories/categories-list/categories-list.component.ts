@@ -28,8 +28,8 @@ export class CategoriesListComponent implements OnInit {
     this.categoryForm = this.fb.group({
       catName: ['', Validators.required],
       catDescription: ['', Validators.required],
-      catStatus: [false, Validators.required],
-      catHasTaco: [false, Validators.required]
+      catStatus: [true, Validators.required],
+      catHasTaco: [true, Validators.required]
     });
   }
 
@@ -47,7 +47,7 @@ export class CategoriesListComponent implements OnInit {
       catName: category?.catName || '',
       catDescription: category?.catDescription || '',
       catStatus: true,
-      catHasTaco: category?.catHasTaco ?? false
+      catHasTaco: category?.catHasTaco ?? true
     });
     this.modalRef = this.modalService.open(content, { centered: true });
   }
@@ -83,12 +83,14 @@ export class CategoriesListComponent implements OnInit {
 
   createCategory(): void {
     if (this.categoryForm.valid) {
-      this.categoriaService.create(this.categoryForm.value).subscribe((resp: any) => {
-        this.categories.push(resp.data);
-        this.closeModal();
-      }, error => {
-        console.error('Error creating category', error);
-      });
+      this.categoriaService.create(this.categoryForm.value).subscribe(
+        (resp: any) => {
+          this.categories.push(resp.data);
+          this.closeModal();
+        }, 
+        error => {
+          console.error('Error creating category', error);
+        });
     } else {
       console.error('Form is invalid');
     }

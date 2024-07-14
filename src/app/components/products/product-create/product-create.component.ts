@@ -20,14 +20,13 @@ export class ProductCreateComponent implements OnInit {
   selectedFile: File | null = null;
   categories: CategoryModel[]=[];
   imageToShow: any;
-  isWithTaco: Boolean=true;
+  isWithTaco: Boolean=false;
 
   constructor(
     private productService: ProductService,
     private categoryService: CategoriaService,
     private router: Router,
     private formBuilder: FormBuilder,
-    //private modalService: NgbModal
   ) { }
 
   formGroupProduct: FormGroup = this.formBuilder.group({
@@ -62,6 +61,20 @@ export class ProductCreateComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
     }
   }
+
+  onSelectedCategory(event: Event){
+    const selectedCategoryId = (event.target as HTMLSelectElement).value;
+    const selectedCategory = this.categories.find(category => category.id.toString() === selectedCategoryId);
+
+    if (selectedCategory) {
+      this.isWithTaco = selectedCategory.catHasTaco;
+    } else {
+      console.log("No hay la categoria", selectedCategory);
+      this.isWithTaco = false;
+    }
+  
+  }
+
   onSubmit() {
     console.log("entraaaa");
     this.isLoading = true;
