@@ -14,8 +14,9 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
   getProducts() {
-    return this.http.get<ProductModel[]>(`${this.apiUrl}/list?search`)
+    return this.http.get<any>(`${this.apiUrl}/list?search`)
   }
+  
   getProductsByCategory(idcategoria: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/listaxcate/${idcategoria}`);
 }
@@ -29,7 +30,7 @@ export class ProductService {
   }
   
   updateProduct(id: string, product: FormData) {
-    return this.http.put<ProductModel>(`${this.apiUrl}/update/${id}`, product);
+    return this.http.put<any>(`${this.apiUrl}/update/${id}`, product);
   }
 
   deleteProduct(id: number) {

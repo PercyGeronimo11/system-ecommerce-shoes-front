@@ -41,7 +41,7 @@ export class LotCreateComponent implements OnInit {
   });
 
   materialForm: materialForm = {
-    id:0,
+    id: 0,
     name: '',
     quantity: 0,
     priceUnit: 0,
@@ -74,8 +74,7 @@ export class LotCreateComponent implements OnInit {
         },
         (error) => {
           console.log("No se guardo", error);
-        })
-      ;
+        });
   }
 
   getListProducts() {
@@ -140,12 +139,11 @@ export class LotCreateComponent implements OnInit {
   onMaterialSelect() {
     //const selectedMaterialId = this.selectedMaterial !== null ? Number(this.selectedMaterial) : null;
     const selectedMaterial = this.materials.find(material => material.id == this.selectedIdMaterial);
-    console.log("id",this.selectedIdMaterial);
-    console.log("maerial:",selectedMaterial);
-    console.log("lista",this.materials);
     if (selectedMaterial) {
       this.materialForm.priceUnit = Number((selectedMaterial.price / selectedMaterial.quantity).toFixed(2));
       this.materialForm.name = selectedMaterial.name;
+    } else {
+      console.log("Material no encontrado");
     }
   }
 

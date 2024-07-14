@@ -33,7 +33,7 @@ export interface LotModel {
     priceUnit: number;
     subTotal: number;
   }
-  
+
   export interface LotModelResp {
     id: number;
     product: {
@@ -48,10 +48,11 @@ export interface LotModel {
     lotTotalCost: number;
     lotQuantityProducts: number;
   }
+  
   export interface LotDetailModelResp {
     id: number;
-    matName: string;
+    name: string;
     detPriceUnit: number,
-    detQuantityMaterials: number; 
+    detQuantity: number; 
     detSubTotal: number;
   }

@@ -42,13 +42,13 @@
                                 <tr *ngFor="let material of lotMaterialsArray.controls; let i=index" [formGroupName]="i">
                                   <td class="col-1">{{ i + 1 }}</td>
                                   <td class="col-4">
-                                    <input formControlName="matName" type="text" class="form-control" readonly>
+                                    <input formControlName="name" type="text" class="form-control" readonly>
                                   </td>
                                   <td class="col-2">
                                     <input formControlName="detPriceUnit" type="number" class="form-control" readonly>
                                   </td>
                                   <td class="col-2">
-                                    <input formControlName="detQuantityMaterials" type="number" class="form-control" readonly>
+                                    <input formControlName="detQuantity" type="number" class="form-control" readonly>
                                   </td>
                                   <td class="col-2">
                                     <input formControlName="detSubTotal" type="number" class="form-control" readonly>
@@ -60,30 +60,7 @@
                                   </td>
                                 </tr>
                               </tbody>
-<!--                             
-                            <tbody formArrayName="lotMaterials">
-                                <tr *ngFor="let material of lotMaterialsArray.controls; let i=index"
-                                    [formGroupName]="i">
-                                    <td class="col-1">{{ i + 1 }}</td>
-                                    <td class="col-4">
-                                        <input formControlName="name" type="text" class="form-control" readonly>
-                                    </td>
-                                    <td class="col-2">
-                                        <input formControlName="detPriceUnit" type="number" class="form-control" readonly>
-                                    </td>
-                                    <td class="col-2">
-                                        <input formControlName="detQuantity" type="number" class="form-control" readonly>
-                                    </td>
-                                    <td class="col-2">
-                                        <input formControlName="detSubTotal" type="number" class="form-control" readonly>
-                                    </td>
-                                    <td class="col-1">
-                                        <button class="btn btn-danger me-1" (click)="removeLotMaterial(i)">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody> -->
+                              
                         </table>
                     </div>
 
@@ -92,7 +69,7 @@
                         <input formControlName="lotTotalCost" type="number" class="form-control" readonly>
                     </div>
 
-                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <button type="submit" class="btn btn-success">Actualizar</button>
                 </form>
             </div>
 
@@ -113,17 +90,17 @@
                             <div class="row mt-3">
                                 <div class="form-group col-4">
                                     <label for="">Cantidad</label>
-                                    <input [(ngModel)]="materialForm.quantity" type="number" class="form-control"
-                                        (input)="onQuantityRead()">
+                                    <input [(ngModel)]="materialDetailsModal.quantity" type="number" class="form-control"
+                                        (input)="onQuantityMaterialRead()">
                                 </div>
                                 <div class="form-group col-4">
                                     <label for="">Precio Unitario</label>
-                                    <input [(ngModel)]="materialForm.priceUnit" type="number" class="form-control"
-                                        (input)="onPriceUnitRead()">
+                                    <input [(ngModel)]="materialDetailsModal.priceUnit" type="number" class="form-control"
+                                        (input)="onPriceUnitMaterialRead()">
                                 </div>
                                 <div class="form-group col-4">
                                     <label for="">Sub Total</label>
-                                    <input [(ngModel)]="materialForm.subTotal" type="number" class="form-control"
+                                    <input [(ngModel)]="materialDetailsModal.subTotal" type="number" class="form-control"
                                         disabled>
                                 </div>
                             </div>
