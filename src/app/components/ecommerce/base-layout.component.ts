@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { RouterModule } from '@angular/router';
 //import { PromocionService } from '../promotions/service/promotions.service';
+import { CategoriaService } from '../categories/service/categories.service';
 import { AuthService } from '../../components/auth/service/auth.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 @Component({
@@ -17,6 +18,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class EcommercePlantilla implements OnInit, OnDestroy {
   products: ProductModel[] = [];
+  categories: any = [];
   isLoading = false;
   error: string | null = null;
   categoria: number = 0;
@@ -29,6 +31,7 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
   slideInterval: any;
 
   constructor(private fb: FormBuilder,
+    public categoriaService: CategoriaService,
     private authService: AuthService,
     private productService: ProductService,
     //private promotionService:PromocionService,
@@ -39,17 +42,22 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
       idcategoria: [0]
     });
 
-
-
+    this.categoriaService.list().subscribe((resp: any) => {
+      this.categories = resp.data;
+      console.log(this.categories);
+    });
+    this.startAutoSlide();
   }
+
   ngOnInit(): void {
+
     this.getProducts();
     this.categoria == 0
-
   }
 
   onSubmit(): void {
-    this.categoria = this.numberForm.get('idcategoria')?.value || 0;
+    this.categoria = this.numberForm.get('idcategoria')?.value;
+    console.log('Selected category:', this.categoria);
     this.  ngOnInit();
   }
 
@@ -84,18 +92,7 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
           }
         );
     }
-    this.startAutoSlide();
   }
-
-
-
-
-
-
-
-
-
-
 
 
   ngOnDestroy() {
@@ -105,10 +102,6 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
   addToCart(product: any): void {
     console.log('Producto agregado al carrito', product);
   }
-
-
-
-
 
   previousSlide(event: Event) {
     event.preventDefault();

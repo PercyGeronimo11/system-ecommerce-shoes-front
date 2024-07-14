@@ -21,7 +21,7 @@
             <div class="icon d-inline-block">
               <i class="fas fa-user"></i>
               <span>
-                <a href="javascript:" (click)="logout()"  class="btn btn-primary"> <span>Ingresar</span></a>
+                <a href="javascript:" (click)="logout()" class="btn btn-primary"> <span>Ingresar</span></a>
               </span>
             </div>
             <div class="icon d-inline-block ml-3">
@@ -59,16 +59,15 @@
             <li class="nav-item ms-3">
               <a class="nav-link" href="/ecommers">Nosotros</a>
             </li>
-            <li class="nav-item dropdown ms-3">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Calzado
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Zapatillas</a></li>
-                <li><a class="dropdown-item" href="#">Tacos</a></li>
-              </ul>
-            </li>
+            <ul class="nav-item ms-3 dropdown" [formGroup]="numberForm" (ngSubmit)="onSubmit()">
+                <select class="form-control" formControlName="idcategoria" name="idcategoria" (change)="onSubmit()">
+                  <option [value]="null" selected disabled>Seleccione</option>
+                  <option [value]="0">Ver todo</option>
+                  <option *ngFor="let category of categories; let i = index" [value]="category.id">
+                    {{ category.catName }}
+                  </option>
+                </select>
+            </ul>
             <li class="nav-item ms-3">
               <a class="nav-link" href="#contact">Contáctanos</a>
             </li>
@@ -111,14 +110,6 @@
             <h6><a href="#"><u>VER TODO</u></a></h6><br>
           </div>
           <div class="container">
-            <form [formGroup]="numberForm" (ngSubmit)="onSubmit()">
-              <div class="form-group">
-                <label for="idcategoria">Categoría</label>
-                <input type="number" class="form-control" id="idcategoria" formControlName="idcategoria" name="idcategoria" placeholder="Ingrese la categoría">
-              </div>
-              <button type="submit" class="btn btn-primary">Filtrar</button>
-            </form>
-
             <div class="row mt-4">
               <div class="col-md-4 mb-4" *ngFor="let product of products.slice(0, 6); let i = index">
                 <div class="product-card card h-100">
@@ -139,8 +130,7 @@
       </ng-content>
       <!--Fin de contenido-->
     </section> <br>
-    <footer class="row bg-black text-center text-white">
-
+    <footer class="container-fluid bg-black text-center text-white">
       <div class="row">
         <div class="col-12 text-center"><br>
           <b class="copyright">El contenido de esta página web está protegido por copyright y es propiedad del grupo 5

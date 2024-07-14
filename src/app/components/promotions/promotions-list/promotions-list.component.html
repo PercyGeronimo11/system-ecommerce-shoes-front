@@ -2,7 +2,7 @@
   <div class="col-xl-12">
     <app-card cardTitle="Promociones" [options]="false" blockClass="table-border-style">
       <div>
-        <button class="btn btn-primary mb-3" (click)="openModal(createContent, null, 'create')">Nueva promoción</button>
+        <button class="btn btn-primary mb-3" (click)="openModal(createContent, null, 'create')">Nuevo</button>
       </div>
       <div class="table-responsive">
         <table class="table table-striped">
@@ -10,8 +10,8 @@
             <tr>
               <th>N°</th>
               <th>Descuento</th>
-              <th>Fecha Inicio</th>
-              <th>Fecha Fin</th>
+              <th>Fecha de Inicio</th>
+              <th>Fecha de Cierre</th>
               <th>Descripción</th>
               <th>Imagen</th>
               <th>Estado</th>
@@ -26,13 +26,16 @@
               <td>{{ promotion.promEnddate }}</td>
               <td>{{ promotion.promDescription }}</td>
               <td>
-              <img [src]="promotion.promUrlImage" style="max-width: 90px;" class="card-img-top promotion-image" alt="Promocion">
-               <span *ngIf="!promotion.promUrlImage">No hay</span>
+                <img [src]="promotion.promUrlImage" style="max-width: 90px;" class="card-img-top promotion-image"
+                  alt="Promocion">
+                <span *ngIf="!promotion.promUrlImage">No existe</span>
               </td>
               <td>{{ promotion.promStatus ? 'Activado' : 'Desactivado' }}</td>
               <td>
-                <button type="button" class="btn btn-primary me-2 mb-2" (click)="openModal(updateContent, promotion, 'update')">Actualizar</button>
-                <button type="button" class="btn btn-danger mb-2" (click)="openModal(deleteContent, promotion, 'delete')">Eliminar</button>
+                <button type="button" class="btn btn-warning me-2 mb-2"
+                  (click)="openModal(updateContent, promotion, 'update')"><i class="fa fa-edit"></i></button>
+                <button type="button" class="btn btn-danger mb-2"
+                  (click)="openModal(deleteContent, promotion, 'delete')"><i class="fa fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
@@ -46,9 +49,6 @@
 <ng-template #deleteContent let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Confirmar Eliminación</h4>
-    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-      <span aria-hidden="true">&times;</span>
-    </button>
   </div>
   <div class="modal-body">
     <p>¿Estás seguro que deseas eliminar la promoción?</p>
@@ -57,7 +57,6 @@
       <li><strong>Fecha Inicio:</strong> {{ selectedPromotion?.promStartdate }}</li>
       <li><strong>Fecha Fin:</strong> {{ selectedPromotion?.promEnddate }}</li>
       <li><strong>Descripción:</strong> {{ selectedPromotion?.promDescription }}</li>
-      <li><strong>URL:</strong> {{ selectedPromotion?.promUrlImage }}</li>
     </ul>
   </div>
   <div class="modal-footer">
@@ -70,15 +69,12 @@
 <ng-template #updateContent let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Actualizar Promoción</h4>
-    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-      <span aria-hidden="true">&times;</span>
-    </button>
   </div>
   <div class="modal-body">
     <form [formGroup]="promocionForm">
       <div class="form-group">
         <label for="percentage">Descuento</label>
-        <input type="number" class="form-control" id="percentage"  formControlName="promPercentage" name="percentage">
+        <input type="number" class="form-control" id="percentage" formControlName="promPercentage" name="percentage">
       </div>
       <div class="form-group">
         <label for="startDate">Fecha Inicio</label>
@@ -102,17 +98,18 @@
       <div class="form-group">
         <label for="promUrlImage">Imagen</label>
       </div>
-        <img [src]="selectedPromotion?.promUrlImage " class="img-thumbnail mt-2" style="max-width: 100px;">
+      <img [src]="selectedPromotion?.promUrlImage " class="img-thumbnail mt-2" style="max-width: 100px;">
       <div class="form-group">
         <label for="promUrlImage">Nueva Imagen</label>
-        <input type="file" class="form-control" id="promUrlImage"  (click)="clearImageToShow()" (change)="onFileSelected($event)">
+        <input type="file" class="form-control" id="promUrlImage" (click)="clearImageToShow()"
+          (change)="onFileSelected($event)">
       </div>
-        <img *ngIf="imageToShow" [src]="imageToShow" class="img-thumbnail mt-2" style="max-width: 100px;" >
+      <img *ngIf="imageToShow" [src]="imageToShow" class="img-thumbnail mt-2" style="max-width: 100px;">
 
-</form>
+    </form>
   </div>
   <div class="modal-footer">
-    <button type="button"  class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
     <button type="button" class="btn btn-primary" (click)="updatePromotion()">Actualizar</button>
   </div>
 </ng-template>
@@ -121,9 +118,7 @@
 <ng-template #createContent let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Nueva Promoción</h4>
-    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-      <span aria-hidden="true">&times;</span>
-    </button>
+
   </div>
   <div class="modal-body">
     <form [formGroup]="promocionForm">
