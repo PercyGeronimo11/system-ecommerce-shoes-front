@@ -29,7 +29,7 @@ export class CategoriesListComponent implements OnInit {
       catName: ['', Validators.required],
       catDescription: ['', Validators.required],
       catStatus: [false, Validators.required],
-      catHasttaco: [false, Validators.required]
+      catHasTaco: [false, Validators.required]
     });
   }
 
@@ -47,7 +47,7 @@ export class CategoriesListComponent implements OnInit {
       catName: category?.catName || '',
       catDescription: category?.catDescription || '',
       catStatus: true,
-      catHasttaco: category?.catHasttaco ?? false
+      catHasTaco: category?.catHasTaco ?? false
     });
     this.modalRef = this.modalService.open(content, { centered: true });
   }

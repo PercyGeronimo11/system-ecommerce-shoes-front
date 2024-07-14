@@ -20,7 +20,7 @@
               <th scope="row">{{ i + 1 }}</th>
               <td>{{ categoria.catName }}</td>
               <td>{{ categoria.catDescription }}</td>
-              <td>{{ categoria.catHasttaco ? 'Si tiene' : 'No tiene' }}</td>
+              <td>{{ categoria.catHasTaco ? 'Si tiene' : 'No tiene' }}</td>
               <td>
                 <button type="button" class="btn btn-warning me-2 mb-2"
                   (click)="openModal(updateContent, categoria, 'update')"><i class="fa fa-edit"></i></button>
@@ -76,13 +76,13 @@
         <div class="d-flex justify-content-center">
           <div class="form-check form-check-inline">
             <label class="form-check-label" for="active">Si</label>
-            <input class="form-check-input" type="radio" id="active" formControlName="catHasttaco" [value]="1"
-              name="catHasttaco">
+            <input class="form-check-input" type="radio" id="active" formControlName="catHasTaco" [value]="1"
+              name="catHasTaco">
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label" for="inactive">No</label>
-            <input class="form-check-input" type="radio" id="inactive" formControlName="catHasttaco" [value]="0"
-              name="catHasttaco">
+            <input class="form-check-input" type="radio" id="inactive" formControlName="catHasTaco" [value]="0"
+              name="catHasTaco">
           </div>
         </div>
       </div>
@@ -114,13 +114,13 @@
         <div class="d-flex justify-content-center">
           <div class="form-check form-check-inline">
             <label class="form-check-label" for="active">Si</label>
-            <input class="form-check-input" type="radio" id="active" formControlName="catHasttaco" [value]="1"
-              name="catHasttaco">
+            <input class="form-check-input" type="radio" id="active" formControlName="catHasTaco" [value]="1"
+              name="catHasTaco">
           </div>
           <div class="form-check form-check-inline">
             <label class="form-check-label" for="inactive">No</label>
-            <input class="form-check-input" type="radio" id="inactive" formControlName="catHasttaco" [value]="0"
-              name="catHasttaco">
+            <input class="form-check-input" type="radio" id="inactive" formControlName="catHasTaco" [value]="0"
+              name="catHasTaco">
           </div>
         </div>
       </div>
