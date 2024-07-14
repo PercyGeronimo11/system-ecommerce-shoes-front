@@ -11,14 +11,18 @@ export class ProductService {
 
   private apiUrl = 'http://127.0.0.1:8080/product'; // Replace with your actual API URL
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getProducts() {
     return this.http.get<ProductModel[]>(`${this.apiUrl}/list?search`)
   }
+
+
   getProductsByCategory(idcategoria: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/listaxcate/${idcategoria}`);
-}
+  }
+
+
 
   getProductById(id: string) {
     return this.http.get<any>(`${this.apiUrl}/get/${id}`)

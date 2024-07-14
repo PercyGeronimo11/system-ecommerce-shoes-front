@@ -2,7 +2,7 @@
   <div class="col-xl-12">
     <app-card cardTitle="Categorias" [options]="false" blockClass="table-border-style">
       <div>
-        <button class="btn btn-primary mb-3" (click)="openModal(createContent, null, 'create')">Nueva categoria</button>
+        <button class="btn btn-primary mb-3" (click)="openModal(createContent, null, 'create')">Nuevo</button>
       </div>
       <div class="table-responsive">
         <table class="table table-striped">
@@ -11,7 +11,7 @@
               <th>N°</th>
               <th>Nombre</th>
               <th>Descripcion</th>
-              <th>Tiene calzado</th>
+              <th>Taco</th>
               <th>Opciones</th>
             </tr>
           </thead>
@@ -20,12 +20,12 @@
               <th scope="row">{{ i + 1 }}</th>
               <td>{{ categoria.catName }}</td>
               <td>{{ categoria.catDescription }}</td>
-              <td>{{ categoria.catHasttaco ? 'tiene' : 'no tiene' }}</td>
+              <td>{{ categoria.catHasttaco ? 'Si tiene' : 'No tiene' }}</td>
               <td>
-                <button type="button" class="btn btn-primary me-2 mb-2"
-                  (click)="openModal(updateContent, categoria, 'update')">Actualizar</button>
+                <button type="button" class="btn btn-warning me-2 mb-2"
+                  (click)="openModal(updateContent, categoria, 'update')"><i class="fa fa-edit"></i></button>
                 <button type="button" class="btn btn-danger mb-2"
-                  (click)="openModal(deleteContent, categoria,'delete')">Eliminar</button>
+                  (click)="openModal(deleteContent, categoria,'delete')"><i class="fa fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
@@ -39,16 +39,15 @@
 <ng-template #deleteContent let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Confirmar Eliminación</h4>
-    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-      <span aria-hidden="true">&times;</span>
-    </button>
   </div>
   <div class="modal-body">
-    <p>¿Estás seguro que deseas eliminar la categoria?</p>
+    <p style="text-align: center;">¿Estás seguro que deseas eliminar la categoria?</p>
     <ul>
       <li><strong>Nombre:</strong> {{ selectedCategory?.catName }}</li>
       <li><strong>Descripcion:</strong> {{ selectedCategory?.catDescription }}</li>
-      <li><strong>Estado:</strong> {{ selectedCategory?.catStatus }}</li>
+      <li><strong>Estado:</strong>
+        {{ selectedCategory?.catStatus? 'Activo' : 'Inactivo' }}
+      </li>
     </ul>
   </div>
   <div class="modal-footer">
@@ -61,9 +60,6 @@
 <ng-template #updateContent let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Actualizar Categoria</h4>
-    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-      <span aria-hidden="true">&times;</span>
-    </button>
   </div>
   <div class="modal-body">
     <form [formGroup]="categoryForm">
@@ -74,6 +70,21 @@
       <div class="form-group">
         <label for="description">Descripcion</label>
         <input type="text" class="form-control" id="description" formControlName="catDescription" name="description">
+      </div>
+      <div class="form-group">
+        <label for="status" style="text-align: center;"><b>¿Tiene taco?</b></label><br>
+        <div class="d-flex justify-content-center">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label" for="active">Si</label>
+            <input class="form-check-input" type="radio" id="active" formControlName="catHasttaco" [value]="1"
+              name="catHasttaco">
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label" for="inactive">No</label>
+            <input class="form-check-input" type="radio" id="inactive" formControlName="catHasttaco" [value]="0"
+              name="catHasttaco">
+          </div>
+        </div>
       </div>
     </form>
   </div>
@@ -87,30 +98,27 @@
 <ng-template #createContent let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Nueva Categoria</h4>
-    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-      <span aria-hidden="true">&times;</span>
-    </button>
   </div>
   <div class="modal-body">
     <form [formGroup]="categoryForm">
       <div class="form-group">
-        <label for="name">Nombre</label>
+        <label for="name"><b>Nombre</b></label>
         <input type="text" class="form-control" id="name" formControlName="catName" name="name">
       </div>
       <div class="form-group">
-        <label for="description">Descripcion</label>
+        <label for="description"><b>Descripcion</b></label>
         <input type="text" class="form-control" id="description" formControlName="catDescription" name="description">
       </div>
       <div class="form-group">
-        <label for="status">Tiene calzado</label><br>
+        <label for="status" style="text-align: center;"><b>¿Tiene taco?</b></label><br>
         <div class="d-flex justify-content-center">
           <div class="form-check form-check-inline">
-            <label class="form-check-label" for="active">(Asignado)</label>
+            <label class="form-check-label" for="active">Si</label>
             <input class="form-check-input" type="radio" id="active" formControlName="catHasttaco" [value]="1"
               name="catHasttaco">
           </div>
           <div class="form-check form-check-inline">
-            <label class="form-check-label" for="inactive">(No asignado)</label>
+            <label class="form-check-label" for="inactive">No</label>
             <input class="form-check-input" type="radio" id="inactive" formControlName="catHasttaco" [value]="0"
               name="catHasttaco">
           </div>
