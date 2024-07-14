@@ -28,7 +28,8 @@ export class CategoriesListComponent implements OnInit {
     this.categoryForm = this.fb.group({
       catName: ['', Validators.required],
       catDescription: ['', Validators.required],
-      catStatus: [false, Validators.required]
+      catStatus: [false, Validators.required],
+      catHasttaco: [false, Validators.required]
     });
   }
 
@@ -45,7 +46,8 @@ export class CategoriesListComponent implements OnInit {
     this.categoryForm.reset({
       catName: category?.catName || '',
       catDescription: category?.catDescription || '',
-      catStatus: true
+      catStatus: true,
+      catHasttaco: category?.catHasttaco ?? false
     });
     this.modalRef = this.modalService.open(content, { centered: true });
   }

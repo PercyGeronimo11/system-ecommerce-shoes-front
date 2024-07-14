@@ -20,23 +20,22 @@
           <div class="col icon-container">
             <div class="icon d-inline-block">
               <i class="fas fa-user"></i>
-              <span> <a [routerLink]="['/ecommersCreate']" class="btn btn-primary">
-                  <span>Ingresar</span>
-                </a>
+              <span>
+                <a href="javascript:" (click)="logout()"  class="btn btn-primary"> <span>Ingresar</span></a>
               </span>
             </div>
             <div class="icon d-inline-block ml-3">
               <i class="fas fa-shopping-cart"></i>
               <span>
-                <a href="#" class="btn btn-primary">
-                  <span>Carrito</span>
+                <a [routerLink]="['/ecommersCliente']" class="btn btn-primary">
+                  <span>Registrar</span>
                 </a>
               </span>
             </div>
             <div class="icon d-inline-block ml-3">
               <i class="fas fa-train"></i>
               <span>
-                <a  href="/ecommers" class="btn btn-primary">
+                <a href="/ecommers" class="btn btn-primary">
                   <span>Envíos</span>
                 </a>
               </span>
@@ -55,10 +54,10 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
           <ul class="navbar-nav mb-2 mb-lg-0">
             <li class="nav-item ms-3">
-              <a class="nav-link"  href="/ecommers">Inicio</a>
+              <a class="nav-link" href="/ecommers">Inicio</a>
             </li>
             <li class="nav-item ms-3">
-              <a class="nav-link"  href="/ecommers">Nosotros</a>
+              <a class="nav-link" href="/ecommers">Nosotros</a>
             </li>
             <li class="nav-item dropdown ms-3">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -109,19 +108,29 @@
         <div class="container">
           <div class="col-12" style="text-align: center;">
             <h1><b>TENDENCIA</b></h1>
-            <h6><a href="#"><u>VER TODO</u></a></h6>
+            <h6><a href="#"><u>VER TODO</u></a></h6><br>
           </div>
-          <div class="row">
-            <div class="col-md-4 mb-4" *ngFor="let product of products.slice(0, 6); let i = index">
-              <div class="product-card card h-100">
-                <img [src]="product.proUrlImage" class="card-img-top product-image" alt="Producto">
-                <div class="card-body d-flex flex-column">
-                  <h5 class="card-title">{{ product.proName }}</h5>
-                  <p class="card-text">{{ product.proDescription }}</p>
-                  <p class="price mt-auto">S/.{{ product.proUnitPrice }}</p>
-                  <button class="btn btn-primary mt-3" (click)="addToCart(product)">
-                    <i class="fas fa-shopping-cart"></i> Agregar
-                  </button>
+          <div class="container">
+            <form [formGroup]="numberForm" (ngSubmit)="onSubmit()">
+              <div class="form-group">
+                <label for="idcategoria">Categoría</label>
+                <input type="number" class="form-control" id="idcategoria" formControlName="idcategoria" name="idcategoria" placeholder="Ingrese la categoría">
+              </div>
+              <button type="submit" class="btn btn-primary">Filtrar</button>
+            </form>
+
+            <div class="row mt-4">
+              <div class="col-md-4 mb-4" *ngFor="let product of products.slice(0, 6); let i = index">
+                <div class="product-card card h-100">
+                  <img [src]="product.proUrlImage" class="card-img-top product-image" alt="Producto">
+                  <div class="card-body d-flex flex-column">
+                    <p class="card-title" style="font-size: large;">{{ product.proName }}</p>
+                    <p class="card-text" style="font-size: large;">{{ product.proDescription }}</p>
+                    <p class="price mt-auto" style="font-size:x-large;">S/.{{ product.proUnitPrice }}</p>
+                    <button class="btn btn-primary mt-3" (click)="addToCart(product)">
+                      <i class="fas fa-shopping-cart"></i> Agregar
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -134,9 +143,11 @@
 
       <div class="row">
         <div class="col-12 text-center"><br>
-            <b class="copyright">El contenido de esta página web está protegido por copyright y es propiedad del grupo 5 ☺</b>
-            <br> <b>2024</b><br>
-        </div></div>
+          <b class="copyright">El contenido de esta página web está protegido por copyright y es propiedad del grupo 5
+            ☺</b>
+          <br> <b>2024</b><br>
+        </div>
+      </div>
     </footer>
 
   </div>

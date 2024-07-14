@@ -69,7 +69,7 @@ export class PromotionsListComponent implements OnInit {
       promStartdate: promotion?.promStartdate || '',
       promEnddate: promotion?.promEnddate || '',
       promDescription: promotion?.promDescription || '',
-    //  promUrlImage: promotion?.promUrlImage || '',
+      promUrlImage: promotion?.promUrlImage || '',
       promStatus: promotion?.promStatus || false
     });
     this.modalRef = this.modalService.open(content, { centered: true });
@@ -77,17 +77,23 @@ export class PromotionsListComponent implements OnInit {
 
   closeModal(): void {
     if (this.modalRef) {
+      this.imageToShow = null;
       this.modalRef.close();
     }
   }
-
+// Método para limpiar imageToShow
+clearImageToShow() {
+  this.imageToShow = null; // o this.imageToShow = '';
+}
   onFileSelected(event: any) {
     if (event.target.files && event.target.files[0]) {
+
       this.selectedFile = event.target.files[0];
+
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.imageToShow = e.target.result;
-      };
+      }
       reader.readAsDataURL(event.target.files[0]);
     }
   }
@@ -108,9 +114,10 @@ export class PromotionsListComponent implements OnInit {
       }
 
       this.promocionService.edit(this.selectedPromotion.id, formData).subscribe((resp: any) => {
-        const index = this.promotions.findIndex((promo: any) => promo.id === this.selectedPromotion.id);
+        const updatedPromotion = resp.data; // Assuming the response returns the updated promotion object
+        const index = this.promotions.findIndex((promo: any) => promo.id === updatedPromotion.id);
         if (index !== -1) {
-          this.promotions[index] = { ...this.promotions[index], ...this.promocionForm.value };
+          this.promotions[index] = updatedPromotion; // Update the promotion in the local array
         }
         this.closeModal();
       }, error => {
@@ -129,7 +136,7 @@ export class PromotionsListComponent implements OnInit {
         formData.append('file', this.selectedFile);
       }
 
-      this.promocionService.create(formData).subscribe((resp: any) => {
+        this.promocionService.create(formData).subscribe((resp: any) => {
         this.promotions.push(resp.data);
         this.closeModal();
       }, error => {

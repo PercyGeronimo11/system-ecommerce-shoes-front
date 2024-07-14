@@ -1,0 +1,21 @@
+.d-flex {
+  display: flex;
+  gap: 10px; /* Añade un espacio entre los botones */
+}
+
+.btn-custom {
+  display: inline-block;
+  padding: 8px 15px; /* Ajusta el tamaño del padding para botones más pequeños */
+  font-size: 14px; /* Ajusta el tamaño de la fuente */
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-custom:hover {
+  background-color: #0056b3;
+}

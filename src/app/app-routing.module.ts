@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/analytics',
+        redirectTo: '/ecommers',
         pathMatch: 'full'
       },
       {
@@ -96,7 +96,7 @@ const routes: Routes = [
         loadComponent: () => import('./demo/authentication/sign-up/sign-up.component')
       },
       {
-        path: 'auth/signin',
+        path: 'login',
         loadComponent: () => import('./components/auth/sign-in/sign-in.component')
       }
     ]

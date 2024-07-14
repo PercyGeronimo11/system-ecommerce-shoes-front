@@ -11,16 +11,16 @@ export class PromocionService {
 
   constructor(private http: HttpClient) { }
 
+
+  getById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
+  }
   list(): Observable<any> {
     return this.http.get(this.apiUrl);
   }
 
   create(data: FormData): Observable<any> {
     return this.http.post(this.apiUrl, data);
-  }
-
-  getById(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}`);
   }
 
   edit(id: number, data: FormData): Observable<any> {
