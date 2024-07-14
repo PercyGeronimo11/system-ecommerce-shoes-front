@@ -1,50 +1,58 @@
-//import { CommonModule } from '@angular/common';
-//import { RouterModule } from '@angular/router';
-//  imports: [SharedModule,RouterModule,CommonModule,EcommercePlantilla],
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { Router } from '@angular/router';
 import { ecommerceService } from '../service/ecomer.service';
 import { EcommercePlantilla } from '../base-layout.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from 'src/app/theme/shared/shared.module';
 @Component({
   selector: 'app-users-eco-create',
   standalone: true,
-  imports: [SharedModule,RouterModule,CommonModule,EcommercePlantilla],
+  imports: [SharedModule,CommonModule, RouterModule,EcommercePlantilla],
   templateUrl: './users-eco-create.component.html',
   styleUrls: ['./users-eco-create.component.scss']
 })
 export class UsersEcoCreateComponent implements OnInit {
-  createAccountForm: FormGroup;
+  customerForm: FormGroup;
   passwordFieldType: string = 'password';
-  constructor(private fb: FormBuilder) {
-    this.createAccountForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      dni: ['', Validators.required],
-      department: ['', Validators.required],
-      birthDate: ['', Validators.required],
-      city: ['', Validators.required],
-      province: ['', Validators.required],
-      cellphone: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      status: [1], // Valor por defecto para status
-      use_register_date: [new Date().toISOString()], // Fecha del sistema
-      rol_id: [3] // Valor por defecto para rol_id
+
+  constructor(
+    private ecommerceService: ecommerceService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {
+    this.customerForm = this.fb.group({
+      custFirstName: ['', Validators.required],
+      custLastName: ['', Validators.required],
+      custDni: ['', Validators.required],
+      custEmail: ['', Validators.required],
+      custDepartment: ['', Validators.required],
+      custCity: ['', Validators.required],
+      custProvince: ['', Validators.required],
+      custPassword: ['', Validators.required],
+      custCellphone:  ['', Validators.required],
     });
   }
+
   togglePasswordVisibility(): void {
     this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
   }
-  ngOnInit(): void { }
+
+  ngOnInit(): void {}
 
   onSubmit(): void {
-    if (this.createAccountForm.valid) {
-      console.log('Formulario enviado', this.createAccountForm.value);
-      // Aquí puedes manejar el envío del formulario, como hacer una petición HTTP
+    if (this.customerForm.valid) {
+      this.ecommerceService.create(this.customerForm.value).subscribe((resp: any) =>  {
+          console.log('Cliente creado exitosamente', resp);
+          this.router.navigate(['/ecommers']);
+        },
+        error => {
+          console.error('Error al crear el cliente', error);
+        });
+    }else {
+      this.customerForm.markAllAsTouched();
+      console.error('El formulario es inválido');
     }
   }
 }

@@ -116,6 +116,21 @@ export const NavigationItems: NavigationItem[] = [
     ]
   },
   {
+    id: 'Clientes',
+    title: 'Clientes',
+    type: 'group',
+    icon: 'icon-group',
+    children: [
+      {
+        id: 'Clientes',
+        title: 'Clientes',
+        type: 'item',
+        url: '/customers',
+        icon: 'feather icon-box'
+      },
+    ]
+  },
+  {
     id: 'ui-component',
     title: 'Modulos',
     type: 'group',

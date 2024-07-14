@@ -7,21 +7,30 @@ import { Observable } from 'rxjs';
   })
 export class ecommerceService {
 
-  private apiUrl = "http://localhost:8080/api/user";
+  private apiUrl = "http://localhost:8080/api/customer";
 
-  constructor(
-    private http: HttpClient,
-) { }
-    create(data:any){
-        return this.http.post(this.apiUrl, data);
-    }
+  constructor(private http: HttpClient) { }
 
-    get(id:any){
-        return this.http.get(this.apiUrl+"/"+id);
-    }
+  list() {
+    return this.http.get(`${this.apiUrl}`);
+  }
 
-    edit(id:any, data:any){
-        return this.http.put(this.apiUrl+"/"+id, data);
-    }
+  create(customer:any){
+    return this.http.post(`${this.apiUrl}`, customer);
+  }
 
+  getById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
+  }
+
+
+  edit(id: number, customer: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, customer);
+  }
+
+
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }
+
