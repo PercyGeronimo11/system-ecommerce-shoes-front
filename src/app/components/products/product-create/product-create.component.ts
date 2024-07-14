@@ -20,6 +20,8 @@ export class ProductCreateComponent implements OnInit {
   selectedFile: File | null = null;
   categories: CategoryModel[]=[];
   imageToShow: any;
+  isWithTaco: Boolean=true;
+
   constructor(
     private productService: ProductService,
     private categoryService: CategoriaService,
@@ -32,13 +34,13 @@ export class ProductCreateComponent implements OnInit {
     catId: ['', [Validators.required, Validators.nullValidator]],
     proName: ['', [Validators.required]],
     proDescription: ['', [Validators.required]],
-    proUnitPrice: ['', [Validators.required]],
+    proUnitPrice: ['', [Validators.required, Validators.min(0)]],
     proUnitCost: ['', [Validators.required]],
-    proSizePlatform: ['', [Validators.required]],
-    proSizeTaco: ['', [Validators.required]],
-    proSize: [null, [Validators.required]],
+    proSizePlatform: ['', [Validators.required, Validators.min(0)]],
+    proSizeTaco: ['', [Validators.required, Validators.min(0)]],
+    proSize: [null, [Validators.required, Validators.min(0)]],
     proColor: [null, [Validators.required]],
-    proStock: [null, [Validators.required]],
+    proStock: [null, [Validators.required, Validators.min(0)]],
     proUrlImage: ['', [Validators.required]]
   });
 
@@ -48,10 +50,6 @@ export class ProductCreateComponent implements OnInit {
       this.categories=categories.data;
     });
   }
-
-  // onFileSelected(event: any) {
-
-  // }
 
   onFileSelected2(event: any) {
     this.imageToShow='';

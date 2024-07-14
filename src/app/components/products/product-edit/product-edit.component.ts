@@ -9,12 +9,12 @@ import { ProductModel } from 'src/app/models/product.model';
 
 @Component({
   selector: 'app-product-edit',
-  standalone:true,
-  imports: [RouterModule,SharedModule],
+  standalone: true,
+  imports: [RouterModule, SharedModule],
   templateUrl: './product-edit.component.html',
   styleUrl: './product-edit.component.scss'
 })
-export class ProductEditComponent{
+export class ProductEditComponent {
   isLoading = false;
   error: string | null = null;
   selectedFile: File | null = null;
@@ -22,6 +22,7 @@ export class ProductEditComponent{
   imageToShow: any;
   formGroupProduct: FormGroup;
   productId: string;
+  isWithTaco: Boolean = true;
 
   constructor(
     private productService: ProductService,
@@ -35,13 +36,13 @@ export class ProductEditComponent{
       catId: ['', [Validators.required, Validators.nullValidator]],
       proName: ['', [Validators.required]],
       proDescription: ['', [Validators.required]],
-      proUnitPrice: ['', [Validators.required]],
+      proUnitPrice: ['', [Validators.required, Validators.min(0)]],
       proUnitCost: ['', [Validators.required]],
       proSizePlatform: ['', [Validators.required]],
-      proSizeTaco: ['', [Validators.required]],
-      proSize: [null, [Validators.required]],
+      proSizeTaco: ['', [Validators.required, Validators.min(0)]],
+      proSize: [null, [Validators.required, Validators.min(0)]],
       proColor: [null, [Validators.required]],
-      proStock: [null, [Validators.required]],
+      proStock: [null, [Validators.required, Validators.min(0)]],
       proUrlImage: ['', [Validators.required]]
     });
     this.productId = '';
@@ -51,36 +52,34 @@ export class ProductEditComponent{
     this.productId = this.route.snapshot.paramMap.get('id') || '';
     this.categoryService.list().subscribe((categories: any) => {
       this.categories = categories.data;
-
-
     });
 
-    this.productService.getProductById(this.productId)
-    .subscribe(product => {
-      if (product) {
-        this.formGroupProduct.patchValue({
-          catId: product.data.category?.id, // Usar la operación de encadenamiento opcional "?" para evitar un error si category es undefined
-          proName: product.data.proName,
-          proDescription: product.data.proDescription,
-          proUnitPrice: product.data.proUnitPrice,
-          proUnitCost: product.data.proUnitCost,
-          proSizePlatform: product.data.proSizePlatform,
-          proSizeTaco: product.data.proSizeTaco,
-          proSize: product.data.proSize,
-          proColor: product.data.proColor,
-          proStock: product.data.proStock,
-          proUrlImage: product.data.proUrlImage
-        });
-        if (product.data.proUrlImage) {
-          this.imageToShow = product.data.proUrlImage;
+    this.productService.getProductById(this.productId).subscribe(
+      product => {
+        if (product.data) {
+          this.formGroupProduct.patchValue({
+            catId: product.data.category?.id, // Usar la operación de encadenamiento opcional "?" para evitar un error si category es undefined
+            proName: product.data.proName,
+            proDescription: product.data.proDescription,
+            proUnitPrice: product.data.proUnitPrice,
+            proUnitCost: product.data.proUnitCost,
+            proSizePlatform: product.data.proSizePlatform,
+            proSizeTaco: product.data.proSizeTaco,
+            proSize: product.data.proSize,
+            proColor: product.data.proColor,
+            proStock: product.data.proStock,
+            proUrlImage: product.data.proUrlImage
+          });
+          if (product.data.proUrlImage) {
+            this.imageToShow = product.data.proUrlImage;
+          }
+        } else {
+          console.error("El objeto de producto es undefined");
         }
-      } else {
-        console.error("El objeto de producto es undefined");
-      }
-    },
-    (error) => {
-      console.log("Error al obtener el producto:", error);
-    });
+      },
+      (error) => {
+        console.log("Error al obtener el producto:", error);
+      });
   }
 
   onFileSelected2(event: any) {

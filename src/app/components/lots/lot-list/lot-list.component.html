@@ -22,8 +22,9 @@
                         <td>{{lot.lotQuantityProducts}} pares</td>
                         <td> S/. {{ lot.lotTotalCost }}</td>
                         <td>
-                          <a routerLink="['/lot/edit', lot.id]" class="btn btn-primary">Editar</a>
-                          <!-- <button (click)="deleteLot(lot.id)" class="btn btn-danger">Eliminar</button> -->
+                          <a [routerLink]="['/lots/edit', lot.id]" class="btn btn-warning">
+                            <i class="fa fa-edit"></i>
+                          </a>
                         </td>
                       </tr>
                     </tbody>

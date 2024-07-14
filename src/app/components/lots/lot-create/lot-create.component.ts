@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductModel } from '../../../models/product.model';
-import { ProductService } from '../../../services/product.service';
 import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { ProductModel } from '../../../models/product.model';
+import { ProductService } from '../../../services/product.service';
 import { MaterialService } from '../../materials/service/materials.service';
 import { MaterialModel } from 'src/app/models/material.model';
 import { LotCreateReq, materialForm } from 'src/app/models/lot.model';

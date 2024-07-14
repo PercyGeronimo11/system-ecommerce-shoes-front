@@ -12,7 +12,6 @@ export interface LotModel {
     lotQuantityProducts: number;
   }
   
-  
   export interface LotCreateReq {
     productId: number;
     lotQuantityProducts: number;
@@ -33,4 +32,26 @@ export interface LotModel {
     quantity: number;
     priceUnit: number;
     subTotal: number;
+  }
+  
+  export interface LotModelResp {
+    id: number;
+    product: {
+      id: number;
+      proName: string;
+      category: {
+        id: number;
+        catName: string;
+      };
+    };
+    lotDetails: LotDetailModelResp[];
+    lotTotalCost: number;
+    lotQuantityProducts: number;
+  }
+  export interface LotDetailModelResp {
+    id: number;
+    matName: string;
+    detPriceUnit: number,
+    detQuantityMaterials: number; 
+    detSubTotal: number;
   }
