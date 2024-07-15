@@ -19,7 +19,7 @@ const routes: Routes = [
         component: LotCreateComponent
     },
     {
-        path: 'edit',
+        path: 'edit/:id',
         component: LotEditComponent
     }
 ];

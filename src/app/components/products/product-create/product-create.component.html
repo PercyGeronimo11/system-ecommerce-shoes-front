@@ -15,30 +15,26 @@
               </div>
               <div class="form-group col-6">
                 <label for="categorySelect">Seleccionar Categoría</label>
-                <select formControlName="catId" id="categorySelect" class="col-sm-3 form-select">
-                  <option *ngFor="let category of categories" [value]="category.id">{{ category.catName }}</option>
+                <select formControlName="catId" id="categorySelect" class="col-sm-3 form-select" (change)="onSelectedCategory($event)">
+                  <option *ngFor="let category of categories" [value]="category.id">
+                    {{ category.catName }}
+                  </option>
                 </select>
               </div>
               <div class="form-group col-6">
                 <label for="proTalla" class="col-sm-3 col-form-label">Talla</label>
                 <select formControlName="proSize" id="proTalla" class="col-sm-3 form-select" required>
-                  <option> 35 </option>
-                  <option> 36 </option>
+                  <option> 33 </option>
                   <option> 37 </option>
-                  <option> 38 </option>
                   <option> 39 </option>
                   <option> 40 </option>
                 </select>
               </div>
               <div class="form-group col-6">
                 <label for="proColor" class="col-sm-3 col-form-label">Color</label>
-                <select formControlName="proColor" id="proColor" class="col-sm-3 form-select" required>
-                  <option> Negro </option>
-                  <option> Blanco</option>
-                  <option> Marron </option>
-                </select>
+                <input type="text" class="form-control" id="proColor" formControlName="proColor" required>
               </div>
-              <div class="form-group col-6">
+              <div *ngIf="isWithTaco"  class="form-group col-6">
                 <label for="proSizePlatform" class="col-form-label">Numero Plataforma</label>
                 <select formControlName="proSizePlatform" id="proSizePlatform" class="col-sm-3 form-select" required>
                   <option> 0</option>
@@ -46,7 +42,7 @@
                   <option> 4</option>
                 </select>
               </div>
-              <div class="form-group col-6">
+              <div *ngIf="isWithTaco" class="form-group col-6">
                 <label for="proSizeTaco" class="col-form-label">Numero taco</label>
                 <select formControlName="proSizeTaco" id="proSizeTacon" class="col-sm-3 form-select" required>
                   <option>2</option>
@@ -55,11 +51,6 @@
                   <option>8</option>
                 </select>
               </div>
-              <!-- <div class="form-group col-6">
-                <label for="prostock" class="col-sm-3 col-form-label">Stock</label>
-                <input type="text" class="form-control" id="proName" formControlName="proStock" name="prostock"
-                  required>
-              </div> -->
             </div>
           </div>
           <div class="col col-lg-6">

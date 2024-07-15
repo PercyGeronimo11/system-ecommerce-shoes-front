@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductModel } from '../../../models/product.model';
-import { ProductService } from '../../../services/product.service';
 import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { ProductModel } from '../../../models/product.model';
+import { ProductService } from '../../../services/product.service';
 import { MaterialService } from '../../materials/service/materials.service';
 import { MaterialModel } from 'src/app/models/material.model';
 import { LotCreateReq, materialForm } from 'src/app/models/lot.model';
@@ -41,7 +41,7 @@ export class LotCreateComponent implements OnInit {
   });
 
   materialForm: materialForm = {
-    id:0,
+    id: 0,
     name: '',
     quantity: 0,
     priceUnit: 0,
@@ -74,8 +74,7 @@ export class LotCreateComponent implements OnInit {
         },
         (error) => {
           console.log("No se guardo", error);
-        })
-      ;
+        });
   }
 
   getListProducts() {
@@ -140,12 +139,11 @@ export class LotCreateComponent implements OnInit {
   onMaterialSelect() {
     //const selectedMaterialId = this.selectedMaterial !== null ? Number(this.selectedMaterial) : null;
     const selectedMaterial = this.materials.find(material => material.id == this.selectedIdMaterial);
-    console.log("id",this.selectedIdMaterial);
-    console.log("maerial:",selectedMaterial);
-    console.log("lista",this.materials);
     if (selectedMaterial) {
       this.materialForm.priceUnit = Number((selectedMaterial.price / selectedMaterial.quantity).toFixed(2));
       this.materialForm.name = selectedMaterial.name;
+    } else {
+      console.log("Material no encontrado");
     }
   }
 

@@ -1,38 +1,39 @@
 <div class="row">
   <div class="col-sm-12">
     <app-card cardTitle="Lista de Productos" [options]="false" blockClass="table-border-style">
-      <a  [routerLink]="['/products/create']" type="button"  class="btn btn-primary">Nuevo</a>
+      <a [routerLink]="['/products/create']" type="button" class="btn btn-primary">Nuevo</a>
       <div class="table-responsive">
         <table class="table">
-                  <thead>
-                    <tr>
-                      <th>N°</th>
-                      <th>Producto</th>
-                      <th>Descripción</th>
-                      <th>Precio Unitario</th>
-                      <th>Tamaño Plataforma</th>
-                      <th>Tamaño Tacón</th>
-                      <th>stock</th>
-                      <th>Opciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let product of products; let i = index">
-                      <td>{{ i + 1 }}</td>
-                      <td>{{ product.proName }}</td>
-                      <td>{{ product.proDescription }}</td>
-                      <td>{{ product.proUnitPrice }}</td>
-                      <td>{{ product.proSizePlatform }}</td>
-                      <td>{{ product.proSizeTaco }}</td>
-                      <td>{{ product.proStock }}</td>
-                       <!-- <td><img [src]="product.proUrlImage" alt="Producto"></td> -->
-                      <td>
-                        <a [routerLink]="['/products/edit/', product.id]" class="btn btn-primary">Editar</a>
-                       
-                        <!-- <button (click)="deleteProduct(product.id)" class="btn btn-danger">Eliminar</button> -->
-                      </td>
-                    </tr>
-                  </tbody>
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Producto</th>
+              <th>Talla</th>
+              <th>Color</th>
+              <th>Precio Unitario</th>
+              <th>stock</th>
+              <th>N° Plataforma</th>
+              <th>N° Taco</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ product.proName }}</td>
+              <td>{{ product.proSize }}</td>
+              <td>{{ product.proColor }}</td>
+              <td>{{ product.proUnitPrice }}</td>
+              <td>{{ product.proStock }}</td>
+              <td>{{ product.proSizePlatform }}</td>
+              <td>{{ product.proSizeTaco }}</td>
+              <td>
+                <a [routerLink]="['/products/edit/', product.id]" class="btn btn-primary">Editar</a>
+
+                <!-- <button (click)="deleteProduct(product.id)" class="btn btn-danger">Eliminar</button> -->
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </app-card>
