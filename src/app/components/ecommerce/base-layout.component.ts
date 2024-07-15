@@ -9,8 +9,8 @@ import { RouterModule } from '@angular/router';
 import { SharedDataService } from '../../services/shared-data.service';
 import { CategoriaService } from '../categories/service/categories.service';
 import { AuthService } from '../../components/auth/service/auth.service';
-import { ecommerceService } from './service/ecomer.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { isUndefined } from 'lodash';
 @Component({
   selector: 'app-base-layout',
   standalone: true,
@@ -55,19 +55,18 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loginResponse = 'Ingresar'
     this.sharedDataService.loginResponse$.subscribe(
       loginResp => {
-        if(loginResp.error) {
-          this.loginResponse=0
-          this.getProducts();
-          this.categoria == 0
-        }else {
-          this.loginResponse = loginResp;
-          this.getProducts();
-          this.categoria == 0
+        if (loginResp.error) {
+          console.log('Estos datos son', this.loginResponse);
+        } else {
+          this.loginResponse = loginResp.data.custFirstName;
+          console.log('Estos datos son', this.loginResponse);
         }
-      }
-    );
+      });
+    this.getProducts();
+    this.categoria == 0
   }
 
   onSubmit(): void {
