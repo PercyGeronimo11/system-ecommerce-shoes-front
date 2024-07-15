@@ -16,7 +16,6 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 export class UsersEcoCreateComponent implements OnInit {
   customerForm: FormGroup;
   passwordFieldType: string = 'password';
-
   constructor(
     private ecommerceService: ecommerceService,
     private fb: FormBuilder,

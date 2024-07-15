@@ -6,17 +6,20 @@ import { Router } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { RouterModule } from '@angular/router';
 //import { PromocionService } from '../promotions/service/promotions.service';
+import { SharedDataService } from '../../services/shared-data.service';
 import { CategoriaService } from '../categories/service/categories.service';
 import { AuthService } from '../../components/auth/service/auth.service';
+import { ecommerceService } from './service/ecomer.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-base-layout',
   standalone: true,
-  imports: [RouterModule,CommonModule,SharedModule],
+  imports: [RouterModule, CommonModule, SharedModule],
   templateUrl: './base-layout.component.html',
   styleUrls: ['./base-layout.component.scss']
 })
 export class EcommercePlantilla implements OnInit, OnDestroy {
+  loginResponse: any;
   products: ProductModel[] = [];
   categories: any = [];
   NameCate: any = [];
@@ -35,6 +38,7 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
     public categoriaService: CategoriaService,
     private authService: AuthService,
     private productService: ProductService,
+    private sharedDataService: SharedDataService,
     //private promotionService:PromocionService,
 
     private router: Router
@@ -51,15 +55,25 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
-    this.getProducts();
-    this.categoria == 0
+    this.sharedDataService.loginResponse$.subscribe(
+      loginResp => {
+        if(loginResp.error) {
+          this.loginResponse=0
+          this.getProducts();
+          this.categoria == 0
+        }else {
+          this.loginResponse = loginResp;
+          this.getProducts();
+          this.categoria == 0
+        }
+      }
+    );
   }
 
   onSubmit(): void {
     this.categoria = this.numberForm.get('idcategoria')?.value;
     console.log('Selected category:', this.categoria);
-    this.  ngOnInit();
+    this.ngOnInit();
   }
 
   getProducts(): void {
@@ -70,7 +84,7 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
           (products: any) => {
             this.products = products.data.content;
             this.isLoading = false;
-            this.NameCate="Productos";
+            this.NameCate = "Productos";
             console.log("Productos filtrados por categoría:", this.NameCate);
             console.log("Todos los productos cargados:", products);
           },
@@ -86,7 +100,7 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
           (products: any) => {
             this.products = products.data.content;
             this.isLoading = false;
-           // this.NameCate=this.categoriaService.getById(this.categoria);
+            // this.NameCate=this.categoriaService.getById(this.categoria);
             console.log("Productos filtrados por categoría:", this.NameCate);
             console.log("Productos filtrados por categoría:", products);
           },

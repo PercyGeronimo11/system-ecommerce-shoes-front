@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 @Injectable({
     providedIn: 'root'
   })
@@ -13,6 +14,18 @@ export class ecommerceService {
 
   list() {
     return this.http.get(`${this.apiUrl}`);
+  }
+
+  logIn(email: string, password: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/login`, { email, password })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  private handleError(error: any): Observable<never> {
+    console.error('An error occurred', error);
+    return throwError('Something went wrong; please try again later.');
   }
 
   create(customer:any){

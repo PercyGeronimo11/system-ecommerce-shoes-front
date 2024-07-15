@@ -22,13 +22,15 @@
             <div class="icon d-inline-block">
               <i class="fas fa-user"></i>
               <span>
-                <a href="javascript:" [routerLink]="['/ecommersCreate']"  class="btn btn-primary"> <span>Ingresar</span></a>
+                <a [routerLink]="['/ecommersCreate']" class="btn btn-primary">
+                  <span>Ingresar</span> <!--  <span>{{loginResponse.name}}}</span>-->
+                </a>
               </span>
             </div>
             <div class="icon d-inline-block ml-3">
               <i class="fas fa-shopping-cart"></i>
               <span>
-                <a  href="/ecommers"  class="btn btn-primary">
+                <a href="/ecommers" class="btn btn-primary">
                   <span>Productos</span>
                 </a>
               </span>
