@@ -26,6 +26,7 @@
                   <input type="text" class="form-control form-control-lg" id="inputDNI" placeholder="DNI" formControlName="custDni" />
                   <div *ngIf="customerForm.get('custDni')?.touched && customerForm.get('custDni')?.invalid">
                     <small *ngIf="customerForm.get('custDni')?.errors?.['required']" class="text-danger">DNI es requerido.</small>
+                    <small *ngIf="customerForm.get('custDni')?.errors?.['pattern']" class="text-danger">DNI debe tener exactamente 8 dígitos.</small>
                   </div>
                 </div>
               </div>
@@ -65,6 +66,7 @@
                   <input type="text" class="form-control form-control-lg" id="inputCellphone" placeholder="Celular" formControlName="custCellphone" />
                   <div *ngIf="customerForm.get('custCellphone')?.touched && customerForm.get('custCellphone')?.invalid">
                     <small *ngIf="customerForm.get('custCellphone')?.errors?.['required']" class="text-danger">Celular es requerido.</small>
+                    <small *ngIf="customerForm.get('custCellphone')?.errors?.['pattern']" class="text-danger">Celular debe tener exactamente 9 dígitos.</small>
                   </div>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-4 form-group">
@@ -87,7 +89,6 @@
                   </div>
                   <div *ngIf="customerForm.get('custPassword')?.touched && customerForm.get('custPassword')?.invalid">
                     <small *ngIf="customerForm.get('custPassword')?.errors?.['required']" class="text-danger">Contraseña es requerida.</small>
-                    <small *ngIf="customerForm.get('custPassword')?.errors?.['minlength']" class="text-danger">Contraseña debe tener al menos 8 caracteres.</small>
                   </div>
                 </div>
               </div>

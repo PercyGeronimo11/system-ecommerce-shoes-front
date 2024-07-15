@@ -28,7 +28,7 @@ export class ecommerceService {
     return throwError('Something went wrong; please try again later.');
   }
 
-  create(customer:any){
+  create(customer:any): Observable<any>{
     return this.http.post(`${this.apiUrl}`, customer);
   }
 

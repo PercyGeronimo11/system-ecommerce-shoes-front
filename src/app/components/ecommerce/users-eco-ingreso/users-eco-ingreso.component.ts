@@ -25,7 +25,7 @@ export class EcommersIngresoModule implements OnInit {
   ) {
     this.userecoForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required]],
     });
 
   }
@@ -39,7 +39,6 @@ export class EcommersIngresoModule implements OnInit {
           //retorno del usuario
           this.sharedServ.setLoginResponse(loginResp);
           this.router.navigate(['/ecommers']);
-
         },
         loginError => {
 
