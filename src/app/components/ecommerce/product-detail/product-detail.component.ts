@@ -1,24 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { ProductModel } from 'src/app/models/product.model';
+import { ProductService } from 'src/app/services/product.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-import { ProductModel } from '../../models/product.model';
-import { ProductService } from '../../services/product.service';
 //import { PromocionService } from '../promotions/service/promotions.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AuthService } from '../../components/auth/service/auth.service';
-import { SharedDataService } from '../../services/shared-data.service';
-import { CategoriaService } from '../categories/service/categories.service';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from 'src/app/components/auth/service/auth.service';
+import { CategoriaService } from 'src/app/components/categories/service/categories.service';
+import { SharedDataService } from 'src/app/services/shared-data.service';
+
 @Component({
   selector: 'app-base-layout',
   standalone: true,
   imports: [RouterModule, CommonModule, SharedModule],
-  templateUrl: './base-layout.component.html',
-  styleUrls: ['./base-layout.component.scss']
+  templateUrl: './product-detail.component.html',
+  styleUrls: ['./product-detail.component.scss']
 })
-export class EcommercePlantilla implements OnInit, OnDestroy {
+export class ProductDetailComponent implements OnInit, OnDestroy {
   loginResponse: any;
+  selectedSize: number | null = null;
   products: ProductModel[] = [];
+  product: ProductModel | undefined;
   categories: any = [];
   NameCate: any = [];
   isLoading = false;
@@ -37,6 +41,8 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
     private authService: AuthService,
     private productService: ProductService,
     private sharedDataService: SharedDataService,
+    private route: ActivatedRoute,
+
     //private promotionService:PromocionService,
 
     private router: Router
@@ -52,6 +58,7 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
     this.startAutoSlide();
   }
 
+  
   ngOnInit(): void {
     this.loginResponse = 'Ingresar'
     this.sharedDataService.loginResponse$.subscribe(
@@ -64,6 +71,7 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
         }
       });
     this.getProducts();
+    this.ngOnInit2();
     this.categoria == 0
   }
 
@@ -72,6 +80,8 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
     console.log('Selected category:', this.categoria);
     this.ngOnInit();
   }
+
+
 
   getProducts(): void {
     this.isLoading = true;
@@ -139,11 +149,21 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
   }
 
   
-  viewProductDetail(product: ProductModel): void {
-    this.router.navigate(['/product', product.id]);
+  ngOnInit2(): void {
+    const productId = this.route.snapshot.paramMap.get('id');
+    if (productId) {
+      this.productService.getProductById(productId).subscribe(
+        (response: any) => {
+          this.product = response.data;
+        },
+        error => {
+          console.error("Error al cargar el producto:", error);
+        }
+      );
+    }
   }
-
-
-
-
+  selectSize(size: number) {
+    this.selectedSize = size;
+  }
+  
 }
