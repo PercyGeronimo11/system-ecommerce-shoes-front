@@ -22,7 +22,7 @@ export class ProductEditComponent {
   imageToShow: any;
   formGroupProduct: FormGroup;
   productId: string;
-  isWithTaco: Boolean = true;
+  isWithTaco: Boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -35,14 +35,14 @@ export class ProductEditComponent {
     this.formGroupProduct = this.formBuilder.group({
       catId: ['', [Validators.required, Validators.nullValidator]],
       proName: ['', [Validators.required]],
-      proDescription: ['', [Validators.required]],
+      proDescription: [''],
       proUnitPrice: ['', [Validators.required, Validators.min(0)]],
-      proUnitCost: ['', [Validators.required]],
+      proUnitCost: [''],
       proSizePlatform: ['', [Validators.required]],
       proSizeTaco: ['', [Validators.required, Validators.min(0)]],
       proSize: [null, [Validators.required, Validators.min(0)]],
       proColor: [null, [Validators.required]],
-      proStock: [null, [Validators.required, Validators.min(0)]],
+      proStock: [null],
       proUrlImage: ['', [Validators.required]]
     });
     this.productId = '';
@@ -58,7 +58,7 @@ export class ProductEditComponent {
       product => {
         if (product.data) {
           this.formGroupProduct.patchValue({
-            catId: product.data.category?.id, // Usar la operación de encadenamiento opcional "?" para evitar un error si category es undefined
+            catId: product.data.category?.id, 
             proName: product.data.proName,
             proDescription: product.data.proDescription,
             proUnitPrice: product.data.proUnitPrice,
@@ -73,6 +73,7 @@ export class ProductEditComponent {
           if (product.data.proUrlImage) {
             this.imageToShow = product.data.proUrlImage;
           }
+          this.isWithTaco = product.data.category.catHasTaco;
         } else {
           console.error("El objeto de producto es undefined");
         }
@@ -80,6 +81,18 @@ export class ProductEditComponent {
       (error) => {
         console.log("Error al obtener el producto:", error);
       });
+  }
+
+  onSelectedCategory(event: Event){
+    const selectedCategoryId = (event.target as HTMLSelectElement).value;
+    const selectedCategory = this.categories.find(category => category.id.toString() === selectedCategoryId);
+
+    if (selectedCategory) {
+      this.isWithTaco = selectedCategory.catHasTaco;
+    } else {
+      console.log("No hay la categoria", selectedCategory);
+      this.isWithTaco = false;
+    }
   }
 
   onFileSelected2(event: any) {
@@ -94,6 +107,11 @@ export class ProductEditComponent {
   }
 
   onSubmit() {
+    for (const control in this.formGroupProduct.controls) {
+      if (this.formGroupProduct.controls.hasOwnProperty(control)) {
+        this.formGroupProduct.controls[control].markAsTouched();
+      }
+    }
     this.isLoading = true;
     this.error = null;
     const formData = new FormData();
