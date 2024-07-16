@@ -8,16 +8,21 @@
                 <div class="form-group col-12">
                   <label for="proName" class="col-sm-3 col-form-label">Nombre:</label>
                   <input type="text" class="form-control" id="proName" formControlName="proName" name="proName" required>
+                  <div *ngIf="formGroupProduct.controls['proName'].hasError('required') && formGroupProduct.controls['proName'].touched" class="text-danger">Nombre es obligatorio</div>
                 </div>
                 <div class="form-group col-6">
                   <label for="proUnitPrice" class="col-form-label">Precio unitario:</label>
                   <input type="number" class="form-control" id="proUnitPrice" formControlName="proUnitPrice" required>
+                  <div *ngIf="formGroupProduct.controls['proUnitPrice'].hasError('required') && formGroupProduct.controls['proUnitPrice'].touched" class="text-danger">Precio Unitario es obligatorio</div>
                 </div>
                 <div class="form-group col-6">
                   <label for="categorySelect">Seleccionar Categoría</label>
-                  <select formControlName="catId" id="categorySelect" class="col-sm-3 form-select">
-                    <option *ngFor="let category of categories" [value]="category.id">{{ category.catName }}</option>
+                  <select formControlName="catId" id="categorySelect" class="col-sm-3 form-select" (change)="onSelectedCategory($event)">
+                    <option *ngFor="let category of categories" [value]="category.id">
+                      {{ category.catName }}
+                    </option>
                   </select>
+                  <div *ngIf="formGroupProduct.controls['catId'].hasError('required') && formGroupProduct.controls['catId'].touched" class="text-danger">Debe seleccionar obligatoria</div>
                 </div>
                 <div class="form-group col-6">
                   <label for="proSize" class="col-sm-3 col-form-label">Talla</label>
@@ -27,10 +32,12 @@
                     <option> 39 </option>
                     <option> 40 </option>
                   </select>
+                  <div *ngIf="formGroupProduct.controls['proSize'].hasError('required') && formGroupProduct.controls['proSize'].touched" class="text-danger">Talla es obligatorio</div>
                 </div>
                 <div class="form-group col-6">
                   <label for="proColor" class="col-sm-3 col-form-label">Color</label>
                   <input type="text" class="form-control" id="proColor" formControlName="proColor" >
+                  <div *ngIf="formGroupProduct.controls['proColor'].hasError('required') && formGroupProduct.controls['proColor'].touched" class="text-danger">Color es obligatorio</div>
                 </div>
                 <div *ngIf="isWithTaco"  class="form-group col-6">
                   <label for="proSizePlatform" class="col-form-label">Numero Plataforma</label>
@@ -39,6 +46,7 @@
                     <option> 2</option>
                     <option> 4</option>
                   </select>
+                 
                 </div>
                 <div *ngIf="isWithTaco" class="form-group col-6">
                   <label for="proSizeTaco" class="col-form-label">Numero taco</label>
@@ -50,8 +58,12 @@
                   </select>
                 </div>
                 <div class="form-group col-6">
-                  <label for="prostock" class="col-sm-3 col-form-label">Stock</label>
+                  <label for="prostock" class="col-sm-3 col-lg-12 col-form-label">Stock</label>
                   <input type="text" class="form-control" id="proStock" formControlName="proStock" name="prostock" readonly>
+                </div>
+                <div class="form-group col-6">
+                  <label for="proUnitCost" class="col-sm-3 col-lg-12 col-form-label">Costo Unitario estimado</label>
+                  <input type="text" class="form-control" id="proUnitCost" formControlName="proUnitCost" name="proUnitCost" readonly>
                 </div>
               </div>
             </div>
@@ -64,6 +76,7 @@
                 <div class="form-group">
                   <label for="proUrlImage" class="col-form-label">Imagen</label>
                   <input type="file" class="form-control" id="proUrlImage" (change)="onFileSelected2($event)">
+                  <div *ngIf="formGroupProduct.controls['proUrlImage'].hasError('required') && formGroupProduct.controls['proUrlImage'].touched" class="text-danger">La Imagen es obligatorio</div>
                 </div>
                 <div class="form-group">
                   <img *ngIf="imageToShow" [src]="imageToShow" class="img-thumbnail mt-2" style="max-width: 300px;">

@@ -32,14 +32,12 @@ export class ProductCreateComponent implements OnInit {
   formGroupProduct: FormGroup = this.formBuilder.group({
     catId: ['', [Validators.required, Validators.nullValidator]],
     proName: ['', [Validators.required]],
-    proDescription: ['', [Validators.required]],
+    proDescription: [''],
     proUnitPrice: ['', [Validators.required, Validators.min(0)]],
-    proUnitCost: ['', [Validators.required]],
     proSizePlatform: ['', [Validators.required, Validators.min(0)]],
     proSizeTaco: ['', [Validators.required, Validators.min(0)]],
     proSize: [null, [Validators.required, Validators.min(0)]],
     proColor: [null, [Validators.required]],
-    proStock: [null, [Validators.required, Validators.min(0)]],
     proUrlImage: ['', [Validators.required]]
   });
 
@@ -76,11 +74,14 @@ export class ProductCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("entraaaa");
+    for (const control in this.formGroupProduct.controls) {
+      if (this.formGroupProduct.controls.hasOwnProperty(control)) {
+        this.formGroupProduct.controls[control].markAsTouched();
+      }
+    }
     this.isLoading = true;
     this.error = null;
     const formData = new FormData();
-    //const catIdValue = parseInt(this.formGroupProduct.value.catId, 10);
     formData.append('catId', this.formGroupProduct.value.catId);
     formData.append('proName', this.formGroupProduct.value.proName);
     formData.append('proDescription', this.formGroupProduct.value.proDescription);
@@ -92,13 +93,12 @@ export class ProductCreateComponent implements OnInit {
 
     if (this.selectedFile) {
       formData.append('file', this.selectedFile);
-      console.log("seleccionado para file");
-      this.productService.createProduct(formData)
-        .subscribe(()=> {
-          console.log("exitoso consumo api");
+      this.productService.createProduct(formData).subscribe(
+        ()=> {
           this.isLoading = false;
           this.router.navigate(['/products/list']);
-        }, error => {
+        },
+        error => {
           this.isLoading = false;
           this.error = error.message;
         });

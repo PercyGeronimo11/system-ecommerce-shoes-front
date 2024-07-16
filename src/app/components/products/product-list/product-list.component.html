@@ -4,33 +4,38 @@
       <a [routerLink]="['/products/create']" type="button" class="btn btn-primary">Nuevo</a>
       <div class="table-responsive">
         <table class="table">
-          <thead>
+          <thead class="text-center">
             <tr>
               <th>N°</th>
               <th>Producto</th>
+              <th>Categoria</th>
               <th>Talla</th>
               <th>Color</th>
-              <th>Precio Unitario</th>
               <th>stock</th>
+              <th>Precio Unitario</th>
               <th>N° Plataforma</th>
-              <th>N° Taco</th>
+              <th>N° taco</th>
               <th>Opciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let product of products; let i = index">
+            <tr *ngFor="let product of products; let i = index" class="text-center">
               <td>{{ i + 1 }}</td>
               <td>{{ product.proName }}</td>
+              <td>{{ product.category.catName }}</td>
               <td>{{ product.proSize }}</td>
               <td>{{ product.proColor }}</td>
-              <td>{{ product.proUnitPrice }}</td>
               <td>{{ product.proStock }}</td>
-              <td>{{ product.proSizePlatform }}</td>
-              <td>{{ product.proSizeTaco }}</td>
+              <td>{{ product.proUnitPrice }}</td>
+              <td>{{ product.proSizePlatform?product.proSizePlatform:'--' }}</td>
+              <td>{{ product.proSizeTaco?product.proSizeTaco:'--' }}</td>
               <td>
-                <a [routerLink]="['/products/edit/', product.id]" class="btn btn-primary">Editar</a>
-
-                <!-- <button (click)="deleteProduct(product.id)" class="btn btn-danger">Eliminar</button> -->
+                <a [routerLink]="['/products/edit/', product.id]" class="btn btn-warning mb-3 me-2">
+                  <i class="fa fa-edit"></i>
+                </a>
+                <button (click)="deleteProduct(product.id)" class="btn btn-danger mb-3 me-2">
+                  <i class="fa fa-trash"></i>
+                </button>
               </td>
             </tr>
           </tbody>
