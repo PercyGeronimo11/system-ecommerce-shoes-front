@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
@@ -28,6 +28,9 @@ export class MaterialCreateModule implements OnInit {
     });
   }
 
+  @Input() cardTitle: string = '';
+  @Input() options: boolean = true;
+  
   ngOnInit(): void {}
 
   onSubmit(): void {
