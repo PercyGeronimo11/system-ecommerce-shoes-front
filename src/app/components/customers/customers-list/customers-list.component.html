@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-xl-12">
+    <app-card cardTitle="Clientes" [options]="false" blockClass="table-border-style">
+      <div class="d-flex justify-content-end mb-3">
+        <form [formGroup]="searchForm" class="d-flex">
+          <input type="text" class="form-control" placeholder="Coloque su apellido" formControlName="lastName">
+          <button class="btn btn-info ms-2" type="button" (click)="clearFilter()">Limpiar</button>
+        </form>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped"  style="text-align: center;">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Apellidos</th>
+              <th>Nombres</th>
+              <th>Dni</th>
+              <th>Departamento</th>
+              <th>Ciudad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let customer of filteredCustomers; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ customer.custLastName }}</td>
+              <td>{{ customer.custFirstName }}</td>
+              <td>{{ customer.custDni }}</td>
+              <td>{{ customer.custDepartment }}</td>
+              <td>{{ customer.custCity }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>

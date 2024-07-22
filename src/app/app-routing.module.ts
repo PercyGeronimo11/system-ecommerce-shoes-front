@@ -39,7 +39,6 @@ const routes: Routes = [
         path: 'userCreate',
         loadComponent: () => import('./components/users/users-create/users-create.component').then(m => m.UsersCreateModule)
       },
-
       {
         path: 'promotions',
         loadComponent: () => import('./components/promotions/promotions-list/promotions-list.component').then(p => p.PromotionsListComponent),canActivate: [AuthGuard]
@@ -65,9 +64,14 @@ const routes: Routes = [
         loadChildren: () => import('./components/lots/lot.module').then(m => m.LotModule),canActivate: [AuthGuard]
       },
       {
+        path: 'customers',
+        loadComponent: () => import('./components/customers/customers-list/customers-list.component').then(cu => cu.CustomerListModule),canActivate: [AuthGuard]
+      },
+      {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)
       },
+
       {
         path: 'chart',
         loadComponent: () => import('./demo/chart & map/core-apex.component')
