@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProductDetailComponent } from 'src/app/components/ecommerce/product-detail/product-detail.component'; // Asegúrate de que la ruta sea correcta
+import { AuthGuard } from './components/auth/auth.guard';
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
-import { AuthGuard } from './components/auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -87,10 +88,12 @@ const routes: Routes = [
       {
         path: 'sample-page',
         loadComponent: () => import('./demo/sample-page/sample-page.component')
-      }
+      },
+  
+
     ]
   },
-
+  { path: 'product/:id', component: ProductDetailComponent },
   {
     path: '',
     component: GuestComponent,

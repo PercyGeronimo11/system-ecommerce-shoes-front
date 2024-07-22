@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { ProductModel } from 'src/app/models/product.model';
+
 @Injectable({
     providedIn: 'root'
   })
@@ -10,7 +12,8 @@ export class ecommerceService {
 
   private apiUrl = "http://localhost:8080/api/customer";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,     private router: Router
+  ) { }
 
   list() {
     return this.http.get(`${this.apiUrl}`);
@@ -45,5 +48,15 @@ export class ecommerceService {
   delete(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+
+  getProductById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/products/${id}`);
+  }
+  
+  viewProductDetail(product: ProductModel): void {
+    this.router.navigate(['/product', product.id]);
+  }
+
+  
 }
 
