@@ -1,12 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-import { ecommerceService } from '../service/ecomer.service';
 import { SharedDataService } from '../../../services/shared-data.service';
 import { EcommercePlantilla } from '../base-layout.component';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ecommerceService } from '../service/ecomer.service';
 @Component({
   selector: 'app-ecommers-ingreso',
   standalone: true,

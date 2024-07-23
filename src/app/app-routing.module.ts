@@ -115,6 +115,9 @@ const routes: Routes = [
   ,{
     path: 'ecommersCliente',
     loadComponent: () => import('./components/ecommerce/users-eco-create/users-eco-create.component').then(e => e.UsersEcoCreateComponent)
+  }  ,{
+    path: 'cart',
+    loadComponent: () => import('./components/ecommerce/cart/cart.component').then(e => e.CartComponent)
   }
 ];
 
