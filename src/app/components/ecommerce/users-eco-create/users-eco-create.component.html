@@ -4,7 +4,7 @@
       <div class="row justify-content-center">
         <div class="container col-sm-12 col-md-10 col-lg-12">
           <div class="border rounded p-4 shadow-sm bg-white">
-            <h4 class="mb-4"><b>Crear Cuenta</b></h4>
+            <h4 class="mb-4"><b>Registro</b></h4>
             <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
               <div class="form-row">
                 <div class="col-sm-12 col-md-6 col-lg-4 form-group">
@@ -92,6 +92,7 @@
                   </div>
                 </div>
               </div>
+              <div *ngIf="errorMessage" class="alert alert-danger mt-4">{{ errorMessage }}</div>
               <div class="d-flex justify-content-between mt-4">
                 <button type="submit" class="btn btn-primary btn-lg px-5">Crear</button>
                 <a href="/ecommers" class="btn btn-secondary btn-lg px-5">Volver a la tienda</a>
