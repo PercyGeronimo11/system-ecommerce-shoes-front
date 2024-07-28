@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ecommerceService } from '../service/ecomer.service';
+import { ecommerceService } from '../../../services/ecomer.service';
 import { EcommercePlantilla } from '../base-layout.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { SharedDataService } from '../../../services/shared-data.service';
+
 @Component({
   selector: 'app-users-eco-create',
   standalone: true,
@@ -17,6 +18,7 @@ import { SharedDataService } from '../../../services/shared-data.service';
 export class UsersEcoCreateComponent implements OnInit {
   customerForm: FormGroup;
   passwordFieldType: string = 'password';
+  errorMessage: string | null = null;
 
   constructor(
     private ecommerceService: ecommerceService,
@@ -59,22 +61,18 @@ export class UsersEcoCreateComponent implements OnInit {
 
     const formValue = this.customerForm.value;
 
-
     if (!formValue.custBirthDate) {
       formValue.custBirthDate = new Date().toISOString().split('T')[0];
     }
 
     this.ecommerceService.create(formValue).subscribe(
       (resp: any) => {
-
         console.log('Cliente creado:', resp);
-
-
         this.ecommerceService.logIn(formValue.custEmail, formValue.custPassword).subscribe(
           (loginResp: any) => {
             console.log('Inicio de sesión exitoso:', loginResp);
             this.sharedServ.setLoginResponse(loginResp);
-              this.router.navigate(['/ecommers']);
+            this.router.navigate(['/ecommers']);
           },
           (loginError: any) => {
             console.error('Error al iniciar sesión después de crear el cliente:', loginError);
@@ -82,9 +80,9 @@ export class UsersEcoCreateComponent implements OnInit {
         );
       },
       (createError: any) => {
+        this.errorMessage = createError;
         console.error('Error al crear el cliente:', createError);
       }
     );
   }
 }
-

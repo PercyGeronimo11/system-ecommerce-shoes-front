@@ -17,6 +17,12 @@ export interface ProductModel {
   proSize: string | null;
   proStock: number;
   proUrlImage: String;
+  
+  name: string;
+  size: number;
+  price: number;
+  quantity: number; // Asegúrate de que esto está presente
+  image: String;
 }
 
 export interface ProductCreateReq {

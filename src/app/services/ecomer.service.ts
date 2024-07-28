@@ -21,20 +21,26 @@ export class ecommerceService {
   }
 
   logIn(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, { email, password })
-      .pipe(
+    return this.http.post(`${this.apiUrl}/login`, { email, password }).pipe(
         catchError(this.handleError)
       );
   }
 
+
+
+  create(customer: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}`, customer).pipe(
+      catchError(this.handleError)
+    );
+  }
   private handleError(error: any): Observable<never> {
-    console.error('An error occurred', error);
-    return throwError('Something went wrong; please try again later.');
+    let errorMessage = 'Something went wrong; please try again later.';
+    if (error.error && error.error.message) {
+      errorMessage = error.error.message;
+    }
+    return throwError(errorMessage);
   }
 
-  create(customer:any): Observable<any>{
-    return this.http.post(`${this.apiUrl}`, customer);
-  }
 
   getById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
@@ -53,11 +59,11 @@ export class ecommerceService {
   getProductById(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/products/${id}`);
   }
-  
+
   viewProductDetail(product: ProductModel): void {
     this.router.navigate(['/product', product.id]);
   }
 
-  
+
 }
 

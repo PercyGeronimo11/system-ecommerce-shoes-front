@@ -30,11 +30,12 @@
             <div class="icon d-inline-block ml-3">
               <i class="fas fa-shopping-cart"></i>
               <span>
-                <a href="/ecommers" class="btn btn-primary">
+                <a href="/cart" class="btn btn-primary">
                   <span>Productos</span>
+                  <span class="badge badge-pill badge-danger">{{ cartItemCount }}</span>
                 </a>
               </span>
-            </div>
+            </div>            
             <div class="icon d-inline-block ml-3">
               <i class="fas fa-train"></i>
               <span>
@@ -115,7 +116,7 @@
               <p class="card-title" style="font-size: large;">{{ product.proName }}</p>
               <p class="card-text" style="font-size: large;">{{ product.proDescription }}</p>
               <p class="price mt-auto" style="font-size:x-large;">S/.{{ product.proUnitPrice }}</p>
-              <button class="btn btn-secondary mt-3" (click)="addToCart(product)">
+              <button class="btn btn-secondary mt-3">
                 <i class="fas fa-shopping-cart"></i> Agregar
               </button>
             </div>
