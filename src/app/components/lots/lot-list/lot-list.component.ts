@@ -8,7 +8,7 @@ import { LotEditComponent } from '../lot-edit/lot-edit.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductCreateReq, ProductModel } from '../../../models/product.model';
 import { ProductService } from '../../../services/product.service';
-import { CategoriaService } from '../../categories/service/categories.service';
+import { CategoriaService } from '../../../services/categories.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {CategoryModel} from '../../../models/category.model';

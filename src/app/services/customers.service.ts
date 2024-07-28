@@ -1,14 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment';
-import { AuthService } from '../../auth/service/auth.service';
+import { environment } from '../../environments/environment';
+import { AuthService } from '../components/auth/service/auth.service';
 
 @Injectable({
     providedIn: 'root'
   })
-export class MaterialService {
+export class CustomerService {
 
-    private apiUrl= environment.apiUrl+"/api/material";
+    private apiUrl= environment.apiUrl+"/api/customer";
 
     constructor(
         private http: HttpClient,

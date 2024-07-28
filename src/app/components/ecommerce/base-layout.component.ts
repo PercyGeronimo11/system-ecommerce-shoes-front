@@ -8,7 +8,7 @@ import { ProductService } from '../../services/product.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from '../../components/auth/service/auth.service';
 import { SharedDataService } from '../../services/shared-data.service';
-import { CategoriaService } from '../categories/service/categories.service';
+import { CategoriaService } from '../../services/categories.service';
 @Component({
   selector: 'app-base-layout',
   standalone: true,

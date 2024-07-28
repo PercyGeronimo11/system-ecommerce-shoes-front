@@ -8,7 +8,7 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/components/auth/service/auth.service';
-import { CategoriaService } from 'src/app/components/categories/service/categories.service';
+import { CategoriaService } from 'src/app/services/categories.service';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 
 @Component({
