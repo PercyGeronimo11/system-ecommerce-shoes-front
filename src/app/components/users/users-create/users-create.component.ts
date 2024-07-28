@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-import { UserService } from '../service/users.service';
+import { UserService } from '../../../services/users.service';
 import { Router } from '@angular/router';
 
 @Component({

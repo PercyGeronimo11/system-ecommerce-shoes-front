@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { SharedDataService } from '../../../services/shared-data.service';
 import { EcommercePlantilla } from '../base-layout.component';
-import { ecommerceService } from '../service/ecomer.service';
+import { ecommerceService } from '../../../services/ecomer.service';
 @Component({
   selector: 'app-ecommers-ingreso',
   standalone: true,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MaterialService } from '../service/materials.service';
+import { MaterialService } from '../../../services/materials.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

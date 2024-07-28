@@ -3,10 +3,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/components/auth/service/auth.service';
-import { CategoriaService } from 'src/app/components/categories/service/categories.service';
-import { CartService } from 'src/app/components/ecommerce/service/cart.service';
-import { ProductModel } from 'src/app/models/product.model';
-import { ProductService } from 'src/app/services/product.service';
+import { CartService } from '../../../services/cart.service';
+import { ProductModel } from '../../../models/product.model';
+import { ProductService } from '../../../services/product.service';
+import { CategoriaService } from '../../../services/categories.service';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 

@@ -3,14 +3,13 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { CartService } from 'src/app/components/ecommerce/service/cart.service';
+import { CartService } from '../../services/cart.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { AuthService } from '../../components/auth/service/auth.service';
 import { ProductModel } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 import { SharedDataService } from '../../services/shared-data.service';
-import { CategoriaService } from '../categories/service/categories.service';
-
+import { CategoriaService } from '../../services/categories.service';
 @Component({
   selector: 'app-base-layout',
   standalone: true,

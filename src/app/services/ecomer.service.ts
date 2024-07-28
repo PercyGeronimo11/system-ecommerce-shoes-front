@@ -4,13 +4,14 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ProductModel } from 'src/app/models/product.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
     providedIn: 'root'
   })
 export class ecommerceService {
 
-  private apiUrl = "http://localhost:8080/api/customer";
+  private apiUrl = environment.apiUrl +"/api/customer";
 
   constructor(private http: HttpClient,     private router: Router
   ) { }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductCreateReq } from '../../../models/product.model';
 import { ProductService } from '../../../services/product.service';
-import { CategoriaService } from '../../categories/service/categories.service';
+import { CategoriaService } from '../../../services/categories.service';
 import { Router } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';

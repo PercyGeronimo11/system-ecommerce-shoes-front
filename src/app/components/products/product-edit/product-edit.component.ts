@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../../services/product.service';
-import { CategoriaService } from '../../categories/service/categories.service';
+import { CategoriaService } from '../../../services/categories.service';
 import { CategoryModel } from '../../../models/category.model';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { ProductModel } from 'src/app/models/product.model';

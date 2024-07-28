@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 
 // project import
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-import { MaterialService } from '../service/materials.service';
+import { MaterialService } from '../../../services/materials.service';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LotModel,LotCreateReq, LotModelResp } from '../models/lot.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LotService {
-  private apiUrl = 'http://127.0.0.1:8080/lot';
+  private apiUrl = environment.apiUrl+'/lot';
 
   constructor(private http: HttpClient) {}
 
