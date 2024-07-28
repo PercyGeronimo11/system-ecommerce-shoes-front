@@ -37,7 +37,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   cartItemCount: number = 0;
   cart: any[] = []; // Lista para almacenar los productos agregados al carrito
 
-
   constructor(private fb: FormBuilder,
               public categoriaService: CategoriaService,
               private authService: AuthService,
@@ -80,6 +79,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   
     this.loadProductDetail();
   }
+
   loadProductDetail(): void {
     const productId = this.route.snapshot.paramMap.get('id');
     if (productId) {
@@ -91,7 +91,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       });
     }
   }
-
 
   onSubmit(): void {
     this.categoria = this.numberForm.get('idcategoria')?.value;
@@ -131,7 +130,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     clearInterval(this.slideInterval);
   }
 
-
   previousSlide(event: Event) {
     event.preventDefault();
     this.currentSlide = (this.currentSlide === 0) ? this.slides.length - 1 : this.currentSlide - 1;
@@ -152,18 +150,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
-
-  ngOnInit2(): void {
-    const productId = this.route.snapshot.paramMap.get('id');
-    if (productId) {
-      this.productService.getProductById(productId).subscribe((response: any) => {
-        this.product = response.data;
-      }, error => {
-        console.error("Error al cargar el producto:", error);
-      });
-    }
-  }
-
   addToCart(product: ProductModel): void {
     if (this.selectedSize) {
       const productToAdd = {
@@ -179,6 +165,11 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         this.cartItemCount = count; // Actualiza el contador local
       });
       console.log('Producto agregado al carrito:', productToAdd);
+      localStorage.setItem('addingProduct', 'true'); // Indica que se está agregando un producto
+      document.getElementById('loading')?.classList.remove('d-none'); // Muestra el mensaje de carga
+      setTimeout(() => {
+        window.location.reload(); // Refresca la página después de la animación
+      }, 1000); // Tiempo de espera para la animación (1.5 segundos)
     } else {
       console.error('Seleccione una talla antes de agregar al carrito');
     }

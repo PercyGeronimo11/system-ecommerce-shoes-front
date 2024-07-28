@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +7,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-
 <body>
+  <div id="loading" class="loading-overlay d-none">
+    <div class="spinner"></div>
+    <div class="loading-message">Agregando producto...</div>
+  </div>
   <div class="container-fluid">
     <header class="row header">
       <div class="container">
@@ -18,7 +20,6 @@
             <img src="assets/images/logo-ecommerce.jpeg" alt="Logo" class="logo">
           </div>
           <div class="col icon-container">
-
             <div class="icon d-inline-block">
               <i class="fas fa-user"></i>
               <span>
@@ -79,34 +80,42 @@
         </div>
       </div>
     </nav>
-              <div *ngIf="product" class="product-detail-container">
-                <div class="product-image">
-                  <img [src]="product.proUrlImage" alt="{{ product.proName }}" class="img-fluid">
-                </div>
-                <div class="product-info">
-                  <h1>{{ product.proName }}</h1>
-                  <p>{{ product.proDescription }}</p>
-                  <div class="sizes-container">
-                    <span *ngFor="let size of [30, 36, 39, 40]; let i = index"
-                          class="size-circle"
-                          [ngClass]="{'active': selectedSize === size}"
-                          (click)="selectSize(size)">
-                      {{ size }}
-                    </span>
-                  </div>
-                  <p>Precio: S/.{{ product.proUnitPrice }}</p>
-                  <div class="product-add-to-cart">
-                    <button class="btn btn-primary" [disabled]="!selectedSize" (click)="addToCart(product)">Agregar al carrito</button>
-                  </div>
-              
-                  <div *ngIf="!selectedSize">
-                    Debe seleccionar una talla antes de agregar al carrito.
-                  </div>
-                </div>
-              </div>
-  
+    <div *ngIf="product" class="product-detail-container">
+      <div class="product-image">
+        <img [src]="product.proUrlImage" alt="{{ product.proName }}" class="img-fluid">
+      </div>
+      <div class="product-info">
+        <h1>{{ product.proName }}</h1>
+        <p>{{ product.proDescription }}</p>
+        <div class="sizes-container">
+          <span *ngFor="let size of [30, 36, 39, 40]; let i = index"
+                class="size-circle"
+                [ngClass]="{'active': selectedSize === size}"
+                (click)="selectSize(size)">
+            {{ size }}
+          </span>
+        </div>
+        <p>Precio: S/.{{ product.proUnitPrice }}</p>
+        <div class="product-add-to-cart">
+          <button class="btn btn-primary" [disabled]="!selectedSize" (click)="addToCart(product)">Agregar al carrito</button>
+        </div>
+    
+        <div *ngIf="!selectedSize">
+          Debe seleccionar una talla antes de agregar al carrito.
+        </div>
+      </div>
     </div>
-  </body>
+  </div>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      if (localStorage.getItem('addingProduct') === 'true') {
+        document.getElementById('loading').classList.remove('d-none');
+        localStorage.removeItem('addingProduct');
+      }
+    });
+  </script>
+</body>
+</html>
