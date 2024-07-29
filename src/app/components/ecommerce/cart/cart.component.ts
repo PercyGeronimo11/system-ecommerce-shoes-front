@@ -8,11 +8,11 @@ import { CartService } from '../../../services/cart.service';
 import { ProductModel } from 'src/app/models/product.model';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-
+import { EcommercePlantilla } from '../base-layout.component';
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule],
+  imports: [RouterModule, CommonModule, SharedModule,EcommercePlantilla],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
@@ -46,8 +46,9 @@ export class CartComponent implements OnInit, OnDestroy {
     this.cartItems = this.cartService.getCartItems();
     this.groupCartItems();
     this.cartItemCount = this.cartService.getCartSize();
-    
+
     // Suscribirse al loginResponse para actualizar la UI
+    /*
     this.sharedDataService.loginResponse$.subscribe(loginResp => {
       if (loginResp.error) {
         this.loginResponse = 'Ingresar';
@@ -55,7 +56,7 @@ export class CartComponent implements OnInit, OnDestroy {
         this.loginResponse = loginResp.data.custFirstName;
       }
     });
-    
+    */
     console.log(this.cartItems); // Verifica los datos aquí
     this.cdr.detectChanges(); // Forzar detección de cambios si es necesario
   }
@@ -74,7 +75,7 @@ export class CartComponent implements OnInit, OnDestroy {
       return acc;
     }, {} as { [key: number]: ProductModel });
   }
-  
+
   get groupedCartItemsArray() {
     return Object.values(this.groupedCartItems);
   }

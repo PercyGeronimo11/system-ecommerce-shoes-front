@@ -20,14 +20,6 @@ export class ecommerceService {
     return this.http.get(`${this.apiUrl}`);
   }
 
-  logIn(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, { email, password }).pipe(
-        catchError(this.handleError)
-      );
-  }
-
-
-
   create(customer: any): Observable<any> {
     return this.http.post(`${this.apiUrl}`, customer).pipe(
       catchError(this.handleError)

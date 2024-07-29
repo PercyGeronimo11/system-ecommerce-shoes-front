@@ -9,11 +9,11 @@ import { ProductService } from '../../../services/product.service';
 import { CategoriaService } from '../../../services/categories.service';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-
+import { EcommercePlantilla } from '../base-layout.component';
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule],
+  imports: [RouterModule, CommonModule, SharedModule,EcommercePlantilla],
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss']
 })
@@ -39,13 +39,13 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
 
   constructor(private fb: FormBuilder,
-              public categoriaService: CategoriaService,
-              private authService: AuthService,
-              private productService: ProductService,
-              private sharedDataService: SharedDataService,
-              private cartService: CartService,
-              private route: ActivatedRoute,
-              private router: Router) {
+    public categoriaService: CategoriaService,
+    private authService: AuthService,
+    private productService: ProductService,
+    private sharedDataService: SharedDataService,
+    private cartService: CartService,
+    private route: ActivatedRoute,
+    private router: Router) {
     this.numberForm = this.fb.group({
       idcategoria: [0]
     });
@@ -60,6 +60,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loginResponse = 'Ingresar';
+
+    //obtener usuario
+    /*
     this.sharedDataService.loginResponse$.subscribe(loginResp => {
       if (loginResp.error) {
         console.log('Estos datos son', this.loginResponse);
@@ -68,16 +71,20 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         console.log('Estos datos son', this.loginResponse);
       }
     });
+*/
+
+
+
     this.getProducts();
     this.categoria == 0;
-  
+
     // Subscribe to cart item count
     this.cartService.getCartItemCount().subscribe(count => {
       this.cartItemCount = count;
     });
-  
+
     this.cartItemCount = this.cartService.getCartSize();
-  
+
     this.loadProductDetail();
   }
   loadProductDetail(): void {

@@ -65,8 +65,10 @@
         <label for="name">Nombre</label>
         <input type="text" class="form-control" id="name" formControlName="catName" name="name">
         <div *ngIf="categoryForm.get('catName')?.touched && categoryForm.get('catName')?.invalid">
-          <small *ngIf="categoryForm.get('catName')?.errors?.['required']" class="text-danger">Nombre es requerido.</small>
-          <small *ngIf="categoryForm.get('catName')?.errors?.['minlength']" class="text-danger">Nombre debe tener al menos 3 caracteres.</small>
+          <small *ngIf="categoryForm.get('catName')?.errors?.['required']" class="text-danger">Nombre es
+            requerido.</small>
+          <small *ngIf="categoryForm.get('catName')?.errors?.['minlength']" class="text-danger">Nombre debe tener al
+            menos 3 caracteres.</small>
         </div>
       </div>
 
@@ -75,17 +77,15 @@
         <input type="text" class="form-control" id="description" formControlName="catDescription" name="description">
       </div>
       <div class="form-group">
-        <label for="status"><b>¿Tiene taco?</b></label><br>
-          <div class="d-inline-flex -ml-3">
-            <label class="form-check-label"style="margin-right: 10px;" for="active">Si</label>
-            <input class="form-check-input" type="radio" id="active" formControlName="catHasTaco" [value]="true"
-              name="catHasTaco">
-          </div>
-          <div class="d-inline-flex -ml-3">
-            <label class="form-check-label"style="margin-left: 40px;margin-right: 10px;" for="inactive">No</label>
-            <input class="form-check-input" type="radio" id="active" formControlName="catHasTaco" [value]="false"
-              name="catHasTaco">
-          </div>
+        <label><b>¿Tiene taco?</b></label><br>
+        <div class="d-inline-flex">
+          <label class="form-check-label" for="hasTacoYes">Sí</label>
+          <input class="form-check-input" type="radio" formControlName="catHasTaco" id="hasTacoYes" [value]="true">
+        </div>
+        <div class="d-inline-flex" style="margin-left: 20px;">
+          <label class="form-check-label" for="hasTacoNo">No</label>
+          <input class="form-check-input" type="radio" formControlName="catHasTaco" id="hasTacoNo" [value]="false">
+        </div>
       </div>
     </form>
   </div>
@@ -106,8 +106,10 @@
         <label for="name"><b>Nombre</b></label>
         <input type="text" class="form-control" id="name" formControlName="catName" name="name">
         <div *ngIf="categoryForm.get('catName')?.touched && categoryForm.get('catName')?.invalid">
-          <small *ngIf="categoryForm.get('catName')?.errors?.['required']" class="text-danger">Nombre es requerido.</small>
-          <small *ngIf="categoryForm.get('catName')?.errors?.['minlength']" class="text-danger">Nombre debe tener al menos 3 caracteres.</small>
+          <small *ngIf="categoryForm.get('catName')?.errors?.['required']" class="text-danger">Nombre es
+            requerido.</small>
+          <small *ngIf="categoryForm.get('catName')?.errors?.['minlength']" class="text-danger">Nombre debe tener al
+            menos 3 caracteres.</small>
         </div>
       </div>
       <div class="form-group">
@@ -118,11 +120,12 @@
       <div class="form-group">
         <div class="d-inline-flex -ml-3">
           <label class="form-check-label" style="margin-right: 10px;">Si</label>
-          <input class="form-check-input" type="radio" formControlName="catHasTaco" name="catHasTaco" [value]="false" checked>
+          <input class="form-check-input" type="radio" formControlName="catHasTaco" name="catHasTaco" [value]="true">
         </div>
         <div class="d-inline-flex ml-3">
           <label class="form-check-label" style="margin-left: 40px;margin-right: 10px;">No</label>
-          <input class="form-check-input" type="radio" formControlName="catHasTaco" name="catHasTaco" [value]="true">
+          <input class="form-check-input" type="radio" formControlName="catHasTaco" name="catHasTaco" [value]="false"
+            checked>
         </div>
       </div>
     </form>

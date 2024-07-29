@@ -1,4 +1,3 @@
-// shared-data.service.ts
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -6,10 +5,10 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class SharedDataService {
-  private loginResponseSubject = new BehaviorSubject<any>(null);
-  loginResponse$ = this.loginResponseSubject.asObservable();
+  private userSubject = new BehaviorSubject<any>(null);
+  user$ = this.userSubject.asObservable();
 
-  setLoginResponse(loginResp: any) {
-    this.loginResponseSubject.next(loginResp);
+  updateUser(user: any): void {
+    this.userSubject.next(user);
   }
 }

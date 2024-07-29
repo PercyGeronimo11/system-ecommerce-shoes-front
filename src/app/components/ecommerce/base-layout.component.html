@@ -19,29 +19,44 @@
           </div>
           <div class="col icon-container">
 
-            <div class="icon d-inline-block">
+            <div class="icon d-inline-block" *ngIf="loginResponse== 'Ingresar'">
               <i class="fas fa-user"></i>
               <span>
                 <a [routerLink]="['/ecommersCreate']" class="btn btn-primary">
-                  <span>{{loginResponse}}</span> <!--  <span>{{loginResponse.name}}}</span>-->
+                  <span>{{loginResponse}}</span>
                 </a>
+              </span>
+            </div>
+            <div class="icon d-inline-block" *ngIf="loginResponse !== 'Ingresar'" disable>
+              <i class="fas fa-user"></i>
+              <span>
+                  <span style="color: white;">{{loginResponse}}</span>
               </span>
             </div>
             <div class="icon d-inline-block ml-3">
               <i class="fas fa-shopping-cart"></i>
               <span>
-                <a href="/cart" class="btn btn-primary">
+                <a [routerLink]="['/cart']" class="btn btn-primary">
                   <span>Productos</span>
                   <span class="badge badge-pill badge-danger">{{ cartItemCount }}</span>
                 </a>
               </span>
-            </div>            
+            </div>
             <div class="icon d-inline-block ml-3">
               <i class="fas fa-train"></i>
               <span>
-                <a href="/ecommers" class="btn btn-primary">
+                <a [routerLink]="['/ecommers']" class="btn btn-primary">
                   <span>Envíos</span>
                 </a>
+              </span>
+            </div>
+            <div *ngIf="loginResponse !== 'Ingresar'" class="icon d-inline-block ml-3" >
+
+              <i class="fas fa-sign-out-alt"></i>
+              <span>
+                <button (click)="logoutcustomer()" class="btn btn-primary">
+                  <span>Salir</span>
+                </button>
               </span>
             </div>
           </div>
@@ -58,10 +73,10 @@
         <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
           <ul class="navbar-nav mb-2 mb-lg-0">
             <li class="nav-item ms-3">
-              <a class="nav-link" href="/ecommers">Inicio</a>
+              <a class="nav-link"  [routerLink]="['/ecommers']">Inicio</a>
             </li>
             <li class="nav-item ms-3">
-              <a class="nav-link" href="/ecommers">Nosotros</a>
+              <a class="nav-link"  [routerLink]="['/ecommers']">Nosotros</a>
             </li>
             <ul class="nav-item ms-3 dropdown " [formGroup]="numberForm" (ngSubmit)="onSubmit()">
               <select class="form-control me-2" formControlName="idcategoria" name="idcategoria" (change)="onSubmit()">
@@ -73,7 +88,7 @@
               </select>
             </ul>
             <li class="nav-item ms-3">
-              <a class="nav-link" href="#contact">Contáctanos</a>
+              <a class="nav-link" [routerLink]="['/ecommers']">Contáctanos</a>
             </li>
           </ul>
         </div>
@@ -122,8 +137,8 @@
             </div>
           </div>
         </div>
-        
-        
+
+
       </ng-content>
       <!--Fin de contenido-->
     </section> <br>
