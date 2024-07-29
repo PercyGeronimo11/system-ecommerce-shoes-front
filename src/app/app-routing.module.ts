@@ -69,6 +69,10 @@ const routes: Routes = [
         loadComponent: () => import('./components/customers/customers-list/customers-list.component').then(cu => cu.CustomerListModule),canActivate: [AuthGuard]
       },
       {
+        path: 'orders',
+        loadComponent: () => import('./components/orders/orders-list.component').then(m => m.OrdersListModule),canActivate: [AuthGuard]
+      },
+      {
         path: 'component',
         loadChildren: () => import('./demo/ui-element/ui-basic.module').then((m) => m.UiBasicModule)
       },
