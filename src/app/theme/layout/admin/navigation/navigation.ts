@@ -124,7 +124,7 @@ export const NavigationItems: NavigationItem[] = [
         id: 'venta',
         title: 'Ventas',
         type: 'item',
-        url: '/ventas',
+        url: '/orders',
         icon: 'feather icon-box'
       },
     ]
