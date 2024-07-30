@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-xl-12">
+    <app-card cardTitle="Ventas" [options]="false" blockClass="table-border-style">
+      <!-- <div>
+        <button (click)="openMaterialModal()" class="btn btn-primary mb-3">Nuevo venta</button>
+      </div> -->
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Customer</th>
+              <th>Fecha</th>
+              <th>Total</th>
+              <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of orders; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ order.customer.custFirstName }}</td>
+              <td>{{ order.ordDate }}</td>
+              <td>S/{{ order.ordTotal }}</td>
+              <td>
+                <button (click)="selectOrder(order)" class="btn btn-success mb-3 me-2">
+                  <i class="fa fa-eye"></i>
+                </button>
+                <!-- <button (click)="openDeleteModal(order)" class="btn btn-danger mb-3">
+                  <i class="fa fa-trash"></i>
+                </button> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<!-- Modal para crear o editar material -->
+<div id="orderModal" class="modal" [ngStyle]="{'display': modalOrderDetail ? 'block' : 'none'}">
+  <div class="modal-content modal-content-create">
+    <span class="close" (click)="closeMaterialModal()">&times;</span>
+    <h4>Detalle de venta</h4>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <th>N°</th>
+          <th>Cliente</th>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+        </thead>
+        <tr *ngFor="let detailOrder of detailOrders; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ detailOrder.customer }}</td>
+          <td>{{ detailOrder.producto }}</td>
+          <td>{{ detailOrder.quantity }}</td>
+          <td>{{ detailOrder.price }}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>

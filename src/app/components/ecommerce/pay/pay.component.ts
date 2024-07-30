@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
@@ -8,17 +8,19 @@ import { ProductModel } from '../../../models/product.model';
 import { CartService } from '../../../services/cart.service';
 import { CategoriaService } from '../../../services/categories.service';
 import { SharedDataService } from '../../../services/shared-data.service';
+import { EcommercePlantilla } from '../base-layout.component';
+
 @Component({
   selector: 'app-pay',
   standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule],
+  imports: [RouterModule, CommonModule, SharedModule,EcommercePlantilla],
   templateUrl: './pay.component.html',
-  styleUrl: './pay.component.scss'
+  styleUrls: ['./pay.component.scss'] // Corrige el nombre aquí
 })
-export class PayComponent {
-loginResponse: any;
+export class PayComponent implements OnInit, OnDestroy {
+  loginResponse: string = 'Ingresar'; // Tipo explícito y valor predeterminado
   cartItems: ProductModel[] = [];
-  groupedCartItems: { [key: number]: ProductModel } = {};
+  groupedCartItems: { [key: string]: ProductModel & { quantity: number } } = {};
   cartItemCount: number = 0;
   numberForm: FormGroup;
   categories: any[] = [];
@@ -26,12 +28,13 @@ loginResponse: any;
   totalAmount: number = 0;
   isRemoving: boolean = false; // Variable para manejar el estado de la animación
 
-  constructor(private fb: FormBuilder,
-              private cartService: CartService,
-              private authService: AuthService,
-              private sharedDataService: SharedDataService,
-              private categoriaService: CategoriaService,
-             ) {
+  constructor(
+    private fb: FormBuilder,
+    private cartService: CartService,
+    private authService: AuthService,
+    private sharedDataService: SharedDataService,
+    private categoriaService: CategoriaService
+  ) {
     this.numberForm = this.fb.group({
       idcategoria: [0]
     });
@@ -51,12 +54,12 @@ loginResponse: any;
     // Calcular el monto total de los productos en el carrito
     this.calculateTotalAmount();
     
-    // Suscribirse al loginResponse para actualizar la UI
-    this.sharedDataService.loginResponse$.subscribe(loginResp => {
-      if (loginResp.error) {
+    // Suscribirse al user$ para actualizar la UI
+    this.sharedDataService.user$.subscribe((loginResp: any) => {
+      if (loginResp?.error) {
         this.loginResponse = 'Ingresar';
       } else {
-        this.loginResponse = loginResp.data.custFirstName;
+        this.loginResponse = loginResp?.data?.custFirstName || 'Ingresar';
       }
     });
     
@@ -66,9 +69,6 @@ loginResponse: any;
   ngOnDestroy(): void {
     // Implementar la lógica de limpieza si es necesario
   }
-
-
-
 
   groupCartItems() {
     this.groupedCartItems = this.cartItems.reduce((acc, item) => {
@@ -80,10 +80,9 @@ loginResponse: any;
         acc[key] = { ...item, quantity: 1 };
       }
       return acc;
-    }, {} as { [key: string]: ProductModel });
+    }, {} as { [key: string]: ProductModel & { quantity: number } });
   }
 
-  
   get groupedCartItemsArray() {
     return Object.values(this.groupedCartItems);
   }
@@ -134,5 +133,4 @@ loginResponse: any;
       window.location.reload();
     }, 1000); // El tiempo de espera coincide con la duración de la animación
   }
-  
 }

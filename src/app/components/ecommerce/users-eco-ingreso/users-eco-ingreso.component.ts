@@ -6,6 +6,7 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { SharedDataService } from '../../../services/shared-data.service';
 import { EcommercePlantilla } from '../base-layout.component';
 import { ecommerceService } from '../../../services/ecomer.service';
+import { AuthService } from '../../auth/service/auth.service';
 @Component({
   selector: 'app-ecommers-ingreso',
   standalone: true,
@@ -20,7 +21,8 @@ export class EcommersIngresoModule implements OnInit {
     public userService: ecommerceService,
     private fb: FormBuilder,
     private router: Router,
-    private sharedServ: SharedDataService
+    private sharedServ: SharedDataService,
+    private authService: AuthService
   ) {
     this.userecoForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -32,23 +34,31 @@ export class EcommersIngresoModule implements OnInit {
   ngOnInit(): void { }
   onSubmit(): void {
     if (this.userecoForm.valid) {
-      const { email, password } = this.userecoForm.value;
-      this.userService.logIn(email, password).subscribe(
-        (loginResp: any) => {
-          //retorno del usuario
-          this.sharedServ.setLoginResponse(loginResp);
+
+
+      this.authService.loginCustomer(this.userecoForm.value).subscribe(
+        (Resp: any) => {
+          localStorage.setItem('tokencustomer', Resp.token);
+          localStorage.setItem('usernamecustomer', Resp.username);
+          localStorage.setItem('rolecustomer', Resp.rol);
+          // Actualizar el servicio con el nuevo usuario
+          this.sharedServ.updateUser({
+            username: Resp.username,
+            role: Resp.rol
+          });
           this.router.navigate(['/ecommers']);
         },
-        loginError => {
-
+        (loginError) => {
           console.error('Error en la autenticación', loginError);
-          this.errorMessage = 'Error en la autenticación: ' + loginError.error.message;
+          this.errorMessage = 'Credenciales incorrectas: ' + loginError.error.message;
         }
       );
     } else {
-      this.userecoForm.markAllAsTouched();
       this.errorMessage = 'El formulario es inválido';
     }
+  }
+  regresar():void{
+    this.router.navigate(['/ecommers']);
   }
 }
 

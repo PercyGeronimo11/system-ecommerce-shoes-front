@@ -10,6 +10,7 @@ import { ProductModel } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 import { SharedDataService } from '../../services/shared-data.service';
 import { CategoriaService } from '../../services/categories.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-base-layout',
   standalone: true,
@@ -33,14 +34,14 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
   currentSlide = 0;
   slideInterval: any;
   cartItemCount: number = 0;
-
+  userSubscription: Subscription | undefined;
   constructor(private fb: FormBuilder,
-              public categoriaService: CategoriaService,
-              private authService: AuthService,
-              private productService: ProductService,
-              private sharedDataService: SharedDataService,
-              private cartService: CartService,
-              private router: Router) {
+    public categoriaService: CategoriaService,
+    private authService: AuthService,
+    private productService: ProductService,
+    private sharedDataService: SharedDataService,
+    private cartService: CartService,
+    private router: Router) {
     this.numberForm = this.fb.group({
       idcategoria: [0]
     });
@@ -53,13 +54,12 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loginResponse = 'Ingresar';
-    this.sharedDataService.loginResponse$.subscribe(loginResp => {
-      if (loginResp.error) {
-        console.log('Estos datos son', this.loginResponse);
+    // Obtener el nombre de usuario al inicializar el componente
+    this.userSubscription = this.sharedDataService.user$.subscribe(user => {
+      if (user) {
+        this.loginResponse = user.username;
       } else {
-        this.loginResponse = loginResp.data.custFirstName;
-        console.log('Estos datos son', this.loginResponse);
+        this.loginResponse = 'Ingresar';
       }
     });
     this.getProducts();
@@ -77,6 +77,9 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
     this.ngOnInit();
   }
 
+  logoutcustomer(): void {
+    this.authService.logoutCustomer();
+  }
   getProducts(): void {
     this.isLoading = true;
     if (this.categoria == 0) {

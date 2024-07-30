@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { SharedDataService } from '../../../services/shared-data.service';
-
+import { AuthService } from '../../auth/service/auth.service';
 @Component({
   selector: 'app-users-eco-create',
   standalone: true,
@@ -17,6 +17,7 @@ import { SharedDataService } from '../../../services/shared-data.service';
 })
 export class UsersEcoCreateComponent implements OnInit {
   customerForm: FormGroup;
+  loginForm: FormGroup;
   passwordFieldType: string = 'password';
   errorMessage: string | null = null;
 
@@ -24,8 +25,10 @@ export class UsersEcoCreateComponent implements OnInit {
     private ecommerceService: ecommerceService,
     private fb: FormBuilder,
     private router: Router,
-    private sharedServ: SharedDataService
+    private sharedServ: SharedDataService,
+    private authService: AuthService
   ) {
+
     this.customerForm = this.fb.group({
       custFirstName: ['', Validators.required],
       custLastName: ['', Validators.required],
@@ -43,6 +46,11 @@ export class UsersEcoCreateComponent implements OnInit {
         Validators.pattern(/^\d{9}$/)
       ]],
       custBirthDate: ['']
+    });
+
+    this.loginForm = this.fb.group({
+      email: [''],
+      password: ['']
     });
   }
 
@@ -68,16 +76,33 @@ export class UsersEcoCreateComponent implements OnInit {
     this.ecommerceService.create(formValue).subscribe(
       (resp: any) => {
         console.log('Cliente creado:', resp);
-        this.ecommerceService.logIn(formValue.custEmail, formValue.custPassword).subscribe(
-          (loginResp: any) => {
-            console.log('Inicio de sesión exitoso:', loginResp);
-            this.sharedServ.setLoginResponse(loginResp);
-            this.router.navigate(['/ecommers']);
-          },
-          (loginError: any) => {
-            console.error('Error al iniciar sesión después de crear el cliente:', loginError);
-          }
-        );
+
+        // Asignar los valores a loginForm
+        this.loginForm.patchValue({
+          email: formValue.custEmail,
+          password: formValue.custPassword
+        });
+        if (this.loginForm.valid) {
+          this.authService.loginCustomer(this.loginForm.value).subscribe(
+            (lgresp: any) => {
+              localStorage.setItem('tokencustomer', lgresp.token);
+              localStorage.setItem('usernamecustomer', lgresp.username);
+              localStorage.setItem('rolecustomer', lgresp.rol);
+              // Actualizar el servicio con el nuevo usuario
+              this.sharedServ.updateUser({
+                username: lgresp.username,
+                role: lgresp.rol
+              });
+              this.router.navigate(['/ecommers']);
+            },
+            (error) => {
+              console.error('Error al iniciar sesión después de crear el cliente:', error);
+              this.errorMessage = 'Credenciales incorrectas: ';
+            }
+          );
+        } else {
+          this.errorMessage = 'Error al logearte.';
+        }
       },
       (createError: any) => {
         this.errorMessage = createError;
@@ -85,4 +110,5 @@ export class UsersEcoCreateComponent implements OnInit {
       }
     );
   }
+
 }

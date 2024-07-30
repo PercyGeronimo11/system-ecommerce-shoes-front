@@ -3,17 +3,17 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/components/auth/service/auth.service';
-import { CartService } from '../../../services/cart.service';
-import { ProductModel } from '../../../models/product.model';
-import { ProductService } from '../../../services/product.service';
-import { CategoriaService } from '../../../services/categories.service';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-
+import { ProductModel } from '../../../models/product.model';
+import { CartService } from '../../../services/cart.service';
+import { CategoriaService } from '../../../services/categories.service';
+import { ProductService } from '../../../services/product.service';
+import { EcommercePlantilla } from '../base-layout.component';
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule],
+  imports: [RouterModule, CommonModule, SharedModule,EcommercePlantilla],
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss']
 })
@@ -38,13 +38,13 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   cart: any[] = []; // Lista para almacenar los productos agregados al carrito
 
   constructor(private fb: FormBuilder,
-              public categoriaService: CategoriaService,
-              private authService: AuthService,
-              private productService: ProductService,
-              private sharedDataService: SharedDataService,
-              private cartService: CartService,
-              private route: ActivatedRoute,
-              private router: Router) {
+    public categoriaService: CategoriaService,
+    private authService: AuthService,
+    private productService: ProductService,
+    private sharedDataService: SharedDataService,
+    private cartService: CartService,
+    private route: ActivatedRoute,
+    private router: Router) {
     this.numberForm = this.fb.group({
       idcategoria: [0]
     });
@@ -59,6 +59,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loginResponse = 'Ingresar';
+
+    //obtener usuario
+    /*
     this.sharedDataService.loginResponse$.subscribe(loginResp => {
       if (loginResp.error) {
         console.log('Estos datos son', this.loginResponse);
@@ -67,16 +70,20 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         console.log('Estos datos son', this.loginResponse);
       }
     });
+*/
+
+
+
     this.getProducts();
     this.categoria == 0;
-  
+
     // Subscribe to cart item count
     this.cartService.getCartItemCount().subscribe(count => {
       this.cartItemCount = count;
     });
-  
+
     this.cartItemCount = this.cartService.getCartSize();
-  
+
     this.loadProductDetail();
   }
 
