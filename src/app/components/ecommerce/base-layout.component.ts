@@ -8,7 +8,6 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { AuthService } from '../../components/auth/service/auth.service';
 import { ProductModel } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
-import { SharedDataService } from '../../services/shared-data.service';
 import { CategoriaService } from '../../services/categories.service';
 import { Subscription } from 'rxjs';
 @Component({
@@ -25,6 +24,7 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
   NameCate: any = [];
   isLoading = false;
   error: string | null = null;
+  usernamecustomer:any;
   categoria: number = 0;
   numberForm: FormGroup;
   slides = [
@@ -39,7 +39,6 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
     public categoriaService: CategoriaService,
     private authService: AuthService,
     private productService: ProductService,
-    private sharedDataService: SharedDataService,
     private cartService: CartService,
     private router: Router) {
     this.numberForm = this.fb.group({
@@ -54,10 +53,10 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Obtener el nombre de usuario al inicializar el componente
-    this.userSubscription = this.sharedDataService.user$.subscribe(user => {
+
+    this.userSubscription = this.authService.getCustomerObservable().subscribe((user) => {
       if (user) {
-        this.loginResponse = user.username;
+        this.loginResponse = user.usernamecustomer;
       } else {
         this.loginResponse = 'Ingresar';
       }
@@ -65,7 +64,7 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
     this.getProducts();
     this.categoria == 0;
 
-    // Subscribe to cart item count
+
     this.cartService.getCartItemCount().subscribe(count => {
       this.cartItemCount = count;
     });

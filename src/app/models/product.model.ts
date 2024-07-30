@@ -17,21 +17,49 @@ export interface ProductModel {
   proSize: string | null;
   proStock: number;
   proUrlImage: String;
-  
+
   name: string;
   size: number;
   price: number;
   quantity: number; // Asegúrate de que esto está presente
   image: String;
 }
-
-export interface ProductCreateReq {
+export interface ProductoForm {
   id: number;
-  catId: number;
+  category: {
+    id: number;
+    catName: string;
+    description: string;
+    status: boolean;
+  };
   proName: string;
   proDescription: string;
   proUnitPrice: number;
-  proSizePlatform: string ;
-  proSizeTacon: string;
+  proUnitCost: number;
+  proSizePlatform: string | null;
+  proSizeTaco: string | null;
+  proColor: string | null;
+  proSize: string | null;
+  proStock: number;
+  proUrlImage: String;
+}
+ export interface ProductCreateReq {
+  proId: number;
+  proName:String;
+}
+
+export interface PromoCreateReq {
+  promPercentage: number;
+  promStartdate: Date;
+  promEnddate: Date;
+  promDescription: String;
+  promUrlImage: String;
+  promStatus: boolean;
+  promDetail: PromoDetailCreateReq[];
+}
+
+export interface PromoDetailCreateReq{
+  proId: number;
+  proName: String;
 }
 

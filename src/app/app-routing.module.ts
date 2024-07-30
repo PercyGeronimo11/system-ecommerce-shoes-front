@@ -5,7 +5,7 @@ import { ProductDetailComponent } from 'src/app/components/ecommerce/product-det
 import { AuthGuard } from './components/auth/auth.guard';
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
-
+import { SharedDataService } from './services/shared-data.service';
 const routes: Routes = [
   {
     path: '',
@@ -43,6 +43,10 @@ const routes: Routes = [
       {
         path: 'promotions',
         loadComponent: () => import('./components/promotions/promotions-list/promotions-list.component').then(p => p.PromotionsListComponent),canActivate: [AuthGuard]
+      },
+      {
+        path: 'promotionsCreate',
+        loadComponent: () => import('./components/promotions/promotion-create/promotions-create.component').then(p => p.PromotionsCreateComponent),canActivate: [AuthGuard]
       },
       {
         path: 'promotions/:id',
@@ -93,7 +97,7 @@ const routes: Routes = [
         path: 'sample-page',
         loadComponent: () => import('./demo/sample-page/sample-page.component')
       },
-  
+
 
     ]
   },
@@ -133,7 +137,7 @@ const routes: Routes = [
   imports: [
     NgbModule,
     RouterModule.forRoot(routes)],
-  exports: [RouterModule,]
+  exports: [RouterModule]
 })
 export class AppRoutingModule {
 

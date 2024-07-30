@@ -19,18 +19,18 @@
           </div>
           <div class="col icon-container">
 
-            <div class="icon d-inline-block" *ngIf="loginResponse== 'Ingresar'">
+            <div class="icon d-inline-block" *ngIf="loginResponse == 'Ingresar'">
               <i class="fas fa-user"></i>
               <span>
                 <a [routerLink]="['/ecommersCreate']" class="btn btn-primary">
-                  <span>{{loginResponse}}</span>
+                  <span>{{ loginResponse }}</span>
                 </a>
               </span>
             </div>
-            <div class="icon d-inline-block" *ngIf="loginResponse !== 'Ingresar'" disable>
+            <div class="icon d-inline-block" *ngIf="loginResponse !== 'Ingresar'">
               <i class="fas fa-user"></i>
               <span>
-                  <span style="color: white;">{{loginResponse}}</span>
+                <span style="color: white;">{{ loginResponse }}</span>
               </span>
             </div>
             <div class="icon d-inline-block ml-3">

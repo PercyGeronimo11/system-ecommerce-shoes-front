@@ -12,7 +12,9 @@ export class PromocionService {
 
   constructor(private http: HttpClient) { }
 
-
+  getProducts() {
+    return this.http.get<any>(`${this.apiUrl}/list?search`)
+  }
   getById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }

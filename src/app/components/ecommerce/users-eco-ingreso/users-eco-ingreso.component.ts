@@ -34,30 +34,33 @@ export class EcommersIngresoModule implements OnInit {
   ngOnInit(): void { }
   onSubmit(): void {
     if (this.userecoForm.valid) {
-
-
-      this.authService.loginCustomer(this.userecoForm.value).subscribe(
-        (Resp: any) => {
-          localStorage.setItem('tokencustomer', Resp.token);
-          localStorage.setItem('usernamecustomer', Resp.username);
-          localStorage.setItem('rolecustomer', Resp.rol);
-          // Actualizar el servicio con el nuevo usuario
-          this.sharedServ.updateUser({
-            username: Resp.username,
-            role: Resp.rol
-          });
-          this.router.navigate(['/ecommers']);
-        },
-        (loginError) => {
-          console.error('Error en la autenticación', loginError);
-          this.errorMessage = 'Credenciales incorrectas: ' + loginError.error.message;
-        }
-      );
+      const email = this.userecoForm.get('email')?.value;
+      if (email !== 'admin@service.com') {
+        this.authService.loginCustomer(this.userecoForm.value).subscribe(
+          (Resp: any) => {
+            const user = {
+              username: Resp.username,
+              role: Resp.rol,
+              token: Resp.token
+            };
+            this.authService.setCustomer(user);
+            this.authService.getCustomerObservable().subscribe(() => {
+            this.router.navigate(['/ecommers']);
+            });
+          },
+          (loginError) => {
+            console.error('Error en la autenticación', loginError);
+            this.errorMessage = 'Credenciales incorrectas: ' + loginError.error.message;
+          }
+        );
+      } else {
+        this.errorMessage = 'El correo electrónico proporcionado no puede ser usado.';
+      }
     } else {
       this.errorMessage = 'El formulario es inválido';
     }
   }
-  regresar():void{
+  regresar(): void {
     this.router.navigate(['/ecommers']);
   }
 }

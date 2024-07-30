@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { SharedDataService } from 'src/app/services/shared-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,10 @@ import { SharedDataService } from 'src/app/services/shared-data.service';
 export class AuthService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient, private router: Router, private sharedDataService: SharedDataService) {}
+  //Añadido
+  private customerSubject = new BehaviorSubject<any>(this.getCustomerFromLocalStorage());
+  //
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(credentials: any) {
     this.logout();
@@ -30,8 +33,8 @@ export class AuthService {
   logoutCustomer() {
     localStorage.removeItem('tokencustomer');
     localStorage.removeItem('usernamecustomer');
+    this.customerSubject.next(null);
     localStorage.removeItem('rolecustomer');
-    this.sharedDataService.updateUser(null);
     this.router.navigate(['/ecommers']);
   }
 
@@ -43,12 +46,31 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  getCustomer():string | null{
-
-    return localStorage.getItem('username');
+  getCustomer(): string | null {
+    return localStorage.getItem('usernamecustomer');
   }
 
   getRole(): string | null {
     return localStorage.getItem('role');
+  }
+  getCustomerObservable() {
+    return this.customerSubject.asObservable();
+  }
+
+  private getCustomerFromLocalStorage() {
+    const usernamecustomer = localStorage.getItem('usernamecustomer');
+    const rolecustomer = localStorage.getItem('rolecustomer');
+    const tokencustomer = localStorage.getItem('tokencustomer');
+    if (usernamecustomer && rolecustomer && tokencustomer) {
+      return { usernamecustomer, rolecustomer, tokencustomer };
+    }
+    return null;
+  }
+
+  setCustomer(user: any) {
+    localStorage.setItem('usernamecustomer', user.username);
+    localStorage.setItem('rolecustomer', user.role);
+    localStorage.setItem('tokencustomer', user.token);
+    this.customerSubject.next(user);
   }
 }
