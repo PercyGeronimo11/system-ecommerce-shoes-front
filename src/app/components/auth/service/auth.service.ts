@@ -13,7 +13,6 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router, private sharedDataService: SharedDataService) {}
 
   login(credentials: any) {
-    this.logout();
     return this.http.post(`${this.apiUrl}/auth/login`, credentials);
   }
 

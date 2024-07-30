@@ -60,9 +60,14 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Initialize login response
-    this.userSubscription = this.sharedDataService.user$.subscribe(user => {
+    this.loginResponse = 'Ingresar';
+    console.log(localStorage.getItem('usernamecustomer'));
+    if(localStorage.getItem('usernamecustomer')!=null){
+      this.loginResponse=localStorage.getItem('usernamecustomer');
+    }
+    /* this.userSubscription = this.sharedDataService.user$.subscribe(user => {
       this.loginResponse = user ? user.username : 'Ingresar';
-    });
+    }); */
 
     this.getProducts();
 
@@ -80,6 +85,7 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
 
   logoutcustomer(): void {
     this.authService.logoutCustomer();
+    this.loginResponse = 'Ingresar';
   }
 
   getProducts(): void {

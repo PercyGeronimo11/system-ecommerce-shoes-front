@@ -61,9 +61,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Initialize login response
-    this.userSubscription = this.sharedDataService.user$.subscribe(user => {
-      this.loginResponse = user ? user.username : 'Ingresar';
-    });
+    this.loginResponse = 'Ingresar';
+    console.log(localStorage.getItem('usernamecustomer'));
+    if(localStorage.getItem('usernamecustomer')!=null){
+      this.loginResponse=localStorage.getItem('usernamecustomer');
+    }
 
     this.getProducts();
 
