@@ -1,23 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { AuthService } from 'src/app/components/auth/service/auth.service';
-import { ProductModel } from 'src/app/models/product.model';
-import { SharedDataService } from 'src/app/services/shared-data.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { AuthService } from '../../../components/auth/service/auth.service';
+import { ProductModel } from '../../../models/product.model';
 import { CartService } from '../../../services/cart.service';
 import { CategoriaService } from '../../../services/categories.service';
-
+import { SharedDataService } from '../../../services/shared-data.service';
 @Component({
-  selector: 'app-cart',
+  selector: 'app-pay',
   standalone: true,
   imports: [RouterModule, CommonModule, SharedModule],
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  templateUrl: './pay.component.html',
+  styleUrl: './pay.component.scss'
 })
-export class CartComponent implements OnInit, OnDestroy {
-  loginResponse: any;
+export class PayComponent {
+loginResponse: any;
   cartItems: ProductModel[] = [];
   groupedCartItems: { [key: number]: ProductModel } = {};
   cartItemCount: number = 0;
@@ -32,7 +31,7 @@ export class CartComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private sharedDataService: SharedDataService,
               private categoriaService: CategoriaService,
-              private cdr: ChangeDetectorRef) {
+             ) {
     this.numberForm = this.fb.group({
       idcategoria: [0]
     });
@@ -62,7 +61,6 @@ export class CartComponent implements OnInit, OnDestroy {
     });
     
     console.log(this.cartItems); // Verifica los datos aquí
-    this.cdr.detectChanges(); // Forzar detección de cambios si es necesario
   }
 
   ngOnDestroy(): void {

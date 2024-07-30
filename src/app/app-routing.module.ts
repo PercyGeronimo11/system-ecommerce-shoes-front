@@ -88,7 +88,7 @@ const routes: Routes = [
       {
         path: 'sample-page',
         loadComponent: () => import('./demo/sample-page/sample-page.component')
-      },
+      }
   
 
     ]
@@ -106,6 +106,7 @@ const routes: Routes = [
         path: 'login',
         loadComponent: () => import('./components/auth/sign-in/sign-in.component')
       }
+  
     ]
   },
   {
@@ -122,14 +123,19 @@ const routes: Routes = [
   }  ,{
     path: 'cart',
     loadComponent: () => import('./components/ecommerce/cart/cart.component').then(e => e.CartComponent)
+  },
+  {
+    path: 'pay',
+    loadComponent: () => import('./components/ecommerce/pay/pay.component').then(e => e.PayComponent)
   }
+ 
 ];
 
 @NgModule({
   imports: [
     NgbModule,
     RouterModule.forRoot(routes)],
-  exports: [RouterModule,]
+    exports: [RouterModule,]
 })
 export class AppRoutingModule {
 
