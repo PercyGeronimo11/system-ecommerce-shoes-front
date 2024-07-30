@@ -87,7 +87,7 @@
                         <div class="modal-body">
                             <select class="form-control" [(ngModel)]="selectedIdMaterial" (change)="onMaterialSelect()">
                                 <option *ngFor="let material of materials" [value]="material.id">
-                                    {{ material.name }}
+                                    {{ material.name }} ({{ material.unit }})
                                 </option>
                             </select>
                             <div class="row mt-3">

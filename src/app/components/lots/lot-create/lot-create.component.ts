@@ -57,6 +57,7 @@ export class LotCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.getListProducts();
+    this.getListMaterials();
   }
 
   submitFormSaveLot() {
@@ -119,6 +120,7 @@ export class LotCreateComponent implements OnInit {
   openModalMaterial() {
     this.isShowMaterialModal = true;
     this.getListMaterials();
+    this.selectedIdMaterial=this.materials[0].id;
   }
 
   closeModalMaterial() {
