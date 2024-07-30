@@ -171,8 +171,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       this.cartService.getCartItemCount().subscribe(count => {
         this.cartItemCount = count; // Actualiza el contador local
       });
-      console.log('Producto agregado al carrito:', productToAdd);
-      localStorage.setItem('addingProduct', 'true'); // Indica que se está agregando un producto
+      console.log('Producto agregado al carrito:', productToAdd); // Indica que se está agregando un producto
       document.getElementById('loading')?.classList.remove('d-none'); // Muestra el mensaje de carga
       setTimeout(() => {
         window.location.reload(); // Refresca la página después de la animación

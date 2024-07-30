@@ -35,7 +35,6 @@ export class CartService {
     this.saveCartToLocalStorage();
   }
 
-
   getCartItemCount() {
     return this.cartItemCount.asObservable();
   }
