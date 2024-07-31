@@ -7,7 +7,8 @@
           <div class="row">
             <div class="form-group col-4">
               <label for="percentage">Descuento</label>
-              <input type="number" class="form-control" id="percentage" formControlName="promPercentage" name="percentage">
+              <input type="number" class="form-control" id="percentage" formControlName="promPercentage"
+                name="percentage">
             </div>
             <div class="form-group col-4">
               <label for="startDate">Fecha Inicio</label>
@@ -21,7 +22,8 @@
           <div class="row">
             <div class="form-group col-md-12">
               <label for="description">Descripción</label>
-              <textarea class="form-control" id="description" formControlName="promDescription" name="description"></textarea>
+              <textarea class="form-control" id="description" formControlName="promDescription"
+                name="description"></textarea>
             </div>
           </div>
           <div class="row">
@@ -60,7 +62,7 @@
                 <tr *ngFor="let producto of PromoProductosArray.controls; let i = index" [formGroupName]="i">
                   <td class="col-1">{{ i + 1 }}</td>
                   <td class="col-4">
-                    <input formControlName="proId" type="number" class="form-control" readonly>
+                    <input formControlName="id" type="number" class="form-control" readonly>
                   </td>
                   <td class="col-4">
                     <input formControlName="proName" type="text" class="form-control" readonly>
@@ -78,6 +80,7 @@
           <button type="submit" class="btn btn-primary">Guardar</button>
         </form>
       </div>
+
       <!-- Modal de Agregar Producto -->
       <div class="modal fade show d-block" *ngIf="isShowProductoModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -87,9 +90,9 @@
               <button type="button" class="btn-close" (click)="closeModalProducto()"></button>
             </div>
             <div class="modal-body">
+              <label>Productos</label>
               <select class="form-control" [(ngModel)]="selectedIdProducto">
-                <option value="" selected disabled>Seleccione un producto</option>
-                <option *ngFor="let producto of products" [value]="producto.id">
+                <option *ngFor="let producto of filteredProducts; let i = index" [value]="producto.id">
                   {{ producto.proName }}
                 </option>
               </select>

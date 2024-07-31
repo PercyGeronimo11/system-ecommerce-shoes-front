@@ -59,7 +59,7 @@ export interface PromoCreateReq {
 }
 
 export interface PromoDetailCreateReq{
-  proId: number;
+  id: number;
   proName: String;
 }
 

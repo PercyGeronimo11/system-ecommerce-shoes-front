@@ -15,6 +15,7 @@ import { ProductModel, ProductoForm, PromoCreateReq } from 'src/app/models/produ
 export class PromotionsCreateComponent implements OnInit {
   promotions: any = [];
   products: ProductModel[] = [];
+  filteredProducts: ProductModel[] = [];
   selectedPromotion: any = null;
   isCreating: boolean = false;
   selectedFile: File | null = null;
@@ -22,27 +23,14 @@ export class PromotionsCreateComponent implements OnInit {
   error: string | null = null;
   imageToShow: any;
   isShowProductoModal: boolean = false;
-
   promocionForm: FormGroup = this.fb.group({
-
     promPercentage: 0,
-    promStartdate: new Date(),
-    promEnddate: new Date(),
+    promStartdate: '',
+    promEnddate: '',
     promDescription: '',
     promUrlImage: '',
     promStatus: false,
-/*
-    promPercentage: [0, [Validators.required, Validators.min(1), Validators.max(100)]],
-    promStartdate: ['', Validators.required],
-    promEnddate: ['', Validators.required],
-    promDescription: ['', Validators.required],
-    promStatus: [false, Validators.required],
-*/
-
-
     PromoProductos: this.fb.array([])
-  }, {
-    validators: this.dateLessThan('promStartdate', 'promEnddate')
   });
 
   productoForm: ProductoForm = {
@@ -70,8 +58,8 @@ export class PromotionsCreateComponent implements OnInit {
     promStartdate: new Date(),
     promEnddate: new Date(),
     promDescription: '',
-    promUrlImage: '',
     promStatus: false,
+    promUrlImage: '',
     promDetail: this.promocionForm.value.PromoProductos,
   };
 
@@ -122,6 +110,7 @@ export class PromotionsCreateComponent implements OnInit {
   getProducts() {
     this.promocionService.getProducts().subscribe((products: any) => {
       this.products = products.data.content;
+      this.filterProducts();
       console.log("Todos los productos cargados:", products);
     }, (error) => {
       this.error = error.message;
@@ -130,37 +119,35 @@ export class PromotionsCreateComponent implements OnInit {
   }
 
   submitFormSaveLot() {
-    const formData = new FormData();
-
-    // Construir el objeto promotion
-    const promotion = {
+    this.promoCreateReq = {
       promPercentage: this.promocionForm.value.promPercentage,
       promStartdate: this.promocionForm.value.promStartdate,
       promEnddate: this.promocionForm.value.promEnddate,
       promDescription: this.promocionForm.value.promDescription,
-      promUrlImage: this.selectedFile ? this.selectedFile.name : '',
       promStatus: this.promocionForm.value.promStatus,
+      //obtener el archivo seleccionado
+      promUrlImage:"",
       promDetail: this.promocionForm.value.PromoProductos
     };
 
-    // Añadir el objeto promotion a FormData como una cadena JSON
-    formData.append('promotion', JSON.stringify(promotion));
-
-    // Añadir la imagen al FormData si existe
+    //EXTRA PARA IMAGENES  //FALTA REVISAR SERVICIO Y GUARDADO
+    const formData = new FormData();
+    formData.append('promoCreateReq', new Blob([JSON.stringify(this.promoCreateReq)], { type: 'application/json' }));
     if (this.selectedFile) {
       formData.append('file', this.selectedFile);
     }
+    //
 
-    // Llama al servicio con FormData
-    this.promocionService.create(formData).subscribe(
-      (data: any) => {
-        console.log("Se ha guardado correctamente", data);
-        this.router.navigate(['/promotions']);
-      },
-      (error) => {
-        console.log("No se guardó", error);
-      }
-    );
+
+    this.promocionService.create(this.promoCreateReq)
+      .subscribe(
+        (data: any) => {
+          console.log("se a guardado correctamente", data);
+          this.router.navigate(['/promotions']);
+        },
+        (error) => {
+          console.log("No se guardo", error);
+        });
   }
 
   get PromoProductosArray() {
@@ -168,16 +155,16 @@ export class PromotionsCreateComponent implements OnInit {
   }
 
   removePromoProducto(index: number) {
+    const removedProductoId = this.PromoProductosArray.at(index).get('id')?.value;
     this.PromoProductosArray.removeAt(index);
-  }
-
-  editMaterial(index: number) {
-    this.PromoProductosArray.removeAt(index);
+    // Restablecer el producto eliminado a la lista de productos disponibles
+    this.filteredProducts = this.products.filter(product => !this.PromoProductosArray.value.some((promoProduct: any) => promoProduct.id === product.id));
   }
 
   openModalProducto() {
+    this.selectedIdProducto = 1; // Reinicia la selección
     this.isShowProductoModal = true;
-    this.getProducts();
+    this.filterProducts();
   }
 
   closeModalProducto() {
@@ -188,12 +175,18 @@ export class PromotionsCreateComponent implements OnInit {
     const selectedProducto = this.products.find(producto => producto.id == this.selectedIdProducto);
     if (selectedProducto) {
       this.PromoProductosArray.push(this.fb.group({
-        proId: [selectedProducto.id, Validators.required],
+        id: [selectedProducto.id, Validators.required],
         proName: [selectedProducto.proName, Validators.required],
       }));
+      this.filterProducts();
       this.isShowProductoModal = false;
     } else {
       console.log("Producto no encontrado");
     }
+  }
+
+  filterProducts() {
+    // Filtrar productos excluyendo los ya seleccionados
+    this.filteredProducts = this.products.filter(product => !this.PromoProductosArray.value.some((promoProduct: any) => promoProduct.id === product.id));
   }
 }
