@@ -126,20 +126,17 @@ export class PromotionsCreateComponent implements OnInit {
       promDescription: this.promocionForm.value.promDescription,
       promStatus: this.promocionForm.value.promStatus,
       //obtener el archivo seleccionado
-      promUrlImage:"",
+      promUrlImage: "",
       promDetail: this.promocionForm.value.PromoProductos
     };
 
-    //EXTRA PARA IMAGENES  //FALTA REVISAR SERVICIO Y GUARDADO
     const formData = new FormData();
     formData.append('promoCreateReq', new Blob([JSON.stringify(this.promoCreateReq)], { type: 'application/json' }));
     if (this.selectedFile) {
       formData.append('file', this.selectedFile);
     }
     //
-
-
-    this.promocionService.create(this.promoCreateReq)
+    this.promocionService.create(formData)
       .subscribe(
         (data: any) => {
           console.log("se a guardado correctamente", data);
