@@ -46,7 +46,7 @@ export class EcommersIngresoModule implements OnInit {
             username: Resp.username,
             role: Resp.rol
           });
-          this.router.navigate(['/ecommers']);
+          window.location.href = '/ecommers';
         },
         (loginError) => {
           console.error('Error en la autenticación', loginError);
