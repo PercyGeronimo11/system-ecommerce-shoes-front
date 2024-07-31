@@ -1,4 +1,3 @@
-
 <app-base-layout>
   <body>
     <div *ngIf="isRemoving" class="loading-overlay">
@@ -28,7 +27,7 @@
         </div>
       
         <div class="sales-details">
-          <button class="btn-pay" [routerLink]="['/pay']">Ir a pagar</button>
+          <button class="btn-pay" (click)="goToPay()">Ir a pagar</button>
           <div class="summary">
             <div class="summary-title">Resumen del Pedido</div>
             <div class="summary-item">
@@ -47,11 +46,6 @@
           </div>
         </div>
       </div>
-      
-      
   </div>    
   </body>
 </app-base-layout>
-
-
-

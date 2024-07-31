@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/components/auth/service/auth.service';
 import { ProductModel } from 'src/app/models/product.model';
 import { SharedDataService } from 'src/app/services/shared-data.service';
@@ -9,7 +10,6 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { CartService } from '../../../services/cart.service';
 import { CategoriaService } from '../../../services/categories.service';
 import { EcommercePlantilla } from '../base-layout.component';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -35,7 +35,8 @@ export class CartComponent implements OnInit, OnDestroy {
               private authService: AuthService,
               private sharedDataService: SharedDataService,
               private categoriaService: CategoriaService,
-              private cdr: ChangeDetectorRef) {
+              private cdr: ChangeDetectorRef,
+              private router: Router) {
     this.numberForm = this.fb.group({
       idcategoria: [0]
     });
@@ -131,5 +132,14 @@ export class CartComponent implements OnInit, OnDestroy {
       // Forzar detección de cambios
       this.cdr.detectChanges();
     }, 1000); // El tiempo de espera coincide con la duración de la animación
+  }
+
+  goToPay(): void {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/pay']);
+    } else {
+      alert('Por favor, inicie sesión primero');
+      this.router.navigate(['/login']);
+    }
   }
 }

@@ -1,45 +1,50 @@
-
 <app-base-layout>
-<body>
-  <div *ngIf="isRemoving" class="loading-overlay">
-    <div class="loading-spinner"></div>
-    <p>Eliminando producto...</p>
-  </div>
-  <div class="container-fluid">
-    <div class="cart-container">
-      <div class="empty-space"></div>
-      <div class="sales-details">
-        <div class="summary">
-          <div class="summary-title">Resumen del Pedido</div>
-          <div class="summary-item">
-            <span>Cantidad de pedidos:</span>
-            <span>{{ groupedCartItemsArray.length }}</span>
+  <body>
+    <div *ngIf="isRemoving" class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <p>Eliminando producto...</p>
+    </div>
+    <div class="container-fluid">
+      <div class="cart-container">
+        <div class="empty-space"></div>
+        <div class="sales-details">
+          <div class="summary">
+            <div class="summary-title">Resumen del Pedido</div>
+            <div class="summary-item">
+              <span>Cantidad de pedidos:</span>
+              <span>{{ groupedCartItemsArray.length }}</span>
+            </div>
+            <div class="summary-item">
+              <span>Total a pagar:</span>
+              <span>{{ totalAmount | currency }}</span>
+            </div>
           </div>
-          <div class="summary-item">
-            <span>Total a pagar:</span>
+          <div class="free-shipping">Envío gratis</div>
+          <div class="total-amount">
+            <span>Total:</span>
             <span>{{ totalAmount | currency }}</span>
           </div>
-        </div>
-        <div class="free-shipping">Envío gratis</div>
-        <div class="total-amount">
-          <span>Total:</span>
-          <span>{{ totalAmount | currency }}</span>
-        </div>
-        <div class="mini-product-list">
-          <h6>Productos Seleccionados:</h6>
-          <div *ngFor="let item of groupedCartItemsArray" class="mini-product-item">
-            <button class="close-button" (click)="removeItem(item.id, item.size)">&times;</button>
-            <img [src]="item.image" alt="{{ item.name }}" class="mini-product-image">
-            <div class="mini-product-details">
-              <h5>{{ item.name }}</h5>
-              <p>Cantidad: {{ item.quantity || 1 }}</p>
-              <p>Precio: {{ item.price | currency }}</p>
+          <div class="mini-product-list">
+            <h6>Productos Seleccionados:</h6>
+            <div *ngFor="let item of groupedCartItemsArray" class="mini-product-item">
+              <button class="close-button" (click)="removeItem(item.id, item.size)">&times;</button>
+              <img [src]="item.image" alt="{{ item.name }}" class="mini-product-image">
+              <div class="mini-product-details">
+                <h5>{{ item.name }}</h5>
+                <p>Cantidad: {{ item.quantity || 1 }}</p>
+                <p>Precio: {{ item.price | currency }}</p>
+              </div>
             </div>
+          </div>
+          <div *ngIf="loginResponse !== 'Ingresar'">
+            <p>Correo del usuario: {{ loginResponse }}</p>
+          </div>
+          <div *ngIf="loginResponse === 'Ingresar'">
+            <p>Por favor, inicie sesión para continuar con el pago</p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
-</app-base-layout>
-
+  </body>
+  </app-base-layout>
+  

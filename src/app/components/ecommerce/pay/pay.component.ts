@@ -59,7 +59,7 @@ export class PayComponent implements OnInit, OnDestroy {
       if (loginResp?.error) {
         this.loginResponse = 'Ingresar';
       } else {
-        this.loginResponse = loginResp?.data?.custFirstName || 'Ingresar';
+        this.loginResponse = loginResp?.data?.custEmail || 'Ingresar';
       }
     });
     
