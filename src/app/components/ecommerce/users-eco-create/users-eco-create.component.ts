@@ -93,7 +93,7 @@ export class UsersEcoCreateComponent implements OnInit {
                 username: lgresp.username,
                 role: lgresp.rol
               });
-              this.router.navigate(['/ecommers']);
+              window.location.href = '/ecommers';
             },
             (error) => {
               console.error('Error al iniciar sesión después de crear el cliente:', error);
