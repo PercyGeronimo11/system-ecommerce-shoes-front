@@ -15,6 +15,7 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 export class PromotionsListComponent implements OnInit {
   promotions: any = [];
   modalRef: NgbModalRef | null = null;
+  selectedPromotion: any = null;
   isCreating: boolean = false;
   constructor(
     public promocionService: PromocionService,
@@ -28,9 +29,18 @@ export class PromotionsListComponent implements OnInit {
     });
   }
 
+  deletePromotion(id: number): void {
+    this.promocionService.delete(id).subscribe(() => {
+      this.promotions = this.promotions.filter((promo: any) => promo.id !== id);
+      this.closeModal();
+    });
+  }
 
-
-
+  closeModal(): void {
+    if (this.modalRef) {
+      this.modalRef.close();
+    }
+  }
 
 
 }

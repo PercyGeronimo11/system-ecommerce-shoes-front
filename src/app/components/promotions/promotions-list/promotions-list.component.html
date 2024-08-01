@@ -2,7 +2,7 @@
   <div class="col-xl-12">
     <app-card cardTitle="Promociones" [options]="false" blockClass="table-border-style">
       <div>
-        <a  [routerLink]="['/promotionsCreate']" type="button"  class="btn btn-primary">Nuevo</a>
+        <a [routerLink]="['/promotionsCreate']" type="button" class="btn btn-primary">Nuevo</a>
       </div>
       <div class="table-responsive">
         <table class="table table-striped">
@@ -32,18 +32,35 @@
               </td>
               <td>{{ promotion.promStatus ? 'Activado' : 'Desactivado' }}</td>
               <td>
-                <p>botones</p>
-                <!--
                 <button type="button" class="btn btn-warning me-2 mb-2"
-                  (click)="(openModalupdateContent, promotion, 'update')"><i class="fa fa-edit"></i></button>
+                [routerLink]="['/promotionsEdit/{promotion.id}']" ><i class="fa fa-edit"></i></button>
+                <!--
                 <button type="button" class="btn btn-danger mb-2"
-                  (click)="openModal(deleteContent, promotion, 'delete')"><i class="fa fa-trash"></i></button>
-            -->  </td>
+                ><i class="fa fa-trash"></i></button>
+                -->
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
     </app-card>
   </div>
-</div>
+  <ng-template #deleteContent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Confirmar</h4>
+    </div>
+    <div class="modal-body">
+      <h4 style="text-align: center;">¿Estás seguro que deseas eliminar la promoción  {{ selectedPromotion?.promDescription }}? </h4>
+      <ul>
+        <p style="text-align: center;">
+          <i class="fas fa-exclamation-triangle" style="font-size: 50px; color: red;"></i>
+        </p>
+      </ul>
+    </div>
+    <div class="modal-footer" style="display: flex; justify-content: center;">
+      <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+      <button type="button" class="btn btn-danger" (click)="deletePromotion(selectedPromotion.id)">Eliminar</button>
+    </div>
+  </ng-template>
 
+</div>

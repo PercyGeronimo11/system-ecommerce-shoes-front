@@ -49,6 +49,10 @@ const routes: Routes = [
         loadComponent: () => import('./components/promotions/promotion-create/promotions-create.component').then(p => p.PromotionsCreateComponent),canActivate: [AuthGuard]
       },
       {
+        path: 'promotionsEdit/:id',
+        loadComponent: () => import('./components/promotions/promotion-edit/promotions-edit.component').then(p => p.PromotionsEditComponent),canActivate: [AuthGuard]
+      },
+      {
         path: 'promotions/:id',
         loadComponent: () => import('./components/promotions/promotions-list/promotions-list.component').then(p => p.PromotionsListComponent),canActivate: [AuthGuard]
       },
