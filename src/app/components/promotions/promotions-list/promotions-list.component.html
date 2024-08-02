@@ -33,7 +33,7 @@
               <td>{{ promotion.promStatus ? 'Activado' : 'Desactivado' }}</td>
               <td>
                 <button type="button" class="btn btn-warning me-2 mb-2"
-                [routerLink]="['/promotionsEdit/{promotion.id}']" ><i class="fa fa-edit"></i></button>
+                [routerLink]="['/promotionsEdit', promotion.id]"  ><i class="fa fa-edit"></i></button>
                 <!--
                 <button type="button" class="btn btn-danger mb-2"
                 ><i class="fa fa-trash"></i></button>

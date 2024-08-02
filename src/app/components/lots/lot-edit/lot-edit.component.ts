@@ -151,7 +151,7 @@ export class LotEditComponent implements OnInit   {
     });
     this.lotForm.get('lotTotalCost')?.setValue(total);
   }
-  
+
   removeLotMaterial(index: number) {
     this.lotMaterialsArray.removeAt(index);
   }

@@ -48,6 +48,8 @@ export interface ProductoForm {
   proName:String;
 }
 
+
+//Para edit
 export interface PromoCreateReq {
   promPercentage: number;
   promStartdate: Date;
@@ -59,7 +61,7 @@ export interface PromoCreateReq {
 }
 
 export interface PromoDetailCreateReq{
-  id: number;
+  proId: number;
   proName: String;
 }
 

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { PromocionService } from '../../../services/promotions.service';
-import { Router, ActivatedRoute,RouterModule } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { ProductModel, ProductoForm, PromoCreateReq } from 'src/app/models/product.model';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { ProductModel, ProductCreateReq, ProductoForm, PromoDetailCreateReq, PromoCreateReq } from 'src/app/models/product.model';
 
 @Component({
-  selector: 'app-promotions-edit',
+  selector: 'app-tbl-bootstrap',
   standalone: true,
-  imports: [RouterModule, SharedModule],
+  imports: [SharedModule, RouterModule],
   templateUrl: './promotions-edit.component.html',
   styleUrls: ['./promotions-edit.component.scss']
 })
@@ -17,64 +17,115 @@ export class PromotionsEditComponent implements OnInit {
   products: ProductModel[] = [];
   filteredProducts: ProductModel[] = [];
   selectedPromotion: any = null;
-  isEditing: boolean = true;
+  isCreating: boolean = false;
   selectedFile: File | null = null;
   selectedIdProducto: number = 0;
   error: string | null = null;
   imageToShow: any;
   isShowProductoModal: boolean = false;
+
+
+  //Obtencion de datos del formulario
   promocionForm: FormGroup = this.fb.group({
-    promPercentage: [0, Validators.required],
-    promStartdate: ['', Validators.required],
-    promEnddate: ['', Validators.required],
-    promDescription: ['', Validators.required],
-    promUrlImage: [''],
-    promStatus: [false, Validators.required],
+    promPercentage: 0,
+    promStartdate: '',
+    promEnddate: '',
+    promDescription: '',
+    promUrlImage: '',
+    promStatus: false,
     PromoProductos: this.fb.array([])
   });
+  //modelo del prodcuto
+  productoForm: ProductoForm = {
+    id: 0,
+    category: {
+      id: 0,
+      catName: '',
+      description: '',
+      status: false
+    },
+    proName: '',
+    proDescription: '',
+    proUnitPrice: 0,
+    proUnitCost: 0,
+    proSizePlatform: null,
+    proSizeTaco: null,
+    proColor: null,
+    proSize: null,
+    proStock: 0,
+    proUrlImage: ''
+  };
+  //modelo de la promocion
+  promoCreateReq: PromoCreateReq = {
+    promPercentage: 0,
+    promStartdate: new Date(),
+    promEnddate: new Date(),
+    promDescription: '',
+    promStatus: false,
+    promUrlImage: '',
+    promDetail: this.promocionForm.value.PromoProductos,
+  };
 
   constructor(
     public promocionService: PromocionService,
     private router: Router,
+    private route: ActivatedRoute,
     private fb: FormBuilder,
-    private route: ActivatedRoute
-  ) { }
+  ) {
+   }
 
-  ngOnInit(): void {
-    this.getProducts();
-    this.loadPromotionData();
+  dateLessThan(startDate: string, endDate: string) {
+    return (formGroup: FormGroup) => {
+      const start = formGroup.controls[startDate];
+      const end = formGroup.controls[endDate];
+
+      if (start.value && end.value && new Date(start.value) >= new Date(end.value)) {
+        end.setErrors({ dateLessThan: true });
+      } else {
+        end.setErrors(null);
+      }
+    };
   }
 
-  loadPromotionData() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.promocionService.getById(+id).subscribe((promotion: any) => {
-        this.selectedPromotion = promotion;
-        this.promocionForm.patchValue({
-          promPercentage: promotion.promPercentage,
-          promStartdate: promotion.promStartdate,
-          promEnddate: promotion.promEnddate,
-          promDescription: promotion.promDescription,
-          promStatus: promotion.promStatus,
-          promUrlImage: promotion.promUrlImage
-        });
-        promotion.promDetail.forEach((detail: any) => {
-          this.PromoProductosArray.push(this.fb.group({
-            id: [detail.product.id, Validators.required],
-            proName: [detail.product.proName, Validators.required],
-          }));
-        });
-        this.imageToShow = promotion.promUrlImage;
-      }, (error) => {
-        console.error("Error al cargar la promoción:", error);
-        this.error = error.message;
+  ngOnInit(): void {
+
+    const id = this.route.snapshot.params['id'];
+    this.promocionService.getById(id).subscribe(
+      (data) => {
+          this.promocionForm.patchValue({
+            promId: data.data.id,
+            promPercentage: data.data.promPercentage,
+            promStartdate: data.data.promStartdate,
+            promEnddate: data.data.promEnddate,
+            promDescription: data.data.promDescription,
+            promUrlImage: data.data.promUrlImage,
+            promStatus: data.data.promStatus
+          });
+          this.setPromoProduc(data.data.promDetail);
+      },
+      (error) => {
+        console.log("Error al obtener la promocion:", error);
       });
-    }
+  }
+
+
+  setPromoProduc(products: PromoDetailCreateReq[]) {
+    products.forEach(producto => {
+      this.PromoProductosArray.push(this.fb.group({
+        proId: [producto.proId, Validators.required],
+        proName: [producto.proName, Validators.required],
+      }));
+    });
+    console.log("Productos:", products);
   }
 
   close(): void {
     this.imageToShow = null;
     this.router.navigate(['/promotions']);
+  }
+
+  clearImageToShow() {
+    this.imageToShow = null;
   }
 
   onFileSelected(event: any) {
@@ -100,8 +151,8 @@ export class PromotionsEditComponent implements OnInit {
     });
   }
 
-  submitFormEdit() {
-    const promoEditReq: PromoCreateReq = {
+  submitFormSaveLot() {
+    this.promoCreateReq = {
       promPercentage: this.promocionForm.value.promPercentage,
       promStartdate: this.promocionForm.value.promStartdate,
       promEnddate: this.promocionForm.value.promEnddate,
@@ -112,23 +163,19 @@ export class PromotionsEditComponent implements OnInit {
     };
 
     const formData = new FormData();
-    formData.append('promotion', new Blob([JSON.stringify(promoEditReq)], { type: 'application/json' }));
+    formData.append('promotion', new Blob([JSON.stringify(this.promoCreateReq)], { type: 'application/json' }));
     if (this.selectedFile) {
       formData.append('file', this.selectedFile);
     }
-
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.promocionService.edit(+id, formData).subscribe(
+    this.promocionService.create(formData)
+      .subscribe(
         (data: any) => {
-          console.log("Promoción actualizada correctamente", data);
+          console.log("se a guardado correctamente", data);
           this.router.navigate(['/promotions']);
         },
         (error) => {
-          console.log("No se pudo actualizar la promoción", error);
-        }
-      );
-    }
+          console.log("No se guardo", error);
+        });
   }
 
   get PromoProductosArray() {
@@ -136,12 +183,14 @@ export class PromotionsEditComponent implements OnInit {
   }
 
   removePromoProducto(index: number) {
+    const removedProductoId = this.PromoProductosArray.at(index).get('id')?.value;
     this.PromoProductosArray.removeAt(index);
-    this.filterProducts();
+    // Restablecer el producto eliminado a la lista de productos disponibles
+    this.filteredProducts = this.products.filter(product => !this.PromoProductosArray.value.some((promoProduct: any) => promoProduct.id === product.id));
   }
 
   openModalProducto() {
-    this.selectedIdProducto = 0; // Reinicia la selección
+    this.selectedIdProducto = 1; // Reinicia la selección
     this.isShowProductoModal = true;
     this.filterProducts();
   }
@@ -165,6 +214,7 @@ export class PromotionsEditComponent implements OnInit {
   }
 
   filterProducts() {
+    // Filtrar productos excluyendo los ya seleccionados
     this.filteredProducts = this.products.filter(product => !this.PromoProductosArray.value.some((promoProduct: any) => promoProduct.id === product.id));
   }
 }
