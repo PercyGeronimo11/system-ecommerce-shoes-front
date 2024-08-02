@@ -44,7 +44,7 @@ export interface ProductoForm {
   proUrlImage: String;
 }
  export interface ProductCreateReq {
-  proId: number;
+  id: number;
   proName:String;
 }
 
@@ -61,7 +61,7 @@ export interface PromoCreateReq {
 }
 
 export interface PromoDetailCreateReq{
-  proId: number;
+  id: number;
   proName: String;
 }
 
