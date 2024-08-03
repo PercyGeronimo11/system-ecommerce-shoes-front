@@ -3,8 +3,9 @@ import { PromocionService } from '../../../services/promotions.service';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-import { ProductModel, ProductoForm } from 'src/app/models/product.model';
+import { ProductModel } from 'src/app/models/product.model';
 import { PromoDetailResp, PromoCompleteResp } from 'src/app/models/promotion.model';
+import { ProductModule } from '../../products/product.module';
 
 @Component({
   selector: 'app-tbl-bootstrap',
@@ -21,7 +22,7 @@ export class PromotionsEditComponent implements OnInit {
   isCreating: boolean = false;
   cargarpromodet: number = 1;
   selectedFile: File | null = null;
-  selectedIdProducto: number = 0;
+  SeleccionarIdProducto: number = 0;
   error: string | null = null;
   imageToShow: any = null;
   isShowProductoModal: boolean = false;
@@ -36,30 +37,6 @@ export class PromotionsEditComponent implements OnInit {
     PromoDetProductos: this.fb.array([])
   });
 
-  productoForm: ProductoForm = {
-    id: 0,
-    category: {
-      id: 0,
-      catName: '',
-      description: '',
-      status: false
-    },
-    proName: '',
-    proDescription: '',
-    proUnitPrice: 0,
-    proUnitCost: 0,
-    proSizePlatform: null,
-    proSizeTaco: null,
-    proColor: null,
-    proSize: null,
-    proStock: 0,
-    proUrlImage: ''
-  };
-
-  promoDetailResp: PromoDetailResp = {
-    id: 0,
-    proName: '',
-  }
 
   promoCompleteResp: PromoCompleteResp = {
     id: 0,
@@ -167,7 +144,7 @@ export class PromotionsEditComponent implements OnInit {
   }
 
   openModalProducto() {
-    this.selectedIdProducto = 0;
+    this.SeleccionarIdProducto = 0;
     this.isShowProductoModal = true;
     this.filterProducts();
   }
@@ -177,8 +154,8 @@ export class PromotionsEditComponent implements OnInit {
   }
 
   addProducto() {
-    if (this.selectedIdProducto != 0) {
-      const productoSeleccionado = this.products.find(product => product.id === this.selectedIdProducto);
+    if (this.SeleccionarIdProducto != 0 ) {
+      const productoSeleccionado = this.products.find(product => product.id == this.SeleccionarIdProducto);
       if (productoSeleccionado) {
         this.PromoDetProductosArray.push(this.fb.group({
           id: [productoSeleccionado.id, Validators.required],
@@ -187,10 +164,10 @@ export class PromotionsEditComponent implements OnInit {
         this.filterProducts();
         this.isShowProductoModal = false;
       } else {
-        console.log("Producto no encontrado");
+        console.log("Producto no encontrado"+productoSeleccionado);
       }
     } else {
-      this.selectedIdProducto = 0;
+      this.SeleccionarIdProducto = 0;
     }
   }
 

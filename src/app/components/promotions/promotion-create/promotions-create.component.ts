@@ -3,7 +3,7 @@ import { PromocionService } from '../../../services/promotions.service';
 import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-import { ProductModel, ProductoForm, PromoCreateReq } from 'src/app/models/product.model';
+import { ProductModel, PromoCreateReq } from 'src/app/models/product.model';
 
 @Component({
   selector: 'app-tbl-bootstrap',
@@ -33,26 +33,7 @@ export class PromotionsCreateComponent implements OnInit {
     promStatus: false,
     PromoProductos: this.fb.array([])
   });
-  //modelo del prodcuto
-  productoForm: ProductoForm = {
-    id: 0,
-    category: {
-      id: 0,
-      catName: '',
-      description: '',
-      status: false
-    },
-    proName: '',
-    proDescription: '',
-    proUnitPrice: 0,
-    proUnitCost: 0,
-    proSizePlatform: null,
-    proSizeTaco: null,
-    proColor: null,
-    proSize: null,
-    proStock: 0,
-    proUrlImage: ''
-  };
+
   //modelo de la promocion
   promoCreateReq: PromoCreateReq = {
     promPercentage: 0,
