@@ -92,6 +92,7 @@
             <div class="modal-body">
               <label>Productos</label>
               <select class="form-control" [(ngModel)]="selectedIdProducto">
+                <option [value]="0" disabled selected>Seleccione un valor</option>
                 <option *ngFor="let producto of filteredProducts; let i = index" [value]="producto.id">
                   {{ producto.proName }}
                 </option>

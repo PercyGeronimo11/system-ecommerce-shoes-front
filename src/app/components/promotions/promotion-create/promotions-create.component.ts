@@ -33,7 +33,7 @@ export class PromotionsCreateComponent implements OnInit {
     promStatus: false,
     PromoProductos: this.fb.array([])
   });
-//modelo del prodcuto
+  //modelo del prodcuto
   productoForm: ProductoForm = {
     id: 0,
     category: {
@@ -53,7 +53,7 @@ export class PromotionsCreateComponent implements OnInit {
     proStock: 0,
     proUrlImage: ''
   };
- //modelo de la promocion
+  //modelo de la promocion
   promoCreateReq: PromoCreateReq = {
     promPercentage: 0,
     promStartdate: new Date(),
@@ -126,7 +126,7 @@ export class PromotionsCreateComponent implements OnInit {
       promEnddate: this.promocionForm.value.promEnddate,
       promDescription: this.promocionForm.value.promDescription,
       promStatus: this.promocionForm.value.promStatus,
-      promUrlImage:this.promocionForm.value.promUrlImage,
+      promUrlImage: this.promocionForm.value.promUrlImage,
       promDetail: this.promocionForm.value.PromoProductos
     };
 
@@ -158,7 +158,7 @@ export class PromotionsCreateComponent implements OnInit {
   }
 
   openModalProducto() {
-    this.selectedIdProducto = 1; // Reinicia la selección
+    this.selectedIdProducto =0; // Reinicia la selección
     this.isShowProductoModal = true;
     this.filterProducts();
   }
@@ -168,16 +168,20 @@ export class PromotionsCreateComponent implements OnInit {
   }
 
   addProducto() {
-    const selectedProducto = this.products.find(producto => producto.id == this.selectedIdProducto);
-    if (selectedProducto) {
-      this.PromoProductosArray.push(this.fb.group({
-        id: [selectedProducto.id, Validators.required],
-        proName: [selectedProducto.proName, Validators.required],
-      }));
-      this.filterProducts();
-      this.isShowProductoModal = false;
-    } else {
-      console.log("Producto no encontrado");
+    if (this.selectedIdProducto != 0) {
+      const selectedProducto = this.products.find(producto => producto.id == this.selectedIdProducto);
+      if (selectedProducto) {
+        this.PromoProductosArray.push(this.fb.group({
+          id: [selectedProducto.id, Validators.required],
+          proName: [selectedProducto.proName, Validators.required],
+        }));
+        this.filterProducts();
+        this.isShowProductoModal = false;
+      } else {
+        console.log("Producto no encontrado");
+      }
+    } else{
+      this.selectedIdProducto = 0;
     }
   }
 
