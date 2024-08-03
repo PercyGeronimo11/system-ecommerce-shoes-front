@@ -34,10 +34,11 @@
               <td>
                 <button type="button" class="btn btn-warning me-2 mb-2"
                 [routerLink]="['/promotionsEdit', promotion.id]"  ><i class="fa fa-edit"></i></button>
-                <!--
-                <button type="button" class="btn btn-danger mb-2"
-                ><i class="fa fa-trash"></i></button>
-                -->
+
+                <button (click)="openDeleteModal(promotion)" class="btn btn-danger mb-3">
+                  <i class="fa fa-trash"></i>
+                </button>
+
               </td>
             </tr>
           </tbody>
@@ -45,22 +46,16 @@
       </div>
     </app-card>
   </div>
-  <ng-template #deleteContent let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title">Confirmar</h4>
+</div>
+<!-- Modal para eliminar material -->
+<div id="deleteModal" class="modal" [ngStyle]="{'display': modalDeleteVisible ? 'block' : 'none'}">
+  <div class="modal-content modal-content-delete">
+    <span class="close" (click)="closeDeleteModal()">&times;</span>
+    <h4>Confirmación de eliminación</h4>
+    <p>¿Estás seguro de que deseas eliminar la promocion: <b>{{ selectedPromotion?.promDescription }}</b>?</p>
+    <div class="modal-buttons">
+      <button (click)="deletePromocion()" class="btn btn-warning">Eliminar</button>
+      <button (click)="closeDeleteModal()" class="btn btn-danger">Cancelar</button>
     </div>
-    <div class="modal-body">
-      <h4 style="text-align: center;">¿Estás seguro que deseas eliminar la promoción  {{ selectedPromotion?.promDescription }}? </h4>
-      <ul>
-        <p style="text-align: center;">
-          <i class="fas fa-exclamation-triangle" style="font-size: 50px; color: red;"></i>
-        </p>
-      </ul>
-    </div>
-    <div class="modal-footer" style="display: flex; justify-content: center;">
-      <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
-      <button type="button" class="btn btn-danger" (click)="deletePromotion(selectedPromotion.id)">Eliminar</button>
-    </div>
-  </ng-template>
-
+  </div>
 </div>

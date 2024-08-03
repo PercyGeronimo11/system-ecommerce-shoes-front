@@ -17,30 +17,41 @@ export class PromotionsListComponent implements OnInit {
   modalRef: NgbModalRef | null = null;
   selectedPromotion: any = null;
   isCreating: boolean = false;
+  modalDeleteVisible: boolean = false;
   constructor(
     public promocionService: PromocionService,
   ) {
   }
 
   ngOnInit(): void {
+    this.listMaterials();
+  }
+
+  listMaterials() {
     this.promocionService.list().subscribe((resp: any) => {
       this.promotions = resp.data;
       console.log(this.promotions);
     });
   }
-
-  deletePromotion(id: number): void {
-    this.promocionService.delete(id).subscribe(() => {
-      this.promotions = this.promotions.filter((promo: any) => promo.id !== id);
-      this.closeModal();
-    });
+  // Modal de eliminar usuario
+  openDeleteModal(promotion: any) {
+    this.selectedPromotion = promotion;
+    this.modalDeleteVisible = true;
   }
-
-  closeModal(): void {
-    if (this.modalRef) {
-      this.modalRef.close();
+  deletePromocion() {
+    if (this.selectedPromotion) {
+      this.deletepromotionid(this.selectedPromotion.id);
+      this.closeDeleteModal();
     }
   }
+  closeDeleteModal() {
+    this.modalDeleteVisible = false;
+    this.selectedPromotion = null;
+  }
 
-
+  deletepromotionid(id:any):void{
+    this.promocionService.delete(id).subscribe((resp:any) => {
+      this.listMaterials();
+    })
+  }
 }

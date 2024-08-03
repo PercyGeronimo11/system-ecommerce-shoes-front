@@ -3,7 +3,7 @@ import { PromocionService } from '../../../services/promotions.service';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-import { ProductModel } from 'src/app/models/product.model';
+import { ProductModel,PromoCreateReq } from 'src/app/models/product.model';
 import { PromoDetailResp, PromoCompleteResp } from 'src/app/models/promotion.model';
 import { ProductModule } from '../../products/product.module';
 
@@ -16,9 +16,11 @@ import { ProductModule } from '../../products/product.module';
 })
 export class PromotionsEditComponent implements OnInit {
   promotions: any = [];
+  promoID: number=0;
   products: ProductModel[] = [];
   filteredProducts: ProductModel[] = [];
   selectedPromotion: any = null;
+
   isCreating: boolean = false;
   cargarpromodet: number = 1;
   selectedFile: File | null = null;
@@ -48,7 +50,16 @@ export class PromotionsEditComponent implements OnInit {
     promUrlImage: '',
     promoDetail: this.promocionForm.value.PromoDetProductos
   }
-
+  //modelo de la promocion
+  promoCreateReq: PromoCreateReq = {
+    promPercentage: 0,
+    promStartdate: new Date(),
+    promEnddate: new Date(),
+    promDescription: '',
+    promStatus: false,
+    promUrlImage: '',
+    promDetail: this.promocionForm.value.PromoProductos,
+  };
   constructor(
     public promocionService: PromocionService,
     private router: Router,
@@ -62,8 +73,8 @@ export class PromotionsEditComponent implements OnInit {
   }
 
   getDetalles() {
-    const id = this.route.snapshot.params['id'];
-    this.promocionService.getById(id).subscribe(
+    this.promoID= this.route.snapshot.params['id'];
+    this.promocionService.getById(this.promoID).subscribe(
       (response: { data: PromoCompleteResp }) => {
         const data = response.data;
         this.promocionForm.patchValue({
@@ -111,30 +122,32 @@ export class PromotionsEditComponent implements OnInit {
     });
   }
 
-  submitFormSaveLot() {
-    this.promoCompleteResp = {
-      id: this.route.snapshot.params['id'],
+  submitFormEditprom() {
+    this.promoCreateReq = {
       promPercentage: this.promocionForm.value.promPercentage,
       promStartdate: this.promocionForm.value.promStartdate,
       promEnddate: this.promocionForm.value.promEnddate,
       promDescription: this.promocionForm.value.promDescription,
       promStatus: this.promocionForm.value.promStatus,
       promUrlImage: this.promocionForm.value.promUrlImage,
-      promoDetail: this.PromoDetProductosArray.value
+      promDetail: this.PromoDetProductosArray.value
     };
 
     const formData = new FormData();
-    formData.append('promotion', new Blob([JSON.stringify(this.promoCompleteResp)], { type: 'application/json' }));
+    formData.append('promotion', new Blob([JSON.stringify(this.promoCreateReq)], { type: 'application/json' }));
     if (this.selectedFile) {
       formData.append('file', this.selectedFile);
     }
-    this.promocionService.edit(this.route.snapshot.params['id'], formData).subscribe(
-      (data: any) => {
-        console.log("Promoción actualizada:", data);
+    this.promocionService.edit(this.promoID, formData).subscribe(
+      (resp: any) => {
+        console.log("Promoción actualizada:", resp);
         this.router.navigate(['/promotions']);
       },
       (error) => {
-        console.error("Error al editar la promoción:", error);
+        this.error = error.message;
+        console.error("Error al editar la promoción:",  this.error
+
+         );
       }
     );
   }

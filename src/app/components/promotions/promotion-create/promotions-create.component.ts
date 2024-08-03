@@ -100,7 +100,7 @@ export class PromotionsCreateComponent implements OnInit {
     });
   }
 
-  submitFormSaveLot() {
+  submitFormSavepromo() {
     this.promoCreateReq = {
       promPercentage: this.promocionForm.value.promPercentage,
       promStartdate: this.promocionForm.value.promStartdate,
