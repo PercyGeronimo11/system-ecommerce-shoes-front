@@ -5,9 +5,72 @@
       <p>Eliminando producto...</p>
     </div>
     <div class="container-fluid">
-      <div class="cart-container">
-        <div class="empty-space"></div>
-        <div class="sales-details">
+      <div class="row">
+        <div class="col-lg-7 cart-container">
+          <!-- Contact Info Section -->
+          <div class="contact-info-container">
+            <button (click)="toggleUserInfo()" class="toggle-button">
+              Mostrar información de contacto
+              <i class="fa fa-chevron-down" [ngClass]="{'rotate': showUserInfo}"></i>
+            </button>
+            <div *ngIf="user">
+              <div class="row user-info" *ngIf="showUserInfo">
+                <div class="col-md-6 input-group">
+                  <input type="text" id="username" [value]="user.username" [disabled]="!isEditingUsername" placeholder="Nombre">
+                </div>
+                <div class="col-md-6 input-group">
+                  <input type="text" id="email" [value]="userEmail" [disabled]="!isEditingEmail" placeholder="Correo">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Personal Info Section -->
+          <div class="personal-info-container">
+            <button (click)="toggleAdditionalInfo()" class="toggle-button">
+              Mostrar datos personales
+              <i class="fa fa-chevron-down" [ngClass]="{'rotate': showAdditionalInfo}"></i>
+            </button>
+            <div class="row additional-info" *ngIf="showAdditionalInfo">
+              <div class="col-md-6 input-group">
+                <input type="text" id="nombres" [(ngModel)]="additionalInfo.nombres" placeholder="Nombres">
+              </div>
+              <div class="col-md-6 input-group">
+                <input type="text" id="apellidos" [(ngModel)]="additionalInfo.apellidos" placeholder="Apellidos">
+              </div>
+              <div class="col-md-6 input-group">
+                <input type="text" id="dni" [(ngModel)]="additionalInfo.dni" placeholder="DNI">
+              </div>
+            </div>
+          </div>
+
+          <!-- Address Info Section -->
+          <div class="address-info-container">
+            <button (click)="toggleAddressInfo()" class="toggle-button">
+              Mostrar información de dirección
+              <i class="fa fa-chevron-down" [ngClass]="{'rotate': showAddressInfo}"></i>
+            </button>
+            <div class="row address-info" *ngIf="showAddressInfo">
+              <div class="col-md-6 input-group">
+                <input type="text" id="direccion"placeholder="Dirección">
+              </div>
+              <div class="col-md-6 input-group">
+                <input type="text" id="informacion_adicional" placeholder="Información adicional">
+              </div>
+              <div class="col-md-6 input-group">
+                <input type="text" id="departamento"  placeholder="Departamento">
+              </div>
+              <div class="col-md-6 input-group">
+                <input type="text" id="provincia"  placeholder="Provincia">
+              </div>
+              <div class="col-md-6 input-group">
+                <input type="text" id="distrito"  placeholder="Distrito">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 row sales-details">
           <div class="summary">
             <div class="summary-title">Resumen del Pedido</div>
             <div class="summary-item">
@@ -32,19 +95,12 @@
               <div class="mini-product-details">
                 <h5>{{ item.name }}</h5>
                 <p>Cantidad: {{ item.quantity || 1 }}</p>
-                <p>Precio: {{ item.price | currency }}</p>
+                <p>Precio: {{ item.price | currency }}"></p>
               </div>
             </div>
-          </div>
-          <div *ngIf="loginResponse !== 'Ingresar'">
-            <p>Correo del usuario: {{ loginResponse }}</p>
-          </div>
-          <div *ngIf="loginResponse === 'Ingresar'">
-            <p>Por favor, inicie sesión para continuar con el pago</p>
           </div>
         </div>
       </div>
     </div>
   </body>
-  </app-base-layout>
-  
+</app-base-layout>

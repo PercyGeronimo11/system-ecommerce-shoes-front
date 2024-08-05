@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { CustomerService } from 'src/app/services/customers.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { AuthService } from '../../../components/auth/service/auth.service';
 import { ProductModel } from '../../../models/product.model';
@@ -13,12 +14,13 @@ import { EcommercePlantilla } from '../base-layout.component';
 @Component({
   selector: 'app-pay',
   standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule,EcommercePlantilla],
+  imports: [RouterModule, CommonModule, SharedModule, EcommercePlantilla],
   templateUrl: './pay.component.html',
-  styleUrls: ['./pay.component.scss'] // Corrige el nombre aquí
+  styleUrls: ['./pay.component.scss']
 })
 export class PayComponent implements OnInit, OnDestroy {
-  loginResponse: string = 'Ingresar'; // Tipo explícito y valor predeterminado
+  loginResponse: string = 'Ingresar';
+  user: any;
   cartItems: ProductModel[] = [];
   groupedCartItems: { [key: string]: ProductModel & { quantity: number } } = {};
   cartItemCount: number = 0;
@@ -26,20 +28,34 @@ export class PayComponent implements OnInit, OnDestroy {
   categories: any[] = [];
   categoria: number = 0;
   totalAmount: number = 0;
-  isRemoving: boolean = false; // Variable para manejar el estado de la animación
+  isRemoving: boolean = false;
+  userEmail: string | null = null; 
+  showUserInfo = false;
+  showAdditionalInfo = false;  // New property
+  isLoading = false;
+  isEditingUsername = false;
+  isEditingEmail = false;
+  showAddressInfo = false;  // New property
+
+
+  additionalInfo = {
+    nombres: '',
+    apellidos: '',
+    dni: ''
+  };  // New property
 
   constructor(
     private fb: FormBuilder,
     private cartService: CartService,
     private authService: AuthService,
     private sharedDataService: SharedDataService,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private customerService: CustomerService
   ) {
     this.numberForm = this.fb.group({
       idcategoria: [0]
     });
 
-    // Initialize categories
     this.categoriaService.list().subscribe((resp: any) => {
       this.categories = resp.data;
       console.log(this.categories);
@@ -50,32 +66,33 @@ export class PayComponent implements OnInit, OnDestroy {
     this.cartItems = this.cartService.getCartItems();
     this.groupCartItems();
     this.cartItemCount = this.cartService.getCartSize();
-    
-    // Calcular el monto total de los productos en el carrito
     this.calculateTotalAmount();
-    
-    // Suscribirse al user$ para actualizar la UI
-    this.sharedDataService.user$.subscribe((loginResp: any) => {
-      if (loginResp?.error) {
-        this.loginResponse = 'Ingresar';
-      } else {
-        this.loginResponse = loginResp?.data?.custEmail || 'Ingresar';
+
+    this.sharedDataService.user$.subscribe((user) => {
+      this.user = user;
+      if (this.user) {
+        this.customerService.getUser(this.user.username).subscribe((response: any) => {
+          if (response && response.data && response.data.length > 0) {
+            this.userEmail = response.data[0].custEmail;  // Asignar el correo obtenido
+          }
+        });
       }
     });
-    
-    console.log(this.cartItems); // Verifica los datos aquí
+    const customerInfo = this.authService.getCustomerInfo();
+    if (customerInfo) {
+      this.sharedDataService.updateUser(customerInfo);
+    }
+
+    console.log(this.cartItems);
   }
 
-  ngOnDestroy(): void {
-    // Implementar la lógica de limpieza si es necesario
-  }
+  ngOnDestroy(): void {}
 
   groupCartItems() {
     this.groupedCartItems = this.cartItems.reduce((acc, item) => {
-      // Usa una cadena que combine ID y tamaño como clave
       const key = `${item.id}-${item.size}`;
       if (acc[key]) {
-        acc[key].quantity += 1; // Acumula la cantidad
+        acc[key].quantity += 1;
       } else {
         acc[key] = { ...item, quantity: 1 };
       }
@@ -98,7 +115,7 @@ export class PayComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     this.categoria = this.numberForm.get('idcategoria')?.value;
     console.log('Selected category:', this.categoria);
-    this.ngOnInit(); // Reload or filter items based on selected category
+    this.ngOnInit();
   }
 
   logout(): void {
@@ -106,31 +123,46 @@ export class PayComponent implements OnInit, OnDestroy {
   }
 
   removeItem(productId: number, size: number): void {
-    this.isRemoving = true; // Muestra la animación
-  
+    this.isRemoving = true;
+
     setTimeout(() => {
-      console.log(`Removing all items with ID ${productId} and size ${size}`); // Verifica que esta línea se ejecute
-  
-      // Elimina todos los productos con el ID y tamaño especificado
+      console.log(`Removing all items with ID ${productId} and size ${size}`);
       this.cartService.removeAllFromCart(productId, size);
-      
-      // Actualiza la lista de productos en el carrito
       this.cartItems = this.cartService.getCartItems();
-      
-      // Vuelve a agrupar los productos
       this.groupCartItems();
-      
-      // Recalcula el total
       this.calculateTotalAmount();
-      
-      // Ocultar la animación después de 1 segundo (ajusta según tu necesidad)
       this.isRemoving = false;
-      
-      // Actualiza el conteo de productos en el carrito
       this.cartItemCount = this.cartService.getCartSize();
-      
-      // Recargar la página
       window.location.reload();
-    }, 1000); // El tiempo de espera coincide con la duración de la animación
+    }, 1000);
   }
+
+  toggleUserInfo() {
+    this.showUserInfo = !this.showUserInfo;
+    this.isLoading = true;
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1000);
+  }
+
+  toggleAdditionalInfo() {
+    this.showAdditionalInfo = !this.showAdditionalInfo;
+    this.isLoading = true;
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1000);
+  }
+
+  toggleEdit(field: string) {
+    if (field === 'username') {
+      this.isEditingUsername = !this.isEditingUsername;
+    } else if (field === 'email') {
+      this.isEditingEmail = !this.isEditingEmail;
+    }
+  }
+
+  toggleAddressInfo() {
+    this.showAddressInfo = !this.showAddressInfo;
+  }
+
 }

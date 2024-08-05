@@ -1,8 +1,9 @@
+// auth.service.ts
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
 import { SharedDataService } from 'src/app/services/shared-data.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,7 @@ export class AuthService {
     localStorage.removeItem('tokencustomer');
     localStorage.removeItem('usernamecustomer');
     localStorage.removeItem('rolecustomer');
+    localStorage.removeItem('idcustomer');
     this.sharedDataService.updateUser(null);
     this.router.navigate(['/ecommers']);
   }
@@ -42,12 +44,18 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  getCustomer():string | null{
-
-    return localStorage.getItem('username');
+  getCustomer(): string | null {
+    return localStorage.getItem('usernamecustomer');
   }
 
   getRole(): string | null {
-    return localStorage.getItem('role');
+    return localStorage.getItem('rolecustomer');
   }
+
+  getCustomerInfo() {
+    return {
+      username: localStorage.getItem('usernamecustomer'),
+    };
+  }
+ 
 }
