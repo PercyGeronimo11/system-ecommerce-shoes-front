@@ -54,4 +54,10 @@ export class CartService {
   getCartSize(): number {
     return this.cartItems.length;
   }
+
+  removeAllFromCart(productId: number, size: number): void {
+    this.cartItems = this.cartItems.filter(item => !(item.id === productId && item.size === size));
+    this.cartItemCount.next(this.cartItems.length);
+    this.saveCartToLocalStorage();
+  }
 }

@@ -2,29 +2,30 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { CartService } from '../../services/cart.service';
+import { CartService } from '../../../services/cart.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-import { AuthService } from '../../components/auth/service/auth.service';
-import { ProductModel } from '../../models/product.model';
-import { ProductService } from '../../services/product.service';
-import { CategoriaService } from '../../services/categories.service';
+import { AuthService } from '../../../components/auth/service/auth.service';
+import { ProductModel } from '../../../models/product.model';
+import { ProductService } from '../../../services/product.service';
+import { SharedDataService } from '../../../services/shared-data.service';
+import { CategoriaService } from '../../../services/categories.service';
 import { Subscription } from 'rxjs';
+import { EcommercePlantilla } from '../base-layout.component';
 
 @Component({
-  selector: 'app-base-layout',
+  selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule],
-  templateUrl: './base-layout.component.html',
-  styleUrls: ['./base-layout.component.scss']
+  imports: [RouterModule, CommonModule, SharedModule,EcommercePlantilla],
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
-export class EcommercePlantilla implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
   loginResponse: any;
   products: ProductModel[] = [];
   categories: any[] = [];
   NameCate: string = '';
   isLoading = false;
   error: string | null = null;
-  usernamecustomer:any;
   categoria: number = 0;
   numberForm: FormGroup;
   slides = [
@@ -41,6 +42,7 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
     public categoriaService: CategoriaService,
     private authService: AuthService,
     private productService: ProductService,
+    private sharedDataService: SharedDataService,
     private cartService: CartService,
     private router: Router
   ) {
@@ -64,13 +66,10 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
     if(localStorage.getItem('usernamecustomer')!=null){
       this.loginResponse=localStorage.getItem('usernamecustomer');
     }
-    /* this.userSubscription = this.sharedDataService.user$.subscribe(user => {
-      this.loginResponse = user ? user.username : 'Ingresar';
-    }); */
 
     this.getProducts();
 
-
+    // Subscribe to cart item count
     this.cartService.getCartItemCount().subscribe(count => {
       this.cartItemCount = count;
     });
@@ -84,7 +83,6 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
 
   logoutcustomer(): void {
     this.authService.logoutCustomer();
-    this.loginResponse = 'Ingresar';
   }
 
   getProducts(): void {

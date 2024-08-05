@@ -1,0 +1,305 @@
+.cart-container {
+  display: flex;
+  flex-direction: column; /* Cambiado de row a column para que los hijos estén en columna */
+  justify-content: flex-start;
+  max-width: 1200px;
+  padding: 20px;
+}
+
+.total-price {
+  position: absolute;
+  top: 0;
+  right: 50px;
+  margin: 10px;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+h6 {
+  margin-left: 0;
+  margin-bottom: 20px;
+}
+
+.close-button {
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  color: #000;
+  cursor: pointer;
+}
+
+.sales-details {
+  width: 30%;
+  padding: 20px;
+  background-color: #ffffff; /* Fondo blanco */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  align-self: flex-start;
+  margin-top: 20px;
+  margin-left: 40px;
+}
+
+.summary {
+  margin-bottom: 20px;
+}
+
+.summary-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.free-shipping {
+  font-weight: bold;
+  color: #009879;
+  margin-bottom: 20px;
+}
+
+.total-amount {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+/* Mini product list styles */
+.mini-product-list {
+  margin-top: 20px;
+}
+
+.mini-product-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.mini-product-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.mini-product-details {
+  flex: 1;
+}
+
+.mini-product-details h5 {
+  font-size: 0.9em;
+  margin: 0;
+}
+
+.mini-product-details p {
+  font-size: 0.8em;
+  margin: 0;
+}
+
+/* User info styles */
+.user-info-container {
+  width: 60%; /* Aumento del ancho del contenedor */
+  padding: 20px;
+  background-color: #ffffff; /* Fondo blanco */
+  border: none; /* Sin bordes */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 20px;
+}
+
+/* Botón de Mostrar Información */
+.toggle-button {
+  padding: 12px 24px;
+  background-color: #ffffff;
+  color: #000; /* Texto en negro */
+  border: none; /* Sin borde */
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-weight: bold; /* Texto en negrita */
+  position: relative; /* Necesario para el ícono y spinner */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%; /* Asegura que el botón ocupe todo el ancho disponible */
+  max-width: 400px; /* Ajusta el ancho máximo según sea necesario */
+  
+  .spinner {
+    position: absolute;
+    right: 40px;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #ddd;
+    border-top: 3px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    visibility: hidden;
+  }
+
+  .spinner.visible {
+    visibility: visible;
+  }
+
+  i.fa {
+    position: absolute;
+    right: 10px; /* Ajusta la posición del ícono a la derecha */
+    font-size: 1.5em; /* Ajusta el tamaño del ícono según tus preferencias */
+    color: #000; /* Color del ícono */
+    transition: transform 0.3s ease; /* Transición para la rotación */
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.rotate {
+  transform: rotate(180deg); /* Rota el icono 180 grados */
+}
+
+/* Animación del spinner */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+.user-info-container {
+  width: 60%;
+  padding: 20px;
+  background-color: #ffffff;
+  border: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 20px;
+}
+
+.toggle-button {
+  padding: 12px 24px;
+  background-color: #ffffff;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.spinner {
+  position: absolute;
+  right: 40px;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ddd;
+  border-top: 3px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  visibility: hidden;
+}
+
+.spinner.visible {
+  visibility: visible;
+}
+
+i.fa {
+  position: absolute;
+  right: 10px;
+  font-size: 1.5em;
+  color: #000;
+  transition: transform 0.3s ease;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* Existing CSS */
+/* ... */
+.contact-info-container, 
+.personal-info-container {
+  background-color: #ffffff; /* Fondo blanco */
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px; /* Espacio entre las secciones */
+}
+
+.personal-info-container {
+  background-color: white; /* Beige para el contenedor de datos personales */
+}
+
+.contact-info-container {
+  background-color: white; /* Azul claro para el contenedor de información de contacto */
+}
+
+/* Additional styles for new sections */
+.address-info-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+
+.voucher-upload {
+  margin-top: 20px;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  background-color: #1ca538;
+  color: white;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.custom-file-upload:hover {
+  background-color: #129343;
+}
+
+#voucher {
+  display: none;
+}
+
+.voucher-preview img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+}

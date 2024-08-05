@@ -3,12 +3,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/components/auth/service/auth.service';
-import { CartService } from '../../../services/cart.service';
-import { ProductModel } from '../../../models/product.model';
-import { ProductService } from '../../../services/product.service';
-import { CategoriaService } from '../../../services/categories.service';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { ProductModel } from '../../../models/product.model';
+import { CartService } from '../../../services/cart.service';
+import { CategoriaService } from '../../../services/categories.service';
+import { ProductService } from '../../../services/product.service';
 import { EcommercePlantilla } from '../base-layout.component';
 @Component({
   selector: 'app-product-detail',
@@ -36,7 +36,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   slideInterval: any;
   cartItemCount: number = 0;
   cart: any[] = []; // Lista para almacenar los productos agregados al carrito
-
 
   constructor(private fb: FormBuilder,
     public categoriaService: CategoriaService,
@@ -87,6 +86,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
     this.loadProductDetail();
   }
+
   loadProductDetail(): void {
     const productId = this.route.snapshot.paramMap.get('id');
     if (productId) {
@@ -98,7 +98,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       });
     }
   }
-
 
   onSubmit(): void {
     this.categoria = this.numberForm.get('idcategoria')?.value;
@@ -138,7 +137,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     clearInterval(this.slideInterval);
   }
 
-
   previousSlide(event: Event) {
     event.preventDefault();
     this.currentSlide = (this.currentSlide === 0) ? this.slides.length - 1 : this.currentSlide - 1;
@@ -159,18 +157,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
-
-  ngOnInit2(): void {
-    const productId = this.route.snapshot.paramMap.get('id');
-    if (productId) {
-      this.productService.getProductById(productId).subscribe((response: any) => {
-        this.product = response.data;
-      }, error => {
-        console.error("Error al cargar el producto:", error);
-      });
-    }
-  }
-
   addToCart(product: ProductModel): void {
     if (this.selectedSize) {
       const productToAdd = {
@@ -185,7 +171,11 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       this.cartService.getCartItemCount().subscribe(count => {
         this.cartItemCount = count; // Actualiza el contador local
       });
-      console.log('Producto agregado al carrito:', productToAdd);
+      console.log('Producto agregado al carrito:', productToAdd); // Indica que se está agregando un producto
+      document.getElementById('loading')?.classList.remove('d-none'); // Muestra el mensaje de carga
+      setTimeout(() => {
+        window.location.reload(); // Refresca la página después de la animación
+      }, 1000); // Tiempo de espera para la animación (1.5 segundos)
     } else {
       console.error('Seleccione una talla antes de agregar al carrito');
     }

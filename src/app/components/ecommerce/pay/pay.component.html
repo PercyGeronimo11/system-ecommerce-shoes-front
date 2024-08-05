@@ -1,0 +1,117 @@
+<app-base-layout>
+  <body>
+    <div *ngIf="isRemoving" class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <p>Eliminando producto...</p>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-7 cart-container">
+          <!-- Contact Info Section -->
+          <div class="contact-info-container">
+            <button (click)="toggleUserInfo()" class="toggle-button">
+              Mostrar información de contacto
+              <i class="fa fa-chevron-down" [ngClass]="{'rotate': showUserInfo}"></i>
+            </button>
+            <div *ngIf="user">
+              <div class="row user-info" *ngIf="showUserInfo">
+                <div class="col-md-6 input-group">
+                  <input type="text" id="username" [value]="user.username" [disabled]="!isEditingUsername" placeholder="Nombre">
+                </div>
+                <div class="col-md-6 input-group">
+                  <input type="text" id="email" [value]="userEmail" [disabled]="!isEditingEmail" placeholder="Correo">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Personal Info Section -->
+          <div class="personal-info-container">
+            <button (click)="toggleAdditionalInfo()" class="toggle-button">
+              Mostrar datos personales
+              <i class="fa fa-chevron-down" [ngClass]="{'rotate': showAdditionalInfo}"></i>
+            </button>
+            <div class="row additional-info" *ngIf="showAdditionalInfo">
+              <div class="col-md-6 input-group">
+                <input type="text" id="nombres" [(ngModel)]="customerData.custFirstName" placeholder="Nombres">
+              </div>
+              <div class="col-md-6 input-group">
+                <input type="text" id="apellidos" [(ngModel)]="customerData.custLastName" placeholder="Apellidos">
+              </div>
+              <div class="col-md-6 input-group">
+                <input type="text" id="dni" [(ngModel)]="customerData.custDni" placeholder="DNI">
+              </div>
+            </div>
+          </div>
+
+          <!-- Address Info Section -->
+          <div class="address-info-container">
+            <button (click)="toggleAddressInfo()" class="toggle-button">
+              Mostrar información de dirección
+              <i class="fa fa-chevron-down" [ngClass]="{'rotate': showAddressInfo}"></i>
+            </button>
+            <div class="row address-info" *ngIf="showAddressInfo">
+              <div class="col-md-6 input-group">
+                <input type="text" id="direccion" [(ngModel)]="customerData.nombres" placeholder="Dirección">
+              </div>
+              <div class="col-md-6 input-group">
+                <input type="text" id="informacion_adicional" [(ngModel)]="customerData.nombres" placeholder="Información adicional">
+              </div>
+              <div class="col-md-6 input-group">
+                <input type="text" id="departamento" [(ngModel)]="customerData.custDepartment"  placeholder="Departamento">
+              </div>
+              <div class="col-md-6 input-group">
+                <input type="text" id="provincia" [(ngModel)]="customerData.custProvince"  placeholder="Provincia">
+              </div>
+              <div class="col-md-6 input-group">
+                <input type="text" id="distrito" [(ngModel)]="customerData.custCity"  placeholder="Distrito">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 row sales-details">
+          <div class="summary">
+            <div class="summary-title">Resumen del Pedido</div>
+            <div class="summary-item">
+              <span>Cantidad de pedidos:</span>
+              <span>{{ groupedCartItemsArray.length }}</span>
+            </div>
+            <div class="summary-item">
+              <span>Total a pagar:</span>
+              <span>{{ totalAmount | currency }}</span>
+            </div>
+          </div>
+          <div class="free-shipping">Envío gratis</div>
+          <div class="total-amount">
+            <span>Total:</span>
+            <span>{{ totalAmount | currency }}</span>
+          </div>
+          <div class="mini-product-list">
+            <h6>Productos Seleccionados:</h6>
+            <div *ngFor="let item of groupedCartItemsArray" class="mini-product-item">
+              <button class="close-button" (click)="removeItem(item.id, item.size)">&times;</button>
+              <img [src]="item.image" alt="{{ item.name }}" class="mini-product-image">
+              <div class="mini-product-details">
+                <h5>{{ item.name }}</h5>
+                <p>Cantidad: {{ item.quantity || 1 }}</p>
+                <p>Precio: {{ item.price | currency }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="voucher-upload">
+            <label for="voucher" class="custom-file-upload">
+              <i class="fa fa-cloud-upload"></i> Subir Voucher
+            </label>
+            <input type="file" id="voucher" (change)="onFileSelected($event)" accept="image/*">
+            <div *ngIf="voucherPreview" class="voucher-preview">
+              <img [src]="voucherPreview" alt="Voucher Preview">
+            </div>
+          </div>
+          <button class="btn btn-primary" (click)="SubmitOrder()">Guardar</button>
+        </div>
+        
+      </div>
+    </div>
+  </body>
+</app-base-layout>

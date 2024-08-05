@@ -1,35 +1,41 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/components/auth/service/auth.service';
-import { CategoriaService } from '../../../services/categories.service';
-import { CartService } from '../../../services/cart.service';
 import { ProductModel } from 'src/app/models/product.model';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { CartService } from '../../../services/cart.service';
+import { CategoriaService } from '../../../services/categories.service';
 import { EcommercePlantilla } from '../base-layout.component';
+
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule,EcommercePlantilla],
+  imports: [RouterModule, CommonModule, SharedModule, EcommercePlantilla],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit, OnDestroy {
   loginResponse: any;
   cartItems: ProductModel[] = [];
-  groupedCartItems: { [key: number]: ProductModel } = {};
+  groupedCartItems: { [key: string]: ProductModel } = {};
   cartItemCount: number = 0;
   numberForm: FormGroup;
   categories: any[] = [];
   categoria: number = 0;
+  totalAmount: number = 0;
+  isRemoving: boolean = false; // Variable para manejar el estado de la animación
+  userSubscription: Subscription | undefined;
 
   constructor(private fb: FormBuilder,
               private cartService: CartService,
               private authService: AuthService,
               private categoriaService: CategoriaService,
-              private cdr: ChangeDetectorRef) {
+              private cdr: ChangeDetectorRef,
+              private router: Router) {
     this.numberForm = this.fb.group({
       idcategoria: [0]
     });
@@ -46,41 +52,47 @@ export class CartComponent implements OnInit, OnDestroy {
     this.groupCartItems();
     this.cartItemCount = this.cartService.getCartSize();
 
+    // Calcular el monto total de los productos en el carrito
+    this.calculateTotalAmount();
+    
     // Suscribirse al loginResponse para actualizar la UI
-    /*
-    this.sharedDataService.loginResponse$.subscribe(loginResp => {
-      if (loginResp.error) {
-        this.loginResponse = 'Ingresar';
+    this.userSubscription = this.sharedDataService.user$.subscribe(user => {
+      if (user) {
+        this.loginResponse = user.username;
       } else {
-        this.loginResponse = loginResp.data.custFirstName;
+        this.loginResponse = 'Ingresar';
       }
     });
-    */
+    
     console.log(this.cartItems); // Verifica los datos aquí
     this.cdr.detectChanges(); // Forzar detección de cambios si es necesario
   }
 
   ngOnDestroy(): void {
     // Implementar la lógica de limpieza si es necesario
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   groupCartItems() {
     this.groupedCartItems = this.cartItems.reduce((acc, item) => {
-      if (acc[item.id]) {
-        acc[item.id].quantity += 1; // Incrementa la cantidad para productos existentes
+      const key = `${item.id}-${item.size}`;
+      if (acc[key]) {
+        acc[key].quantity += 1;
       } else {
-        acc[item.id] = { ...item, quantity: 1 }; // Inicializa la cantidad para nuevos productos
+        acc[key] = { ...item, quantity: 1 };
       }
       return acc;
-    }, {} as { [key: number]: ProductModel });
+    }, {} as { [key: string]: ProductModel });
   }
 
   get groupedCartItemsArray() {
     return Object.values(this.groupedCartItems);
   }
 
-  getCartItems() {
-    return this.cartItems;
+  calculateTotalAmount() {
+    this.totalAmount = this.cartItems.reduce((total, item) => total + item.price * (item.quantity || 1), 0);
   }
 
   onSubmit(): void {
@@ -91,5 +103,42 @@ export class CartComponent implements OnInit, OnDestroy {
 
   logout(): void {
     this.authService.logout();
+  }
+
+  removeItem(productId: number, size: number): void {
+    this.isRemoving = true; // Muestra la animación
+  
+    setTimeout(() => {
+      console.log(`Removing all items with ID ${productId} and size ${size}`);
+  
+      this.cartService.removeAllFromCart(productId, size);
+      
+      // Actualiza la lista de productos en el carrito
+      this.cartItems = this.cartService.getCartItems();
+      
+      // Vuelve a agrupar los productos
+      this.groupCartItems();
+      
+      // Recalcula el total
+      this.calculateTotalAmount();
+      
+      // Ocultar la animación después de 1 segundo
+      this.isRemoving = false;
+      
+      // Actualiza el conteo de productos en el carrito
+      this.cartItemCount = this.cartService.getCartSize();
+      
+      // Forzar detección de cambios
+      this.cdr.detectChanges();
+    }, 1000); // El tiempo de espera coincide con la duración de la animación
+  }
+
+  goToPay(): void {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/pay']);
+    } else {
+      alert('Por favor, inicie sesión primero');
+      this.router.navigate(['/login']);
+    }
   }
 }

@@ -1,33 +1,51 @@
 <app-base-layout>
-<div class="cart-container">
-  <h2>Carrito de Compras</h2>
-  <div *ngIf="groupedCartItemsArray.length === 0">
-    <p>El carrito está vacío.</p>
-  </div>
-  <div *ngIf="groupedCartItemsArray.length > 0">
-    <table class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <th>Producto</th>
-          <th>Cantidad</th>
-          <th>Precio</th>
-          <th>Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of groupedCartItemsArray">
-          <td>
-            <div class="cart-item">
-              <img [src]="item.image" alt="{{ item.name }}" class="cart-item-image">
-              <span class="cart-item-name">{{ item.name }}</span>
+  <body>
+    <div *ngIf="isRemoving" class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <p>Eliminando producto...</p>
+    </div>      
+    <div class="container-fluid">
+      <div class="cart-container">
+        <div class="product-list">
+          <h6>Inicio > Carrito</h6>
+          <div *ngIf="groupedCartItemsArray.length === 0">
+            <p>El carrito está vacío.</p>
+          </div>
+          <div *ngIf="groupedCartItemsArray.length > 0">
+            <div *ngFor="let item of groupedCartItemsArray" class="product-item">
+              <button class="close-button" (click)="removeItem(item.id, item.size)">&times;</button>
+              <img [src]="item.image" alt="{{ item.name }}" class="product-image">
+              <div class="product-details">
+                <h5>{{ item.name }}</h5>
+                <p>Talla: {{ item.size || 1 }}</p>
+                <p>Cantidad: {{ item.quantity || 1 }}</p>
+                <p>Precio: {{ item.price | currency }}</p>
+                <p class="total-price">Total: {{ (item.price * (item.quantity || 1)) | currency }}</p>
+              </div>
             </div>
-          </td>
-          <td>{{ item.quantity || 1 }}</td>
-          <td>{{ item.price | currency }}</td>
-          <td>{{ (item.price * (item.quantity || 1)) | currency }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+          </div>
+        </div>
+      
+        <div class="sales-details">
+          <button class="btn-pay" (click)="goToPay()">Ir a pagar</button>
+          <div class="summary">
+            <div class="summary-title">Resumen del Pedido</div>
+            <div class="summary-item">
+              <span>Cantidad de pedidos:</span>
+              <span>{{ groupedCartItemsArray.length }}</span>
+            </div>
+            <div class="summary-item">
+              <span>Total a pagar:</span>
+              <span>{{ totalAmount | currency }}</span>
+            </div>
+          </div>
+          <div class="free-shipping">Envío gratis</div>
+          <div class="total-amount">
+            <span>Total:</span>
+            <span>{{ totalAmount | currency }}</span>
+          </div>
+        </div>
+      </div>
+  </div>    
+  </body>
 </app-base-layout>

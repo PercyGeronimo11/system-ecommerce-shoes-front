@@ -1,3 +1,4 @@
+// auth.service.ts
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -16,7 +17,6 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) { }
 
   login(credentials: any) {
-    this.logout();
     return this.http.post(`${this.apiUrl}/auth/login`, credentials);
   }
 
@@ -35,6 +35,8 @@ export class AuthService {
     localStorage.removeItem('usernamecustomer');
     this.customerSubject.next(null);
     localStorage.removeItem('rolecustomer');
+    localStorage.removeItem('idcustomer');
+    this.sharedDataService.updateUser(null);
     this.router.navigate(['/ecommers']);
   }
 
@@ -48,11 +50,20 @@ export class AuthService {
 
   getCustomer(): string | null {
     return localStorage.getItem('usernamecustomer');
+  getCustomer(): string | null {
+    return localStorage.getItem('usernamecustomer');
   }
 
   getRole(): string | null {
-    return localStorage.getItem('role');
+    return localStorage.getItem('rolecustomer');
   }
+
+  getCustomerInfo() {
+    return {
+      username: localStorage.getItem('usernamecustomer'),
+    };
+  }
+ 
   getCustomerObservable() {
     return this.customerSubject.asObservable();
   }
