@@ -90,7 +90,7 @@
         </div>
       </div>
       <div class="modal-buttons">
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Actualizar' : 'Guardar' }}</button>
         <button type="button" class="btn btn-danger" (click)="closeMaterialModal()">Cancelar</button>
       </div>
     </form>
