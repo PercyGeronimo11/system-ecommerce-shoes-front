@@ -39,6 +39,8 @@ export class PayComponent implements OnInit, OnDestroy {
   showAddressInfo = false;  // New property
   cart: any[] = [];
   customerData:any
+  voucherUploaded: boolean = false;
+
 
   additionalInfo = {
     nombres: '',
@@ -180,6 +182,10 @@ export class PayComponent implements OnInit, OnDestroy {
   }
 
   SubmitOrder() {
+    if (!this.voucherUploaded) {
+      alert('Por favor, cargue una imagen del voucher antes de guardar.');
+      return;
+    }
     const cart = localStorage.getItem('cart');
     if (cart) {
       this.cart = JSON.parse(cart);
@@ -217,6 +223,7 @@ export class PayComponent implements OnInit, OnDestroy {
                     console.log('Respuesta de la creación del detalle de orden:', response);
                     localStorage.removeItem('cart');
                     window.location.href = '/ecommers';
+                    alert('El registro de venta fue hecho con éxito');
                 },
                 (error: any) => {
                     console.error('Error al crear el detalle de la orden:', error);
@@ -230,4 +237,24 @@ export class PayComponent implements OnInit, OnDestroy {
       });
     }
   }
+  voucherPreview: string | ArrayBuffer | null = null;
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const fileType = file.type;
+  
+      // Verifica que el archivo sea una imagen
+      if (fileType.match(/image\/*/) == null) {
+        alert('Por favor, seleccione un archivo de imagen válido.');
+        return;
+      }
+  
+      this.voucherUploaded = true;
+      const reader = new FileReader();
+      reader.onload = (e) => this.voucherPreview = reader.result;
+      reader.readAsDataURL(file);
+    }
+  }
+  
 }

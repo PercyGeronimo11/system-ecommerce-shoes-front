@@ -270,3 +270,36 @@ i.fa {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
 }
+
+
+.voucher-upload {
+  margin-top: 20px;
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  background-color: #1ca538;
+  color: white;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.custom-file-upload:hover {
+  background-color: #129343;
+}
+
+#voucher {
+  display: none;
+}
+
+.voucher-preview img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+}
