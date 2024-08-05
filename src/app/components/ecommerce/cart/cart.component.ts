@@ -33,6 +33,7 @@ export class CartComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
               private cartService: CartService,
               private authService: AuthService,
+              private sharedDataService: SharedDataService,
               private categoriaService: CategoriaService,
               private cdr: ChangeDetectorRef,
               private router: Router) {
