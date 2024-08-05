@@ -206,7 +206,8 @@ export class PayComponent implements OnInit, OnDestroy {
         this.orderService.create(data).subscribe(
           (response: any) => {
               console.log('Respuesta de la creación de la orden:', response);
-              let orderDetails = this.cart.map((item: any) => ({
+              let cart = Object.values(this.groupedCartItems)
+              let orderDetails = cart.map((item: any) => ({
                 "odt_amount": item.quantity, 
                 "odt_price": item.price,
                 "odt_status": 1,
