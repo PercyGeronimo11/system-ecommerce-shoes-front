@@ -36,7 +36,6 @@ export class AuthService {
     this.customerSubject.next(null);
     localStorage.removeItem('rolecustomer');
     localStorage.removeItem('idcustomer');
-    this.sharedDataService.updateUser(null);
     this.router.navigate(['/ecommers']);
   }
 
@@ -48,8 +47,6 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  getCustomer(): string | null {
-    return localStorage.getItem('usernamecustomer');
   getCustomer(): string | null {
     return localStorage.getItem('usernamecustomer');
   }
