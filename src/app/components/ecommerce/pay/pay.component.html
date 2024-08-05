@@ -33,13 +33,13 @@
             </button>
             <div class="row additional-info" *ngIf="showAdditionalInfo">
               <div class="col-md-6 input-group">
-                <input type="text" id="nombres" [(ngModel)]="additionalInfo.nombres" placeholder="Nombres">
+                <input type="text" id="nombres" [(ngModel)]="customerData.custFirstName" placeholder="Nombres">
               </div>
               <div class="col-md-6 input-group">
-                <input type="text" id="apellidos" [(ngModel)]="additionalInfo.apellidos" placeholder="Apellidos">
+                <input type="text" id="apellidos" [(ngModel)]="customerData.custLastName" placeholder="Apellidos">
               </div>
               <div class="col-md-6 input-group">
-                <input type="text" id="dni" [(ngModel)]="additionalInfo.dni" placeholder="DNI">
+                <input type="text" id="dni" [(ngModel)]="customerData.custDni" placeholder="DNI">
               </div>
             </div>
           </div>
@@ -52,19 +52,19 @@
             </button>
             <div class="row address-info" *ngIf="showAddressInfo">
               <div class="col-md-6 input-group">
-                <input type="text" id="direccion"placeholder="Dirección">
+                <input type="text" id="direccion" [(ngModel)]="customerData.nombres" placeholder="Dirección">
               </div>
               <div class="col-md-6 input-group">
-                <input type="text" id="informacion_adicional" placeholder="Información adicional">
+                <input type="text" id="informacion_adicional" [(ngModel)]="customerData.nombres" placeholder="Información adicional">
               </div>
               <div class="col-md-6 input-group">
-                <input type="text" id="departamento"  placeholder="Departamento">
+                <input type="text" id="departamento" [(ngModel)]="customerData.custDepartment"  placeholder="Departamento">
               </div>
               <div class="col-md-6 input-group">
-                <input type="text" id="provincia"  placeholder="Provincia">
+                <input type="text" id="provincia" [(ngModel)]="customerData.custProvince"  placeholder="Provincia">
               </div>
               <div class="col-md-6 input-group">
-                <input type="text" id="distrito"  placeholder="Distrito">
+                <input type="text" id="distrito" [(ngModel)]="customerData.custCity"  placeholder="Distrito">
               </div>
             </div>
           </div>
@@ -95,10 +95,11 @@
               <div class="mini-product-details">
                 <h5>{{ item.name }}</h5>
                 <p>Cantidad: {{ item.quantity || 1 }}</p>
-                <p>Precio: {{ item.price | currency }}"></p>
+                <p>Precio: {{ item.price | currency }}</p>
               </div>
             </div>
           </div>
+          <button class="btn btn-primary" (click)="SubmitOrder()" >Guardar</button>
         </div>
       </div>
     </div>

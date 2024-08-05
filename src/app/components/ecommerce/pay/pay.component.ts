@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CustomerService } from 'src/app/services/customers.service';
+import { OrderService } from 'src/app/services/order.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { AuthService } from '../../../components/auth/service/auth.service';
 import { ProductModel } from '../../../models/product.model';
@@ -36,7 +37,8 @@ export class PayComponent implements OnInit, OnDestroy {
   isEditingUsername = false;
   isEditingEmail = false;
   showAddressInfo = false;  // New property
-
+  cart: any[] = [];
+  customerData:any
 
   additionalInfo = {
     nombres: '',
@@ -50,7 +52,8 @@ export class PayComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private sharedDataService: SharedDataService,
     private categoriaService: CategoriaService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private orderService: OrderService
   ) {
     this.numberForm = this.fb.group({
       idcategoria: [0]
@@ -67,13 +70,16 @@ export class PayComponent implements OnInit, OnDestroy {
     this.groupCartItems();
     this.cartItemCount = this.cartService.getCartSize();
     this.calculateTotalAmount();
+    
 
     this.sharedDataService.user$.subscribe((user) => {
       this.user = user;
       if (this.user) {
         this.customerService.getUser(this.user.username).subscribe((response: any) => {
           if (response && response.data && response.data.length > 0) {
-            this.userEmail = response.data[0].custEmail;  // Asignar el correo obtenido
+            this.userEmail = response.data[0].custEmail;
+            this.getCustomer();
+            console.log(this.customerData);  // Asignar el correo obtenido
           }
         });
       }
@@ -84,6 +90,7 @@ export class PayComponent implements OnInit, OnDestroy {
     }
 
     console.log(this.cartItems);
+    
   }
 
   ngOnDestroy(): void {}
@@ -165,4 +172,62 @@ export class PayComponent implements OnInit, OnDestroy {
     this.showAddressInfo = !this.showAddressInfo;
   }
 
+  getCustomer(){
+    this.customerService.getByEmail(this.userEmail).subscribe((customerData: any) => {
+      this.customerData = customerData.data;
+      console.log(customerData);
+    });
+  }
+
+  SubmitOrder() {
+    const cart = localStorage.getItem('cart');
+    if (cart) {
+      this.cart = JSON.parse(cart);
+      
+      this.customerService.getByEmail(this.userEmail).subscribe((customerData: any) => {
+        const customerId = customerData.data.id; // Obtener el ID del cliente
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().split('T')[0];
+    
+        const data = {
+            ord_date: formattedDate,
+            ord_total: this.totalAmount,
+            customer: {
+                id: customerId
+            }
+        };
+
+        this.orderService.create(data).subscribe(
+          (response: any) => {
+              console.log('Respuesta de la creación de la orden:', response);
+              let orderDetails = this.cart.map((item: any) => ({
+                "odt_amount": item.quantity, 
+                "odt_price": item.price,
+                "odt_status": 1,
+                "odt_description": "Ninguno",
+                "order": {
+                    "ord_id": response.data.ord_id
+                },
+                "product": {
+                    "id": item.id
+                }
+              }));
+              this.orderService.createDetails(orderDetails).subscribe(
+                (response: any) => {
+                    console.log('Respuesta de la creación del detalle de orden:', response);
+                    localStorage.removeItem('cart');
+                    window.location.href = '/ecommers';
+                },
+                (error: any) => {
+                    console.error('Error al crear el detalle de la orden:', error);
+                }
+              );
+          },
+          (error: any) => {
+              console.error('Error al crear la orden:', error);
+          }
+        );        
+      });
+    }
+  }
 }

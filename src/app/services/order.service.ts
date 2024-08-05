@@ -20,6 +20,14 @@ export class OrderService {
     }
 
     detail(id:any) {
-        return this.http.get(this.apiUrl+'/detail/'+id);
+        return this.http.get(environment.apiUrl+"/api/orderdetalle/order/"+id);
+    }
+
+    create(data:any){
+        return this.http.post(this.apiUrl, data);
+    }
+
+    createDetails(data:any){
+        return this.http.post(environment.apiUrl+"/api/orderdetalle", data);
     }
 }
