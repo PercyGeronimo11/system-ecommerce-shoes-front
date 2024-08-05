@@ -1,29 +1,46 @@
 <app-base-layout>
-  <div class="container-fluid">
-          <div *ngIf="product" class="product-detail-container">
-                <div class="product-image">
-                  <img [src]="product.proUrlImage" alt="{{ product.proName }}" class="img-fluid">
-                </div>
-                <div class="product-info">
-                  <h1>{{ product.proName }}</h1>
-                  <p>{{ product.proDescription }}</p>
-                  <div class="sizes-container">
-                    <span *ngFor="let size of [30, 36, 39, 40]; let i = index"
-                          class="size-circle"
-                          [ngClass]="{'active': selectedSize === size}"
-                          (click)="selectSize(size)">
-                      {{ size }}
-                    </span>
-                  </div>
-                  <p>Precio: S/.{{ product.proUnitPrice }}</p>
-                  <div class="product-add-to-cart">
-                    <button class="btn btn-primary" [disabled]="!selectedSize" (click)="addToCart(product)">Agregar al carrito</button>
-                  </div>
-
-                  <div *ngIf="!selectedSize">
-                    Debe seleccionar una talla antes de agregar al carrito.
-                  </div>
-                </div>
-          </div>
+  <body>
+    <div id="loading" class="loading-overlay d-none">
+      <div class="spinner"></div>
+      <div class="loading-message">Agregando producto...</div>
     </div>
+    <div class="container-fluid">
+    
+      <div *ngIf="product" class="product-detail-container">
+        <div class="product-image">
+          <img [src]="product.proUrlImage" alt="{{ product.proName }}" class="img-fluid">
+        </div>
+        <div class="product-info">
+          <h1>{{ product.proName }}</h1>
+          <p>{{ product.proDescription }}</p>
+          <div class="sizes-container">
+            <span *ngFor="let size of [30, 36, 39, 40]; let i = index"
+                  class="size-circle"
+                  [ngClass]="{'active': selectedSize === size}"
+                  (click)="selectSize(size)">
+              {{ size }}
+            </span>
+          </div>
+          <p>Precio: S/.{{ product.proUnitPrice }}</p>
+          <div class="product-add-to-cart">
+            <button class="btn btn-primary" [disabled]="!selectedSize" (click)="addToCart(product)">Agregar al carrito</button>
+          </div>
+      
+          <div *ngIf="!selectedSize">
+            Debe seleccionar una talla antes de agregar al carrito.
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </body>
 </app-base-layout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    if (localStorage.getItem('addingProduct') === 'true') {
+      document.getElementById('loading').classList.remove('d-none');
+      localStorage.removeItem('addingProduct');
+    }
+  });
+</script>

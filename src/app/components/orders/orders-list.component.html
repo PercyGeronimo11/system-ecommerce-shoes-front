@@ -19,8 +19,8 @@
             <tr *ngFor="let order of orders; let i = index">
               <th scope="row">{{ i + 1 }}</th>
               <td>{{ order.customer.custFirstName }}</td>
-              <td>{{ order.ordDate }}</td>
-              <td>S/{{ order.ordTotal }}</td>
+              <td>{{ order.ord_date }}</td>
+              <td>S/{{ order.ord_total }}</td>
               <td>
                 <button (click)="selectOrder(order)" class="btn btn-success mb-3 me-2">
                   <i class="fa fa-eye"></i>

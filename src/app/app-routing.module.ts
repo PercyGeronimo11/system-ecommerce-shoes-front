@@ -118,11 +118,12 @@ const routes: Routes = [
         path: 'login',
         loadComponent: () => import('./components/auth/sign-in/sign-in.component')
       }
+  
     ]
   },
   {
     path: 'ecommers',
-    loadComponent: () => import('./components/ecommerce/base-layout.component').then(p => p.EcommercePlantilla)
+    loadComponent: () => import('./components/ecommerce/home/home.component').then(p => p.HomeComponent)
   } // Ruta independiente para EcommerceComponent
   ,{
     path: 'ecommersCreate',
@@ -130,11 +131,16 @@ const routes: Routes = [
   }
   ,{
     path: 'ecommersCliente',
-    loadComponent: () => import('./components/ecommerce/users-eco-create/users-eco-create.component').then(e => e.UsersEcoCreateComponent)
+    loadComponent: () => import('./components/ecommerce/users-eco-create/users-eco-create.component').then(ec => ec.UsersEcoCreateComponent)
   }  ,{
     path: 'cart',
-    loadComponent: () => import('./components/ecommerce/cart/cart.component').then(e => e.CartComponent)
+    loadComponent: () => import('./components/ecommerce/cart/cart.component').then(c => c.CartComponent)
+  },
+  {
+    path: 'pay',
+    loadComponent: () => import('./components/ecommerce/pay/pay.component').then(p => p.PayComponent)
   }
+ 
 ];
 
 @NgModule({

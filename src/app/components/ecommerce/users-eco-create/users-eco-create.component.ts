@@ -1,13 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ecommerceService } from '../../../services/ecomer.service';
-import { EcommercePlantilla } from '../base-layout.component';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { ecommerceService } from '../../../services/ecomer.service';
 import { SharedDataService } from '../../../services/shared-data.service';
 import { AuthService } from '../../auth/service/auth.service';
+import { EcommercePlantilla } from '../base-layout.component';
+
 @Component({
   selector: 'app-users-eco-create',
   standalone: true,
@@ -28,7 +28,6 @@ export class UsersEcoCreateComponent implements OnInit {
     private sharedServ: SharedDataService,
     private authService: AuthService
   ) {
-
     this.customerForm = this.fb.group({
       custFirstName: ['', Validators.required],
       custLastName: ['', Validators.required],
@@ -82,18 +81,21 @@ export class UsersEcoCreateComponent implements OnInit {
           email: formValue.custEmail,
           password: formValue.custPassword
         });
+
         if (this.loginForm.valid) {
           this.authService.loginCustomer(this.loginForm.value).subscribe(
             (lgresp: any) => {
               localStorage.setItem('tokencustomer', lgresp.token);
               localStorage.setItem('usernamecustomer', lgresp.username);
               localStorage.setItem('rolecustomer', lgresp.rol);
+              localStorage.setItem('idcustomer', lgresp.id); // Guardar el ID del usuario
               // Actualizar el servicio con el nuevo usuario
               this.sharedServ.updateUser({
                 username: lgresp.username,
-                role: lgresp.rol
+                role: lgresp.rol,
+                id: lgresp.id // Actualizar el servicio con el ID
               });
-              this.router.navigate(['/ecommers']);
+              window.location.href = '/ecommers';
             },
             (error) => {
               console.error('Error al iniciar sesión después de crear el cliente:', error);
@@ -110,5 +112,4 @@ export class UsersEcoCreateComponent implements OnInit {
       }
     );
   }
-
 }

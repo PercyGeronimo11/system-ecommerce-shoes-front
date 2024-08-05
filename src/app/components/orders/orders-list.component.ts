@@ -38,14 +38,15 @@ export class OrdersListModule implements OnInit {
   }
 
   selectOrder(order: any) {
-    this.orderService.detail(order.id).subscribe((resp: any) => {
+    console.log(order.ord_id);
+    this.orderService.detail(order.ord_id).subscribe((resp: any) => {
       if (resp && resp.data && resp.data.length > 0) {
         this.detailOrders = resp.data.map((orderDetail: any) => ({
           customer: orderDetail.order.customer.usuario.name,
           producto: orderDetail.product.proName,
-          quantity: orderDetail.detQuantity,
-          price: orderDetail.detPrice,
-          description: orderDetail.detDescription
+          quantity: orderDetail.odt_amount,
+          price: orderDetail.odt_price,
+          description: orderDetail.odt_description
         }));
         
         this.modalOrderDetail = true;

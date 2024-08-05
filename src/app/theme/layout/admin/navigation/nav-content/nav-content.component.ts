@@ -35,7 +35,7 @@ export class NavContentComponent implements OnInit {
 
   // life cycle event
   ngOnInit() {
-    const role = this.authService.getRole();
+    const role = localStorage.getItem('role');
     this.navigations = NavigationItems.map(group => ({
       ...group,
       children: group.children?.filter(item => this.shouldShowItem(item, role))
@@ -46,10 +46,11 @@ export class NavContentComponent implements OnInit {
   }
 
   shouldShowItem(item: NavigationItem, role: string | null): boolean {
-    if (item.id === 'user' && role !== 'Administrador') {
+    if (item.id == 'user' && role != 'Administrador') {
       return false;
+    }else{
+      return true;
     }
-    return true;
   }
 
   // public method

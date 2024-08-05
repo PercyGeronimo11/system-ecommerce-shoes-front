@@ -1,0 +1,41 @@
+<app-base-layout>
+  <div class="col-12">
+    <div id="carouselExampleIndicators" class="carousel slide mb-4" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li *ngFor="let slide of slides; let i = index" [attr.data-target]="'#carouselExampleIndicators'"
+          [attr.data-slide-to]="i" [class.active]="i === currentSlide"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div *ngFor="let slide of slides; let i = index" class="carousel-item"
+          [class.active]="i === currentSlide">
+          <img [src]="slide.image" class="d-block w-100" [alt]="slide.caption">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>{{slide.caption}}</h5>
+            <p>{{slide.description}}</p>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#" role="button" (click)="previousSlide($event)">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#" role="button" (click)="nextSlide($event)">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+  <div class="col-md-4 mb-4" *ngFor="let product of products.slice(0, 6); let i = index">
+    <div class="product-card card h-100" (click)="viewProductDetail(product)">
+      <img [src]="product.proUrlImage" class="card-img-top product-image" alt="Producto">
+      <div class="card-body d-flex flex-column">
+        <p class="card-title" style="font-size: large;">{{ product.proName }}</p>
+        <p class="card-text" style="font-size: large;">{{ product.proDescription }}</p>
+        <p class="price mt-auto" style="font-size:x-large;">S/.{{ product.proUnitPrice }}</p>
+        <button class="btn btn-secondary mt-3">
+          <i class="fas fa-shopping-cart"></i> Agregar
+        </button>
+      </div>
+    </div>
+  </div>
+</app-base-layout>
