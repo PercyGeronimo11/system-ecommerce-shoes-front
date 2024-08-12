@@ -38,7 +38,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   cartItemCount: number = 0;
   userSubscription: Subscription | undefined;
   currentRoute: string = '';
-  isRecomendations: boolean = false; // Flag para controlar recomendados de ML
+  isRecomendations: boolean = false;
+  isTitleEcommerce:boolean=false;
 
   constructor(
     private fb: FormBuilder,
@@ -78,10 +79,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(params => {
       if (params['recommendations']) {
         this.getRecommendedProducts();
-        this.isRecomendations=true;
+        this.isTitleEcommerce=true;
       } else {
         this.getProducts();
-        this.isRecomendations=false;
+        this.isTitleEcommerce=false;
       }
     });
 
@@ -94,10 +95,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadProducts(): void {
     if (this.isRecomendations) {
       this.getRecommendedProducts();
-      this.isRecomendations=true;
+      this.isTitleEcommerce=true;
     } else {
       this.getProducts();
-      this.isRecomendations=false;
     }
   }
 
@@ -105,6 +105,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.categoria = this.numberForm.get('idcategoria')?.value || 0;
     console.log('Selected category:', this.categoria);
     this.getProducts(); 
+    this.isTitleEcommerce=false;
   }
 
   logoutcustomer(): void {
