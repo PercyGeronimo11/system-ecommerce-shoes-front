@@ -64,7 +64,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.currentRoute = event.url;
-        this.loadProducts();
+        //this.loadProducts();
+        this.route.queryParams.subscribe(params => {
+          if (params['recommendations']) {
+            this.getRecommendedProducts();
+            this.isTitleEcommerce=true;
+          } else {
+            this.getProducts();
+            this.isTitleEcommerce=false;
+          }
+        });
       }
     });
   }
