@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   cartItemCount: number = 0;
   userSubscription: Subscription | undefined;
   currentRoute: string = '';
-  showRecommendations: boolean = false; // Flag para controlar la vista
+  isRecomendations: boolean = false; // Flag para controlar recomendados de ML
 
   constructor(
     private fb: FormBuilder,
@@ -54,14 +54,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       idcategoria: [0]
     });
 
-    // Load categories
     this.categoriaService.list().subscribe((resp: any) => {
       this.categories = resp.data;
       console.log(this.categories);
     });
 
     this.startAutoSlide();
-    // Detect route changes
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.currentRoute = event.url;
@@ -71,21 +69,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Initialize login response
     this.loginResponse = 'Ingresar';
     console.log(localStorage.getItem('usernamecustomer'));
     if(localStorage.getItem('usernamecustomer')!=null){
       this.loginResponse=localStorage.getItem('usernamecustomer');
     }
 
-    //this.getProducts();
-    //this.getRecommendedProducts()
-
     this.route.queryParams.subscribe(params => {
       if (params['recommendations']) {
         this.getRecommendedProducts();
+        this.isRecomendations=true;
       } else {
         this.getProducts();
+        this.isRecomendations=false;
       }
     });
 
@@ -96,17 +92,19 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
   loadProducts(): void {
-    if (this.showRecommendations) {
+    if (this.isRecomendations) {
       this.getRecommendedProducts();
+      this.isRecomendations=true;
     } else {
       this.getProducts();
+      this.isRecomendations=false;
     }
   }
 
   onSubmit(): void {
     this.categoria = this.numberForm.get('idcategoria')?.value || 0;
     console.log('Selected category:', this.categoria);
-    this.getProducts(); // Refetch products based on selected category
+    this.getProducts(); 
   }
 
   logoutcustomer(): void {
