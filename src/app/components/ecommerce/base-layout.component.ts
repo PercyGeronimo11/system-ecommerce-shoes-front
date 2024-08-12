@@ -64,12 +64,8 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
     if(localStorage.getItem('usernamecustomer')!=null){
       this.loginResponse=localStorage.getItem('usernamecustomer');
     }
-    /* this.userSubscription = this.sharedDataService.user$.subscribe(user => {
-      this.loginResponse = user ? user.username : 'Ingresar';
-    }); */
 
-    this.getProducts();
-
+    this.getRecommendedProducts();
 
     this.cartService.getCartItemCount().subscribe(count => {
       this.cartItemCount = count;
@@ -79,7 +75,7 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
   onSubmit(): void {
     this.categoria = this.numberForm.get('idcategoria')?.value || 0;
     console.log('Selected category:', this.categoria);
-    this.getProducts(); // Refetch products based on selected category
+    this.getRecommendedProducts();
   }
 
   logoutcustomer(): void {
@@ -105,6 +101,20 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
     });
   }
 
+  getRecommendedProducts(): void {
+    const idUser = localStorage.getItem('idUserCustomer');
+    if (idUser) {
+      this.productService.getProductsRecomendationsByIdUserService(idUser).subscribe(
+        (response: any) => {
+          this.products = response.data.content;
+        },
+        error => {
+          this.error = error.message;
+          console.error('Error al cargar productos recomendados:', error);
+        }
+      );
+    }
+  }
   ngOnDestroy() {
     clearInterval(this.slideInterval);
   }

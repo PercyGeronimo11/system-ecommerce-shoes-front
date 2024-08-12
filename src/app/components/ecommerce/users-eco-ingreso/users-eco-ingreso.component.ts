@@ -42,7 +42,8 @@ export class EcommersIngresoModule implements OnInit {
           localStorage.setItem('tokencustomer', Resp.token);
           localStorage.setItem('usernamecustomer', Resp.username);
           localStorage.setItem('rolecustomer', Resp.rol);
-          localStorage.setItem('emailcustomer', Resp.email); // Guardar el correo del usuario
+          localStorage.setItem('emailcustomer', Resp.email);
+          localStorage.setItem('idUserCustomer', Resp.usuario.id);
           this.sharedServ.updateUser({
             username: Resp.username,
             role: Resp.rol

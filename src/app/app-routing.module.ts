@@ -124,8 +124,8 @@ const routes: Routes = [
   {
     path: 'ecommers',
     loadComponent: () => import('./components/ecommerce/home/home.component').then(p => p.HomeComponent)
-  } // Ruta independiente para EcommerceComponent
-  ,{
+  },
+  {
     path: 'ecommersCreate',
     loadComponent: () => import('./components/ecommerce/users-eco-ingreso/users-eco-ingreso.component').then(e => e.EcommersIngresoModule)
   }

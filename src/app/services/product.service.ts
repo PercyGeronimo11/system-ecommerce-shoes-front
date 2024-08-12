@@ -9,7 +9,8 @@ import { environment } from 'src/environments/environment';
 })
 export class ProductService {
 
-  private apiUrl = environment.apiUrl +'/product'; // Replace with your actual API URL
+  private apiUrl = environment.apiUrl +'/product';
+  private apiUrlMl = environment.apiUrlMl +'/product';
 
   constructor(private http: HttpClient) { }
 
@@ -17,11 +18,13 @@ export class ProductService {
     return this.http.get<any>(`${this.apiUrl}/list?search`)
   }
 
+  getProductsRecomendationsByIdUserService(idUser: string) {
+    return this.http.get<any>(`${this.apiUrlMl}/recommendations/${idUser}`)
+  }
 
   getProductsByCategory(idcategoria: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/listaxcate/${idcategoria}`);
   }
-
 
 
   getProductById(id: string) {

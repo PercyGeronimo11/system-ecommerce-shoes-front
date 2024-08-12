@@ -77,6 +77,9 @@
             <li class="nav-item ms-3">
               <a class="nav-link" [routerLink]="['/ecommers']">Nosotros</a>
             </li>
+            <li class="nav-item ms-3">
+              <a class="nav-link" [routerLink]="['/ecommers']" [queryParams]="{ recommendations: true }">Recomendaciones</a>
+            </li>
             <li class="nav-item ms-3 dropdown">
               <form [formGroup]="numberForm" (ngSubmit)="onSubmit()">
                 <select class="form-control me-2" formControlName="idcategoria">
@@ -95,13 +98,9 @@
         </div>
       </div>
     </nav>
-
     <section class="row justify-content-center">
-      <!-- contenido dinámico -->
-      <ng-content>
-        
+      <ng-content> 
       </ng-content>
-      <!-- Fin de contenido -->
     </section>
     <br>
     <footer class="container-fluid bg-black text-center text-white">

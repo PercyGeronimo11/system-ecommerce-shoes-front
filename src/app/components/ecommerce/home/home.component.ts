@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule,NavigationEnd, ActivatedRoute } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { AuthService } from '../../../components/auth/service/auth.service';
@@ -15,13 +15,14 @@ import { EcommercePlantilla } from '../base-layout.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule,EcommercePlantilla],
+  imports: [RouterModule, CommonModule, SharedModule, EcommercePlantilla],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
   loginResponse: any;
   products: ProductModel[] = [];
+  recommendedProducts: ProductModel[] = [];
   categories: any[] = [];
   NameCate: string = '';
   isLoading = false;
@@ -36,6 +37,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   slideInterval: any;
   cartItemCount: number = 0;
   userSubscription: Subscription | undefined;
+  currentRoute: string = '';
+  showRecommendations: boolean = false; // Flag para controlar la vista
 
   constructor(
     private fb: FormBuilder,
@@ -44,7 +47,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private sharedDataService: SharedDataService,
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.numberForm = this.fb.group({
       idcategoria: [0]
@@ -57,6 +61,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
 
     this.startAutoSlide();
+    // Detect route changes
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentRoute = event.url;
+        this.loadProducts();
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -67,12 +78,29 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.loginResponse=localStorage.getItem('usernamecustomer');
     }
 
-    this.getProducts();
+    //this.getProducts();
+    //this.getRecommendedProducts()
 
-    // Subscribe to cart item count
+    this.route.queryParams.subscribe(params => {
+      if (params['recommendations']) {
+        this.getRecommendedProducts();
+      } else {
+        this.getProducts();
+      }
+    });
+
     this.cartService.getCartItemCount().subscribe(count => {
       this.cartItemCount = count;
     });
+  }
+
+
+  loadProducts(): void {
+    if (this.showRecommendations) {
+      this.getRecommendedProducts();
+    } else {
+      this.getProducts();
+    }
   }
 
   onSubmit(): void {
@@ -87,10 +115,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getProducts(): void {
     this.isLoading = true;
-    const fetchProducts = this.categoria === 0 
-      ? this.productService.getProducts() 
+    const fetchProducts = this.categoria === 0
+      ? this.productService.getProducts()
       : this.productService.getProductsByCategory(this.categoria);
-
     fetchProducts.subscribe((response: any) => {
       this.products = response.data.content;
       this.isLoading = false;
@@ -101,6 +128,17 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.isLoading = false;
       console.error("Error al cargar productos:", error);
     });
+  }
+
+  getRecommendedProducts(): void {
+    const idUser = localStorage.getItem('idUserCustomer');
+    if (idUser) {
+      this.productService.getProductsRecomendationsByIdUserService(idUser).subscribe((response: any) => {
+        this.products = response.data.content;
+      }, error => {
+        console.error('Error al cargar productos recomendados:', error);
+      });
+    }
   }
 
   ngOnDestroy() {
