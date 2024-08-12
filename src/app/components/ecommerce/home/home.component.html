@@ -25,6 +25,11 @@
       </a>
     </div>
   </div>
+  <div class="text-center mb-4">
+    <h2 [ngClass]="{'text-primary': isRecomendations, 'text-secondary': !isRecomendations}">
+      {{ isRecomendations ? 'PRODUCTOS RECOMENDADOS' : 'PRODUCTOS EN GENERAL' }}
+    </h2>
+  </div>
   <div class="col-md-4 mb-4" *ngFor="let product of products.slice(0, 9); let i = index">
     <div class="product-card card h-100" (click)="viewProductDetail(product)">
       <img [src]="product.proUrlImage" class="card-img-top product-image" alt="Producto">
