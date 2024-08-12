@@ -6,71 +6,220 @@
     </div>
     <div class="container-fluid">
       <div class="row">
+        <!-- Contenedor principal de las secciones -->
         <div class="col-lg-7 cart-container">
-          <!-- Contact Info Section -->
-          <div class="contact-info-container">
-            <button (click)="toggleUserInfo()" class="toggle-button">
-              Mostrar información de contacto
-              <i class="fa fa-chevron-down" [ngClass]="{'rotate': showUserInfo}"></i>
-            </button>
-            <div *ngIf="user">
-              <div class="row user-info" *ngIf="showUserInfo">
-                <div class="col-md-6 input-group">
-                  <input type="text" id="username" [value]="user.username" [disabled]="!isEditingUsername" placeholder="Nombre">
-                </div>
-                <div class="col-md-6 input-group">
-                  <input type="text" id="email" [value]="userEmail" [disabled]="!isEditingEmail" placeholder="Correo">
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <!-- Personal Info Section -->
-          <div class="personal-info-container">
-            <button (click)="toggleAdditionalInfo()" class="toggle-button">
-              Mostrar datos personales
-              <i class="fa fa-chevron-down" [ngClass]="{'rotate': showAdditionalInfo}"></i>
-            </button>
-            <div class="row additional-info" *ngIf="showAdditionalInfo">
-              <div class="col-md-6 input-group">
-                <input type="text" id="nombres" [(ngModel)]="customerData.custFirstName" placeholder="Nombres">
-              </div>
-              <div class="col-md-6 input-group">
-                <input type="text" id="apellidos" [(ngModel)]="customerData.custLastName" placeholder="Apellidos">
-              </div>
-              <div class="col-md-6 input-group">
-                <input type="text" id="dni" [(ngModel)]="customerData.custDni" placeholder="DNI">
-              </div>
-            </div>
-          </div>
-
-          <!-- Address Info Section -->
-          <div class="address-info-container">
-            <button (click)="toggleAddressInfo()" class="toggle-button">
-              Mostrar información de dirección
-              <i class="fa fa-chevron-down" [ngClass]="{'rotate': showAddressInfo}"></i>
-            </button>
-            <div class="row address-info" *ngIf="showAddressInfo">
-              <div class="col-md-6 input-group">
-                <input type="text" id="direccion" [(ngModel)]="customerData.nombres" placeholder="Dirección">
-              </div>
-              <div class="col-md-6 input-group">
-                <input type="text" id="informacion_adicional" [(ngModel)]="customerData.nombres" placeholder="Información adicional">
-              </div>
-              <div class="col-md-6 input-group">
-                <input type="text" id="departamento" [(ngModel)]="customerData.custDepartment"  placeholder="Departamento">
-              </div>
-              <div class="col-md-6 input-group">
-                <input type="text" id="provincia" [(ngModel)]="customerData.custProvince"  placeholder="Provincia">
-              </div>
-              <div class="col-md-6 input-group">
-                <input type="text" id="distrito" [(ngModel)]="customerData.custCity"  placeholder="Distrito">
-              </div>
-            </div>
-          </div>
+<!-- Div Contacto -->
+<div class="section-container">
+  <div class="section-header" (click)="toggleSection('contact')">
+    <h6>Contacto</h6>
+  </div>
+  <div *ngIf="showContact" class="section-content">
+    <div *ngIf="user">
+      <div class="row user-info">
+        <div class="col-md-6 detail-group">
+          <label for="custCellphone">Celular:</label>
+          <input type="text" id="custCellphone" [(ngModel)]="customerData.custCellphone" class="form-control" disabled="">
+          <span class="check-icon">&#10003;</span> <!-- Check verde -->
         </div>
+        <div class="col-md-6 detail-group">
+          <label for="userEmail">Correo:</label>
+          <input type="text" id="userEmail" [(ngModel)]="userEmail" class="form-control" disabled>
+          <span class="check-icon">&#10003;</span> <!-- Check verde -->
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-ok" (click)="openNextSection('names')">OK</button>
+  </div>
+</div>
+
+<!-- Div Nombres -->
+<div class="section-container">
+  <div class="section-header" (click)="toggleSection('names')">
+    <h6>Nombres</h6>
+  </div>
+  <div *ngIf="showNames" class="section-content">
+    <div class="row additional-info">
+      <div class="col-md-6 detail-group">
+        <label for="custFirstName">Nombres:</label>
+        <input type="text" id="custFirstName" [(ngModel)]="customerData.custFirstName" class="form-control" disabled>
+        <span class="check-icon">&#10003;</span> <!-- Check verde -->
+      </div>
+      <div class="col-md-6 detail-group">
+        <label for="custLastName">Apellidos:</label>
+        <input type="text" id="custLastName" [(ngModel)]="customerData.custLastName" class="form-control" disabled>
+        <span class="check-icon">&#10003;</span> <!-- Check verde -->
+      </div>
+      <div class="col-md-6 detail-group">
+        <label for="custDni">DNI:</label>
+        <input type="text" id="custDni" [(ngModel)]="customerData.custDni" class="form-control" disabled>
+        <span class="check-icon">&#10003;</span> <!-- Check verde -->
+      </div>
+    </div>
+    <button class="btn btn-ok" (click)="openNextSection('address')">OK</button>
+  </div>
+</div>
+
+
+      <!-- Div Dirección -->
+<div class="section-container">
+  <div class="section-header" (click)="toggleSection('address')">
+    <h6>Dirección</h6>
+  </div>
+  <div *ngIf="showAddress" class="section-content">
+    <div class="row address-info">
+      <div class="col-md-6 detail-group">
+        <label for="nombres">Dirección:</label>
+        <input type="text" id="nombres" formControlName="nombres" class="form-control">
+      </div>
+      <div class="col-md-6 detail-group">
+        <label for="additionalInfo">Información adicional:</label>
+        <input type="text" id="additionalInfo" formControlName="additionalInfo" class="form-control">
+      </div>
+      <div class="col-md-6 detail-group">
+        <label for="custDepartment">Departamento:</label>
+        <input type="text" id="additionalInfo" formControlName="custDepartment"  class="form-control">
+      </div>
+      <div class="col-md-6 detail-group">
+        <label for="custProvince">Provincia:</label>
+        <input type="text" id="custProvince" formControlName="custProvince" class="form-control">
+      </div>
+      <div class="col-md-6 detail-group">
+        <label for="custCity">Distrito:</label>
+        <input type="text" id="custCity" formControlName="custCity" class="form-control">
+      </div>
+    </div>
+    <button class="btn btn-ok" (click)="openNextSection('address')">OK</button>
+
+  </div>
+</div>
+
+<!-- Div Envío -->
+<div class="section-container">
+  <div class="section-header" (click)="toggleSection('shipping')">
+    <h6>Envío</h6>
+  </div>
+  <div *ngIf="showShipping" class="section-content">
+    <div class="row shipping-info">
+      <div class="col-md-12 detail-group">
+        <label for="shippingDays">Días para la entrega:</label>
+        <input type="text" id="shippingDays" formControlName="shippingDays" class="form-control">
+        <span class="check-icon">&#10003;</span> <!-- Check verde -->
+      </div>
+      <div class="col-md-12 detail-group">
+        <div class="free-shipping-info">
+          <i class="fa fa-truck"></i> Envío Gratis
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-ok" (click)="openNextSection('address')">OK</button>
+
+  </div>
+</div>
+
+
+
+      <!-- Div Pago -->
+<div class="section-container">
+  <div class="section-header" (click)="toggleSection('payment')">
+    <h6>Pago</h6>
+  </div>
+  <div *ngIf="showPayment" class="section-content">
+    <div class="row payment-methods">
+      <!-- Método de Pago con Yape -->
+      <div class="col-md-6 payment-option" (click)="openPaymentModal('yape')">
+        <div class="payment-icon">
+          <i class="fa fa-mobile"></i>
+        </div>
+        <div class="payment-details">
+          <h5>Yape</h5>
+          <p>Paga con Yape</p>
+        </div>
+      </div>
+
+      <!-- Método de Pago con BCP Cuenta -->
+      <div class="col-md-6 payment-option" (click)="openPaymentModal('bcp')">
+        <div class="payment-icon">
+          <i class="fa fa-credit-card"></i>
+        </div>
+        <div class="payment-details">
+          <h5>BCP Cuenta</h5>
+          <p>Transfiere a tu cuenta BCP</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Modal para el Pago con Yape -->
+<!-- Modal para el Pago con Yape -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="yapeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Pago con Yape</h5>
+          <button type="button" class="close" (click)="closePaymentModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Número de Yape: 987654321</p>
+          <img *ngIf="voucherUploaded" [src]="voucherPreview" alt="QR Yape" class="qr-image">
+          <p>Total a pagar: {{ totalAmount | currency }}</p>
+          <p>Tiempo restante: <span id="timer-yape">{{ formatTime(countdown) }}</span></p> <!-- Timer -->
+        </div>
+        <label for="voucher" class="custom-file-upload" style="background-color: black; color: white; padding: 10px 20px; border-radius: 5px;">
+          <i class="fa fa-cloud-upload"></i> Subir Voucher
+        </label>
+        <div class="modal-footer" style="justify-content: center; flex-direction: column;">
+          <div class="voucher-upload" *ngIf="!voucherUploaded" style="margin-top: 20px;">
         
+            <input type="file" id="voucher" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+          </div>
+          <button *ngIf="voucherUploaded" type="button" class="btn btn-primary" (click)="SubmitOrder()" style="background-color: black; color: white; margin-top: 20px; text-align: center;">
+            <i class="fa fa-check"></i> Finalizar Compra
+          </button>
+         
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para el Pago con BCP -->
+<div class="modal" id="bcpModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Pago con BCP</h5>
+        <button type="button" class="close" (click)="closePaymentModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Número de cuenta BCP: 123-456789-00</p>
+        <img *ngIf="voucherUploaded" [src]="voucherPreview" alt="Voucher Preview" class="voucher-preview">
+        <p>Total a pagar: {{ totalAmount | currency }}</p>
+        <p>Tiempo restante: <span id="timer-bcp">{{ formatTime(countdown) }}</span></p> <!-- Timer -->
+      </div>
+      <div class="modal-footer" style="justify-content: center; flex-direction: column;">
+        <div class="voucher-upload" *ngIf="!voucherUploaded" style="margin-top: 20px;">
+          <label for="voucher" class="custom-file-upload" style="background-color: black; color: white; padding: 10px 20px; border-radius: 5px;">
+            <i class="fa fa-cloud-upload"></i> Subir Voucher
+          </label>
+          <input type="file" id="voucher" (change)="onFileSelected($event)" accept="image/*" style="display: none;">
+        </div>
+        <button *ngIf="voucherUploaded" type="button" class="btn btn-primary" (click)="SubmitOrder()" style="background-color: black; color: white; margin-top: 20px; text-align: center;">
+          <i class="fa fa-check"></i> Finalizar Compra
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  </div>
+
+
         <div class="col-lg-4 row sales-details">
+          <!-- Resumen del Pedido -->
           <div class="summary">
             <div class="summary-title">Resumen del Pedido</div>
             <div class="summary-item">
@@ -99,18 +248,8 @@
               </div>
             </div>
           </div>
-          <div class="voucher-upload">
-            <label for="voucher" class="custom-file-upload">
-              <i class="fa fa-cloud-upload"></i> Subir Voucher
-            </label>
-            <input type="file" id="voucher" (change)="onFileSelected($event)" accept="image/*">
-            <div *ngIf="voucherPreview" class="voucher-preview">
-              <img [src]="voucherPreview" alt="Voucher Preview">
-            </div>
-          </div>
-          <button class="btn btn-primary" (click)="SubmitOrder()">Guardar</button>
+          
         </div>
-        
       </div>
     </div>
   </body>
