@@ -9,8 +9,11 @@ import { AuthService } from '../../../components/auth/service/auth.service';
 import { ProductModel } from '../../../models/product.model';
 import { CartService } from '../../../services/cart.service';
 import { CategoriaService } from '../../../services/categories.service';
+import { DepartmentService } from '../../../services/department.service';
+
 import { SharedDataService } from '../../../services/shared-data.service';
 import { EcommercePlantilla } from '../base-layout.component';
+
 
 @Component({
   selector: 'app-pay',
@@ -38,8 +41,20 @@ export class PayComponent implements OnInit, OnDestroy {
   isEditingEmail = false;
   showAddressInfo = false;  // New property
   cart: any[] = [];
+  currentSection: number = 1;
+  countdown: number = 240;
+  intervalId: any;
+  showContact = true;  // El primer div está visible por defecto
+  showNames = false;
+  showAddress = false;
+  showShipping = false;
+  showPayment = false;
   customerData:any
   voucherUploaded: boolean = false;
+  departments: any[] = [];
+  provinces: any[] = [];
+  isEditMode = false;
+
 
 
   additionalInfo = {
@@ -55,7 +70,8 @@ export class PayComponent implements OnInit, OnDestroy {
     private sharedDataService: SharedDataService,
     private categoriaService: CategoriaService,
     private customerService: CustomerService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private departmentService: DepartmentService,
   ) {
     this.numberForm = this.fb.group({
       idcategoria: [0]
@@ -65,14 +81,18 @@ export class PayComponent implements OnInit, OnDestroy {
       this.categories = resp.data;
       console.log(this.categories);
     });
+
+   
+    
   }
+
+
 
   ngOnInit(): void {
     this.cartItems = this.cartService.getCartItems();
     this.groupCartItems();
     this.cartItemCount = this.cartService.getCartSize();
     this.calculateTotalAmount();
-    
 
     this.sharedDataService.user$.subscribe((user) => {
       this.user = user;
@@ -92,9 +112,45 @@ export class PayComponent implements OnInit, OnDestroy {
     }
 
     console.log(this.cartItems);
-    
+
   }
 
+
+
+  toggleSection(section: string): void {
+    switch (section) {
+      case 'contact':
+        this.showContact = !this.showContact;
+        break;
+      case 'names':
+        this.showNames = !this.showNames;
+        break;
+      case 'address':
+        this.showAddress = !this.showAddress;
+        break;
+      case 'shipping':
+        this.showShipping = !this.showShipping;
+        break;     
+        case 'payment':
+          this.showPayment = !this.showPayment;
+          break;   
+    }
+  }
+
+  openNextSection(section: string): void {
+    this.toggleSection(section);
+    if (section === 'names') {
+      this.showContact = false;
+    } else if (section === 'address') {
+      this.showNames = false;
+    }else if (section === 'shipping') {
+      this.showShipping = false;
+    }else if (section === 'payment') {
+      this.showPayment = false;
+    }
+  }
+
+  
   ngOnDestroy(): void {}
 
   groupCartItems() {
@@ -180,7 +236,65 @@ export class PayComponent implements OnInit, OnDestroy {
       console.log(customerData);
     });
   }
+  // Método para abrir el modal de pago
+  openPaymentModal(paymentMethod: string) {
+    const modalOverlay = document.getElementById('modalOverlay');
 
+    if (modalOverlay) {
+      modalOverlay.style.display = 'flex'; // Mostrar el fondo oscuro
+    }
+
+    if (paymentMethod === 'yape') {
+      const yapeModal = document.getElementById('yapeModal');
+      if (yapeModal) {
+        yapeModal.style.display = 'block';
+        this.startCountdown(); // Inicia la cuenta regresiva para Yape
+      }
+    } else if (paymentMethod === 'bcp') {
+      const bcpModal = document.getElementById('bcpModal');
+      if (bcpModal) {
+        bcpModal.style.display = 'block';
+        this.startCountdown(); // Inicia la cuenta regresiva para BCP
+      }
+    }
+  }
+
+  // Método para cerrar el modal de pago
+  closePaymentModal() {
+    clearInterval(this.intervalId); // Detiene la cuenta regresiva
+    const modalOverlay = document.getElementById('modalOverlay');
+    if (modalOverlay) {
+      modalOverlay.style.display = 'none'; // Ocultar el fondo oscuro
+    }
+
+    const yapeModal = document.getElementById('yapeModal');
+    if (yapeModal) {
+      yapeModal.style.display = 'none';
+    }
+
+    const bcpModal = document.getElementById('bcpModal');
+    if (bcpModal) {
+      bcpModal.style.display = 'none';
+    }
+  }
+
+  // Método para iniciar la cuenta regresiva
+  startCountdown() {
+    this.intervalId = setInterval(() => {
+      if (this.countdown > 0) {
+        this.countdown--;
+      } else {
+        this.closePaymentModal();
+      }
+    }, 1000); // Se ejecuta cada segundo
+  }
+
+  // Método para formatear el tiempo restante en minutos y segundos
+  formatTime(time: number): string {
+    const minutes = Math.floor(time / 60);
+    const seconds = time % 60;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
   SubmitOrder() {
     if (!this.voucherUploaded) {
       alert('Por favor, cargue una imagen del voucher antes de guardar.');
@@ -257,5 +371,7 @@ export class PayComponent implements OnInit, OnDestroy {
       reader.readAsDataURL(file);
     }
   }
+
+
   
 }
