@@ -30,4 +30,8 @@ export class OrderService {
     createDetails(data:any){
         return this.http.post(environment.apiUrl+"/api/orderdetalle", data);
     }
+
+    edit(id:any, data:any){
+        return this.http.put(this.apiUrl+"/"+id, data);
+    }
 }

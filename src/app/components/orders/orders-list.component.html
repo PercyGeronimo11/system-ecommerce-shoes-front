@@ -9,7 +9,7 @@
           <thead>
             <tr>
               <th>N°</th>
-              <th>Customer</th>
+              <th>Cliente</th>
               <th>Fecha</th>
               <th>Total</th>
               <th>Opciones</th>
@@ -25,7 +25,7 @@
                 <button (click)="selectOrder(order)" class="btn btn-success mb-3 me-2">
                   <i class="fa fa-eye"></i>
                 </button>
-                <!-- <button (click)="openDeleteModal(order)" class="btn btn-danger mb-3">
+                <!-- <button (click)="openReviewModal(order)" class="btn btn-success mb-3">
                   <i class="fa fa-trash"></i>
                 </button> -->
               </td>
@@ -37,10 +37,10 @@
   </div>
 </div>
 
-<!-- Modal para crear o editar material -->
+
 <div id="orderModal" class="modal" [ngStyle]="{'display': modalOrderDetail ? 'block' : 'none'}">
   <div class="modal-content modal-content-create">
-    <span class="close" (click)="closeMaterialModal()">&times;</span>
+    <span class="close" (click)="closeOrderModal()">&times;</span>
     <h4>Detalle de venta</h4>
     <div class="table-responsive">
       <table class="table table-striped">
@@ -60,5 +60,15 @@
         </tr>
       </table>
     </div>
+  </div>
+</div>
+
+<div id="orderReviewModal" class="modal" [ngStyle]="{'display': modalReviewVisible ? 'block' : 'none'}">
+  <div class="modal-content modal-content-create">
+    <span class="close" (click)="closeReviewModal()">&times;</span>
+    <h4>Comprobante de pago</h4>
+    <button (click)="confirmOrder()" class="btn btn-success mb-3">
+      Confirmar Pedido
+    </button>
   </div>
 </div>
