@@ -24,6 +24,7 @@ export class OrdersListModule implements OnInit {
   modalReviewVisible = false;
   modalCompletedVisible = false;
   orderSelected:any;
+  modalObservedVisible = false;
   constructor(
     private orderService: OrderService,
     private fb: FormBuilder
@@ -82,7 +83,7 @@ export class OrdersListModule implements OnInit {
         case 2:
           this.modalReviewVisible = false;
           break;
-        case 3:
+        case 4:
           this.modalCompletedVisible = false;
           break;
       }
@@ -100,5 +101,15 @@ export class OrdersListModule implements OnInit {
 
   closeCompletedModal() {
     this.modalCompletedVisible = false;
+  }
+
+  openObservedModal(){
+    this.modalReviewVisible = false;
+    this.ChangeStatusOrder(3);
+    this.modalObservedVisible = true;
+  }
+
+  closeObservedModal() {
+    this.modalObservedVisible = false;
   }
 }
