@@ -22,6 +22,10 @@ export class ProductService {
     return this.http.get<any>(`${this.apiUrlMl}/recommendations/${idUser}`)
   }
 
+  productDemandPrediction(data:any){
+    return this.http.post(`${this.apiUrlMl}/demanding`, data);
+  }
+
   getProductsByCategory(idcategoria: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/listaxcate/${idcategoria}`);
   }
