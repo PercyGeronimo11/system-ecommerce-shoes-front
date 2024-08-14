@@ -88,13 +88,13 @@ export class UsersEcoCreateComponent implements OnInit {
               localStorage.setItem('tokencustomer', lgresp.token);
               localStorage.setItem('usernamecustomer', lgresp.username);
               localStorage.setItem('rolecustomer', lgresp.rol);
-              localStorage.setItem('idcustomer', lgresp.id); // Guardar el ID del usuario
-              // Actualizar el servicio con el nuevo usuario
+              localStorage.setItem('idcustomer', lgresp.id);
               this.sharedServ.updateUser({
                 username: lgresp.username,
                 role: lgresp.rol,
                 id: lgresp.id // Actualizar el servicio con el ID
               });
+              this.authService.updateStatusLoginService(true);
               window.location.href = '/ecommers';
             },
             (error) => {

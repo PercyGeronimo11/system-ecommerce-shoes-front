@@ -5,7 +5,7 @@ import { Router, RouterModule,NavigationEnd, ActivatedRoute } from '@angular/rou
 import { CartService } from '../../../services/cart.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { AuthService } from '../../../components/auth/service/auth.service';
-import { ProductModel } from '../../../models/product.model';
+import { ProductCustomer, ProductModel } from '../../../models/product.model';
 import { ProductService } from '../../../services/product.service';
 import { SharedDataService } from '../../../services/shared-data.service';
 import { CategoriaService } from '../../../services/categories.service';
@@ -22,6 +22,7 @@ import { EcommercePlantilla } from '../base-layout.component';
 export class HomeComponent implements OnInit, OnDestroy {
   loginResponse: any;
   products: ProductModel[] = [];
+  productCustomers: ProductCustomer[] = [];
   recommendedProducts: ProductModel[] = [];
   categories: any[] = [];
   NameCate: string = '';
@@ -98,6 +99,39 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.cartService.getCartItemCount().subscribe(count => {
       this.cartItemCount = count;
     });
+    this.loadProductRatings();
+  }
+
+  loadProductRatings(): void {
+    this.productService.getRatingProductsService().subscribe(
+      response => {
+        this.productCustomers = response;
+        // Puedes realizar otras acciones aquí si es necesario
+      },
+      error => {
+        console.error('Error loading product ratings', error);
+      }
+    );
+  }
+
+  getRatingForProduct(productId: number): number {
+    const productCustomer = this.productCustomers.find(pc => pc.product_id === productId);
+    return productCustomer ? productCustomer.rating : 0;
+  }
+
+  rateProduct(star: number, product: any): void {
+    product.rating = star;
+
+    // Crea el objeto que será enviado al servidor
+    const productCustomer: ProductCustomer = {
+      id: 0, // Este campo puede ser autogenerado en el servidor
+      customer_id: 1, // Aquí coloca el ID real del cliente
+      product_id: product.id,
+      clicks: 0, // Si tienes lógica para esto, ajústalo según corresponda
+      rating: star
+    };
+
+    this.productService.saveRatingProductByCustomer(productCustomer);
   }
 
 
@@ -139,7 +173,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getRecommendedProducts(): void {
-    const idUser = localStorage.getItem('idUserCustomer');
+    const idUser = localStorage.getItem('idCustomer');
     if (idUser) {
       this.productService.getProductsRecomendationsByIdUserService(idUser).subscribe((response: any) => {
         this.products = response.data.content;
@@ -176,4 +210,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   viewProductDetail(product: ProductModel): void {
     this.router.navigate(['/product', product.id]);
   }
+
+
 }

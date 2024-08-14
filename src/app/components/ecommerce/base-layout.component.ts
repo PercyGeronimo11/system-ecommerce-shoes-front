@@ -18,6 +18,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./base-layout.component.scss']
 })
 export class EcommercePlantilla implements OnInit, OnDestroy {
+  isLoggedInCustomer: boolean = false;
+  showRecommendationsButton: boolean = false;
   loginResponse: any;
   products: ProductModel[] = [];
   categories: any[] = [];
@@ -58,15 +60,20 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // Initialize login response
+    this.authService.isLoggedInChanged.subscribe((isLoggedInCustomer: boolean) => {
+      this.isLoggedInCustomer = isLoggedInCustomer;
+    });
+
+    // Comprobar el estado inicial de la sesión
+    this.isLoggedInCustomer = !!localStorage.getItem('tokencustomer');
+    
+    console.log("logueado:", this.isLoggedInCustomer);
+
     this.loginResponse = 'Ingresar';
     console.log(localStorage.getItem('usernamecustomer'));
     if(localStorage.getItem('usernamecustomer')!=null){
       this.loginResponse=localStorage.getItem('usernamecustomer');
     }
-
-    this.getRecommendedProducts();
-
     this.cartService.getCartItemCount().subscribe(count => {
       this.cartItemCount = count;
     });
@@ -102,7 +109,7 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
   }
 
   getRecommendedProducts(): void {
-    const idUser = localStorage.getItem('idUserCustomer');
+    const idUser = localStorage.getItem('idCustomer');
     if (idUser) {
       this.productService.getProductsRecomendationsByIdUserService(idUser).subscribe(
         (response: any) => {

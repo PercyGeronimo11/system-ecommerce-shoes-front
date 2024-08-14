@@ -43,7 +43,7 @@ export class EcommersIngresoModule implements OnInit {
           localStorage.setItem('usernamecustomer', Resp.username);
           localStorage.setItem('rolecustomer', Resp.rol);
           localStorage.setItem('emailcustomer', Resp.email);
-          localStorage.setItem('idUserCustomer', Resp.usuario.id);
+          localStorage.setItem('idCustomer', Resp.usuario.id);
           this.sharedServ.updateUser({
             username: Resp.username,
             role: Resp.rol

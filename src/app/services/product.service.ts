@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProductCreateReq } from '../models/product.model';
+import { ProductCreateReq, ProductCustomer } from '../models/product.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -24,6 +24,14 @@ export class ProductService {
 
   getProductsByCategory(idcategoria: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/listaxcate/${idcategoria}`);
+  }
+
+  getRatingProductsService(): Observable<ProductCustomer[]> {
+    return this.http.get<ProductCustomer[]>(`${this.apiUrl}/get/rating`);
+  }
+
+  saveRatingProductByCustomer(productCustomer: ProductCustomer){
+    return this.http.post(`${this.apiUrl}/save/rating`, productCustomer);
   }
 
 

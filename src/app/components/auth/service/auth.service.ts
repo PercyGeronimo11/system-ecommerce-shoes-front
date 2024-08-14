@@ -2,19 +2,38 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { tap } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = environment.apiUrl;
-
-  //Añadido
   private customerSubject = new BehaviorSubject<any>(this.getCustomerFromLocalStorage());
-  //
-  constructor(private http: HttpClient, private router: Router) { }
+
+  private isLoggedInCustomer: boolean = false;
+  public isLoggedInChanged = new Subject<boolean>();
+
+
+  constructor(
+    private http: HttpClient, 
+    private router: Router
+  ) { }
+
+  // Método para actualizar el estado de la sesión
+  updateStatusLoginService(isLoggedIn: boolean) {
+    this.isLoggedInCustomer = isLoggedIn;
+    this.isLoggedInChanged.next(isLoggedIn);
+  }
+
+  // Método para obtener el estado actual de la sesión
+  get isLoggedInCustomerService(): boolean {
+    return this.isLoggedInCustomer;
+  }
+
 
   login(credentials: any) {
     return this.http.post(`${this.apiUrl}/auth/login`, credentials);
@@ -22,7 +41,9 @@ export class AuthService {
 
   loginCustomer(credentials: any) {
     this.logoutCustomer();
-    return this.http.post(`${this.apiUrl}/auth/login/cliente`, credentials);
+    return this.http.post(`${this.apiUrl}/auth/login/cliente`, credentials).pipe(
+      tap(() => this.updateStatusLoginService(true)) // Aquí se actualiza el estado de login
+    );
   }
 
   logout() {
@@ -36,12 +57,14 @@ export class AuthService {
     this.customerSubject.next(null);
     localStorage.removeItem('rolecustomer');
     localStorage.removeItem('idcustomer');
+    this.updateStatusLoginService(false); 
     this.router.navigate(['/ecommers']);
   }
-
+  
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
+
 
   getToken(): string | null {
     return localStorage.getItem('token');
