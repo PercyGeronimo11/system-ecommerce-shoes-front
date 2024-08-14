@@ -12,6 +12,7 @@
               <th>Cliente</th>
               <th>Fecha</th>
               <th>Total</th>
+              <th>Estado</th>
               <th>Opciones</th>
             </tr>
           </thead>
@@ -22,12 +23,25 @@
               <td>{{ order.ord_date }}</td>
               <td>S/{{ order.ord_total }}</td>
               <td>
-                <button (click)="selectOrder(order)" class="btn btn-success mb-3 me-2">
+                <b [ngStyle]="{
+                  'border-radius': '10px',
+                  'padding': '5px',
+                  'background-color': (order.ord_status === 1) ? '#FFA627' : (order.ord_status === 2) ? '#1A85FF' : (order.ord_status === 3) ? '#23BD9E' : 'transparent',
+                  'color': 'white'
+                }">
+                  {{ order.ord_status === 1 ? 'Pendiente' : order.ord_status === 2 ? 'Pagado' : order.ord_status === 3 ? 'Completado' : '' }}
+                </b>
+              </td>
+              <td>
+                <button (click)="selectOrder(order)" class="btn btn-warning mb-3 me-2">
                   <i class="fa fa-eye"></i>
                 </button>
-                <!-- <button (click)="openReviewModal(order)" class="btn btn-success mb-3">
-                  <i class="fa fa-trash"></i>
-                </button> -->
+                <button *ngIf="order.ord_status === 1" (click)="openReviewModal(order)" class="btn btn-success mb-3">
+                  <!-- <i class="fa fa-trash"></i> --> Validar
+                </button>
+                <button *ngIf="order.ord_status === 2" (click)="openCompletedModal(order)" class="btn btn-primary mb-3">
+                  <!-- <i class="fa fa-trash"></i> --> Completar
+                </button>
               </td>
             </tr>
           </tbody>
@@ -67,8 +81,28 @@
   <div class="modal-content modal-content-create">
     <span class="close" (click)="closeReviewModal()">&times;</span>
     <h4>Comprobante de pago</h4>
-    <button (click)="confirmOrder()" class="btn btn-success mb-3">
+    <iframe src="" frameborder="0"></iframe>
+    <button (click)="ChangeStatusOrder(2)" class="btn btn-success mb-3">
       Confirmar Pedido
     </button>
+    <button (click)="closeReviewModal()" class="btn btn-success mb-3">
+      Cancelar
+    </button>
+  </div>
+</div>
+
+<div id="orderReviewModal" class="modal" [ngStyle]="{'display': modalCompletedVisible ? 'block' : 'none'}">
+  <div class="modal-content modal-content-create" style="text-align: center;">
+    <span class="close" (click)="closeCompletedModal()">&times;</span>
+    <h4>Comprobante de pago</h4>
+    <p>¿Estás seguro que la orden N° {{orderSelected?.ord_id}} fue entregada con éxito?</p>
+    <div style="display: flex; justify-content: space-between;">
+      <button (click)="closeCompletedModal()" class="btn btn-danger mb-3" style="flex: 1; margin-right: 5px;">
+        Cancelar
+      </button>
+      <button (click)="ChangeStatusOrder(3)" class="btn btn-success mb-3" style="flex: 1; margin-left: 5px;">
+        Confirmar Pedido
+      </button>
+    </div>
   </div>
 </div>

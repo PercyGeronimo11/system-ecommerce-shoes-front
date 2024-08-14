@@ -34,4 +34,8 @@ export class OrderService {
     edit(id:any, data:any){
         return this.http.put(this.apiUrl+"/"+id, data);
     }
+
+    changeStatus(id:any, data:any){
+        return this.http.post(this.apiUrl+"/status/"+id, data);
+    }
 }

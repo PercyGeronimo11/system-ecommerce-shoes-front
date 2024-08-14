@@ -22,6 +22,7 @@ export class OrdersListModule implements OnInit {
   modalOrderDetail = false;
   detailOrders: any [] = [];
   modalReviewVisible = false;
+  modalCompletedVisible = false;
   orderSelected:any;
   constructor(
     private orderService: OrderService,
@@ -72,17 +73,32 @@ export class OrdersListModule implements OnInit {
     this.modalReviewVisible = false;
   }
 
-  confirmOrder(){
-    this.orderSelected.ord_status = 2;
-    this.orderService.edit(this.orderSelected.ord_id, this.orderSelected).subscribe((resp: any) => {
-      if (resp && resp.data && resp.data.length > 0) {        
-        this.modalOrderDetail = true;
-        this.modalReviewVisible = false;
-      } else {
-        console.error("No se encontraron detalles de pedido para el pedido seleccionado.");
+  ChangeStatusOrder(status:any){
+    var data = {
+      status: status
+    }
+    this.orderService.changeStatus(this.orderSelected.ord_id, data).subscribe((resp: any) => {
+      switch (status) {
+        case 2:
+          this.modalReviewVisible = false;
+          break;
+        case 3:
+          this.modalCompletedVisible = false;
+          break;
       }
+      
+      this.listOrders();
     }, (error: any) => {
       console.error("Error al obtener los detalles de pedido:", error);
     });
+  }
+
+  openCompletedModal(order:any){
+    this.orderSelected=order;
+    this.modalCompletedVisible = true;
+  }
+
+  closeCompletedModal() {
+    this.modalCompletedVisible = false;
   }
 }
