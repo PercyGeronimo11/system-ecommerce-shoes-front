@@ -25,6 +25,7 @@ export class OrdersListModule implements OnInit {
   modalCompletedVisible = false;
   orderSelected:any;
   modalObservedVisible = false;
+  urlReviewVisible: string | null = null;
   constructor(
     private orderService: OrderService,
     private fb: FormBuilder
@@ -65,9 +66,14 @@ export class OrdersListModule implements OnInit {
     this.modalOrderDetail = false;
   }
 
-  openReviewModal(order:any){
+  openReviewModal(order: any) {
+    this.orderSelected = order;
+    this.orderService.getimage(this.orderSelected.ord_id).subscribe((resp: Blob) => {
+      this.urlReviewVisible = URL.createObjectURL(resp);
+    }, (error: any) => {
+      console.error("Error al obtener la imagen:", error);
+    });
     this.modalReviewVisible = true;
-    this.orderSelected=order;
   }
 
   closeReviewModal() {

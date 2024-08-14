@@ -84,17 +84,11 @@
   <div class="modal-content modal-content-voucher">
     <span class="close" (click)="closeReviewModal()">&times;</span>
     <h4>Comprobante de pago</h4>
-    <iframe src="" frameborder="0"></iframe>
-    <div style="display: flex; justify-content: space-between;">
-      <button (click)="ChangeStatusOrder(2)" class="btn btn-success mb-3" style="flex: 1; margin-right: 5px;">
-        Confirmar
-      </button>
-      <button (click)="openObservedModal()" class="btn btn-warning mb-3" style="flex: 1; margin-right: 5px;">
-        Observar
-      </button>
-      <button (click)="closeReviewModal()" class="btn btn-danger mb-3" style="flex: 1; margin-right: 5px;">
-        Cancelar
-      </button>
+    <img [src]="urlReviewVisible" alt="Order Image" class="responsive-image">
+    <div class="modal-buttons">
+      <button (click)="ChangeStatusOrder(2)" class="btn btn-success mb-3">Confirmar</button>
+      <button (click)="openObservedModal()" class="btn btn-warning mb-3">Observar</button>
+      <button (click)="closeReviewModal()" class="btn btn-danger mb-3">Cancelar</button>
     </div>
   </div>
 </div>
