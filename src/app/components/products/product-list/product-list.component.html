@@ -36,11 +36,27 @@
                 <button (click)="deleteProduct(product.id)" class="btn btn-danger mb-3 me-2">
                   <i class="fa fa-trash"></i>
                 </button>
+                <button (click)="PredictDemandProduct(product.id, product.proName)" class="btn btn-danger mb-3 me-2">
+                  <i class="fa fa-chart-line"></i>
+                </button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </app-card>
+  </div>
+</div>
+
+
+<!-- Modal para eliminar material -->
+<div id="deleteModal" class="modal" [ngStyle]="{'display': modalPredictionVisible ? 'block' : 'none'}">
+  <div class="modal-content modal-content-delete">
+    <span class="close" (click)="closePredictionModal()">&times;</span>
+    <h4>Para el producto "{{nameProduct }}" :</h4>
+    <p>Se estima que para el siguiente mes la demanda sea de <b>{{ demandPrediction }} {{ demandPrediction === 1 ? 'unidad' : 'unidades' }}</b></p>
+    <div class="modal-buttons">
+      <button (click)="closePredictionModal()" class="btn btn-danger">Cerrar</button>
+    </div>
   </div>
 </div>

@@ -20,6 +20,9 @@ export class ProductListComponent implements OnInit {
   isLoading = false;
   error: string | null = null;
   modalRef: NgbModal | null=null;
+  demandPrediction:any;
+  nameProduct:any;
+  modalPredictionVisible = false;
 
   constructor( 
     private productService: ProductService,
@@ -54,5 +57,34 @@ export class ProductListComponent implements OnInit {
 
   openModalCreateProduct(){
     this.modalService.open(ProductCreateComponent);
+  }
+
+  closePredictionModal(){
+    this.modalPredictionVisible=false;
+  }
+
+  PredictDemandProduct(idProduct:any, nameProduct:any){
+    const today = new Date();
+  
+    const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1);
+    
+    const year = nextMonth.getFullYear();
+    const month = nextMonth.getMonth() + 1;
+    var data = {
+      "product_id":idProduct,
+      "year": year,
+      "month": month,
+    };
+
+    this.productService.productDemandPrediction(data).subscribe(
+      (resp: any) => {
+        this.modalPredictionVisible=true;
+        this.nameProduct = nameProduct;
+        this.demandPrediction = Math.round(resp.prediction);
+      },
+      (error) => {
+        console.error('Error predict demanding this product', error);
+      }
+    )
   }
 }
