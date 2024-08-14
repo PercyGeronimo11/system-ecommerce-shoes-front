@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   error: string | null = null;
   categoria: number = 0;
   numberForm: FormGroup;
+  promociones: { [id: number]: any } = {};
   slides = [
     { image: 'assets/images/baner1.jpg', caption: '', description: '' },
     { image: 'assets/images/baner2.jpg', caption: '', description: '' },
@@ -113,12 +114,23 @@ export class HomeComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     this.categoria = this.numberForm.get('idcategoria')?.value || 0;
     console.log('Selected category:', this.categoria);
-    this.getProducts(); 
+    this.getProducts();
     this.isTitleEcommerce=false;
   }
 
   logoutcustomer(): void {
     this.authService.logoutCustomer();
+  }
+
+  //obtengo la promocion x id del producto
+  getpromoxproduct(idproducto: number): void {
+    this.productService.getpromo(idproducto).subscribe((resp: any) => {
+      if (resp && resp.data) {
+        this.promociones[idproducto] = resp.data;
+      } else {
+        this.promociones[idproducto] = null; // No hay promoción para este producto
+      }
+    });
   }
 
   getProducts(): void {
@@ -129,7 +141,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     fetchProducts.subscribe((response: any) => {
       this.products = response.data.content;
       this.isLoading = false;
+      // Determinar el nombre de la categoría seleccionada
       this.NameCate = this.categoria === 0 ? 'Productos' : this.categories.find(cat => cat.id === this.categoria)?.name || 'Categoría';
+     // Obtener promociones para todos los productos
+      this.products.forEach(product => this.getpromoxproduct(product.id));
+
       console.log("Productos filtrados por categoría:", this.NameCate);
     }, error => {
       this.error = error.message;

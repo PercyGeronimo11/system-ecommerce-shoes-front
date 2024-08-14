@@ -1,3 +1,5 @@
+<!--home.component.html-->
+<!--Se actualizara la lista de productos a mostrar-->
 <app-base-layout>
   <div class="col-12">
     <div id="carouselExampleIndicators" class="carousel slide mb-4" data-ride="carousel">
@@ -32,15 +34,30 @@
   </div>
   <div class="col-md-4 mb-4" *ngFor="let product of products.slice(0, 9); let i = index">
     <div class="product-card card h-100" (click)="viewProductDetail(product)">
-      <img [src]="product.proUrlImage" class="card-img-top product-image" alt="Producto">
-      <div class="card-body d-flex flex-column">
-        <p class="card-title" style="font-size: large;">{{ product.proName }}</p>
-        <p class="card-text" style="font-size: large;">{{ product.proDescription }}</p>
-        <p class="price mt-auto" style="font-size:x-large;">S/.{{ product.proUnitPrice }}</p>
-        <button class="btn btn-secondary mt-3">
-          <i class="fas fa-shopping-cart"></i> Agregar
-        </button>
-      </div>
+        <img [src]="product.proUrlImage" class="card-img-top product-image" alt="Producto">
+        <div class="card-body d-flex flex-column">
+            <p class="card-title mb-2" style="font-size: large;">{{ product.proName }}</p>
+            <p class="card-text mb-2" style="font-size: large;">{{ product.proDescription }}</p>
+            <p *ngIf="promociones[product.id]?.promPercentage" style="font-size: large; color: red;">
+                Descuento: {{ promociones[product.id].promPercentage }} %
+            </p>
+            <p class="price mt-auto" style="font-size: x-large;">
+                <span *ngIf="promociones[product.id]?.promPercentage; else noDiscount">
+                    <span style="text-decoration: line-through; color: grey;">
+                        S/. {{ product.proUnitPrice }}
+                    </span>
+                    <span style="color: red; margin-left: 10px;">
+                        S/. {{ product.proUnitPrice - (product.proUnitPrice * promociones[product.id].promPercentage / 100.0) }}
+                    </span>
+                </span>
+                <ng-template #noDiscount>
+                    S/. {{ product.proUnitPrice }}
+                </ng-template>
+            </p>
+            <button class="btn btn-secondary mt-3">
+                <i class="fas fa-shopping-cart"></i> Agregar
+            </button>
+        </div>
     </div>
-  </div>
+</div>
 </app-base-layout>

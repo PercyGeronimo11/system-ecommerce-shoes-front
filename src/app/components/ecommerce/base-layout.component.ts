@@ -85,8 +85,8 @@ export class EcommercePlantilla implements OnInit, OnDestroy {
 
   getProducts(): void {
     this.isLoading = true;
-    const fetchProducts = this.categoria === 0 
-      ? this.productService.getProducts() 
+    const fetchProducts = this.categoria === 0
+      ? this.productService.getProducts()
       : this.productService.getProductsByCategory(this.categoria);
 
     fetchProducts.subscribe((response: any) => {
