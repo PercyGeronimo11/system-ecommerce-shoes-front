@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../components/auth/service/auth.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -37,5 +38,9 @@ export class OrderService {
 
     changeStatus(id:any, data:any){
         return this.http.post(this.apiUrl+"/status/"+id, data);
+    }
+
+    getimage(id:any): Observable<Blob>{
+        return this.http.get(environment.apiUrl+"/api/transaction/image/"+id, { responseType: 'blob' });
     }
 }

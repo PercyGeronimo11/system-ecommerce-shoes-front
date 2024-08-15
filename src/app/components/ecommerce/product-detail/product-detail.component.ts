@@ -54,7 +54,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.numberForm = this.fb.group({
       idcategoria: [0]
     });
-
     this.categoriaService.list().subscribe((resp: any) => {
       this.categories = resp.data;
       console.log(this.categories);
@@ -65,6 +64,18 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loginResponse = 'Ingresar';
+    //obtener usuario
+    /*
+    this.sharedDataService.loginResponse$.subscribe(loginResp => {
+      if (loginResp.error) {
+        console.log('Estos datos son', this.loginResponse);
+      } else {
+        this.loginResponse = loginResp.data.custFirstName;
+        console.log('Estos datos son', this.loginResponse);
+      }
+    });
+*/
+
     this.getProducts();
     this.categoria == 0;
     this.cartService.getCartItemCount().subscribe(count => {

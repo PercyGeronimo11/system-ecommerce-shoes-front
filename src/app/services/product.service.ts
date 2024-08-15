@@ -18,6 +18,14 @@ export class ProductService {
     return this.http.get<any>(`${this.apiUrl}/list?search`)
   }
 
+
+  getpromo(id: number) {
+    return this.http.get<any>(`${this.apiUrl}/getpromo/${id}`)
+  }
+
+
+
+
   getProductsRecomendationsByIdUserService(idUser: string) {
     return this.http.get<any>(`${this.apiUrlMl}/recommendations/${idUser}`)
   }
@@ -37,7 +45,7 @@ export class ProductService {
   createProduct(product: FormData) {
     return this.http.post<ProductCreateReq>(`${this.apiUrl}/store`, product);
   }
-  
+
   updateProduct(id: string, product: FormData) {
     return this.http.put<any>(`${this.apiUrl}/update/${id}`, product);
   }

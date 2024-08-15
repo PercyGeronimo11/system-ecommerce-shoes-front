@@ -10,6 +10,7 @@ export interface ProductModel {
   proName: string;
   proDescription: string;
   proUnitPrice: number;
+  precioDescuento: number;
   proUnitCost: number;
   proSizePlatform: string | null;
   proSizeTaco: string | null;

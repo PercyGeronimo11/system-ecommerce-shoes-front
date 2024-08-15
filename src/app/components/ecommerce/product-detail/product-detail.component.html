@@ -33,6 +33,7 @@
             <button class="btn btn-primary" [disabled]="!selectedSize" (click)="addToCart(product)">Agregar al
               carrito</button>
           </div>
+
           <div *ngIf="!selectedSize">
             Debe seleccionar una talla antes de agregar al carrito.
           </div>

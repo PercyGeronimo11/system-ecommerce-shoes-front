@@ -26,10 +26,10 @@
                 <b [ngStyle]="{
                   'border-radius': '10px',
                   'padding': '5px',
-                  'background-color': (order.ord_status === 1) ? '#FFA627' : (order.ord_status === 2) ? '#1A85FF' : (order.ord_status === 3) ? '#23BD9E' : 'transparent',
+                  'background-color': (order.ord_status === 1) ? '#FFA627' : (order.ord_status === 2) ? '#1A85FF' : (order.ord_status === 3) ? 'red' : (order.ord_status === 4) ? '#23BD9E' : 'transparent',
                   'color': 'white'
                 }">
-                  {{ order.ord_status === 1 ? 'Pendiente' : order.ord_status === 2 ? 'Pagado' : order.ord_status === 3 ? 'Completado' : '' }}
+                  {{ order.ord_status === 1 ? 'Pendiente' : order.ord_status === 2 ? 'Pagado' : order.ord_status === 3 ? 'Observado' : order.ord_status === 4 ? 'Completado' : '' }}
                 </b>
               </td>
               <td>
@@ -37,10 +37,13 @@
                   <i class="fa fa-eye"></i>
                 </button>
                 <button *ngIf="order.ord_status === 1" (click)="openReviewModal(order)" class="btn btn-success mb-3">
-                  <!-- <i class="fa fa-trash"></i> --> Validar
+                  Validar
                 </button>
                 <button *ngIf="order.ord_status === 2" (click)="openCompletedModal(order)" class="btn btn-primary mb-3">
-                  <!-- <i class="fa fa-trash"></i> --> Completar
+                  Completar
+                </button>
+                <button *ngIf="order.ord_status === 3" (click)="openReviewModal(order)" class="btn btn-success mb-3">
+                  Validar
                 </button>
               </td>
             </tr>
@@ -78,16 +81,15 @@
 </div>
 
 <div id="orderReviewModal" class="modal" [ngStyle]="{'display': modalReviewVisible ? 'block' : 'none'}">
-  <div class="modal-content modal-content-create">
+  <div class="modal-content modal-content-voucher">
     <span class="close" (click)="closeReviewModal()">&times;</span>
     <h4>Comprobante de pago</h4>
-    <iframe src="" frameborder="0"></iframe>
-    <button (click)="ChangeStatusOrder(2)" class="btn btn-success mb-3">
-      Confirmar Pedido
-    </button>
-    <button (click)="closeReviewModal()" class="btn btn-success mb-3">
-      Cancelar
-    </button>
+    <img [src]="urlReviewVisible" alt="Order Image" class="responsive-image">
+    <div class="modal-buttons">
+      <button (click)="ChangeStatusOrder(2)" class="btn btn-success mb-3">Confirmar</button>
+      <button (click)="openObservedModal()" class="btn btn-warning mb-3">Observar</button>
+      <button (click)="closeReviewModal()" class="btn btn-danger mb-3">Cancelar</button>
+    </div>
   </div>
 </div>
 
@@ -100,8 +102,21 @@
       <button (click)="closeCompletedModal()" class="btn btn-danger mb-3" style="flex: 1; margin-right: 5px;">
         Cancelar
       </button>
-      <button (click)="ChangeStatusOrder(3)" class="btn btn-success mb-3" style="flex: 1; margin-left: 5px;">
+      <button (click)="ChangeStatusOrder(4)" class="btn btn-success mb-3" style="flex: 1; margin-left: 5px;">
         Confirmar Pedido
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="orderObservedModal" class="modal" [ngStyle]="{'display': modalObservedVisible ? 'block' : 'none'}">
+  <div class="modal-content modal-content-create" style="text-align: center;">
+    <span class="close" (click)="closeObservedModal()">&times;</span>
+    <h4>Voucher Observado</h4>
+    <p>la confirmacion quedara en espera, por favor, comunicarse con el cliente a este numero: "{{orderSelected?.customer.custCellphone}}" o al correo:"{{orderSelected?.customer.custEmail}}"</p>
+    <div style="display: flex; justify-content: space-between;">
+      <button (click)="closeObservedModal()" class="btn btn-danger mb-3" style="flex: 1; margin-right: 5px;">
+        Cerrar
       </button>
     </div>
   </div>

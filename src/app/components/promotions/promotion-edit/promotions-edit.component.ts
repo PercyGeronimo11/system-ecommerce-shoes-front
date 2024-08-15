@@ -20,7 +20,7 @@ export class PromotionsEditComponent implements OnInit {
   products: ProductModel[] = [];
   filteredProducts: ProductModel[] = [];
   selectedPromotion: any = null;
-
+  detalles: any = [];
   isCreating: boolean = false;
   cargarpromodet: number = 1;
   selectedFile: File | null = null;
@@ -68,6 +68,7 @@ export class PromotionsEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getFiltroGuardado()
     this.getProducts();
     this.getDetalles();
   }
@@ -110,6 +111,23 @@ export class PromotionsEditComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
     }
   }
+  filterProducts() {
+    this.filteredProducts = this.products.filter(product => !this.PromoDetProductosArray.value.some((promoProduct: any) => promoProduct.id === product.id));
+  }
+
+  getFiltroGuardado(){
+    this.promocionService.getDetalle().subscribe((resp: any) => {
+      this.detalles = resp.data; // obteniendo lista de detalles
+      this.promocionService.getProducts().subscribe((resp: any) => {
+          // Filtramos los productos que no estén en los detalles
+
+          const detalleProductIds = this.detalles.map((detalle: any) => detalle.product.id);
+          this.products = resp.data.content.filter((product: any) => !detalleProductIds.includes(product.id));
+          console.log("Productos filtrados cargados:", this.products);
+      });
+  });
+  }
+
 
   getProducts() {
     this.promocionService.getProducts().subscribe((products: any) => {
@@ -121,6 +139,9 @@ export class PromotionsEditComponent implements OnInit {
       console.error("Error al cargar todos los productos:", error);
     });
   }
+
+
+
 
   submitFormEditprom() {
     this.promoCreateReq = {
@@ -195,10 +216,6 @@ export class PromotionsEditComponent implements OnInit {
     } else {
       console.log("Producto no encontrado");
     }
-  }
-
-  filterProducts() {
-    this.filteredProducts = this.products.filter(product => !this.PromoDetProductosArray.value.some((promoProduct: any) => promoProduct.id === product.id));
   }
 
   removePromoProducto(index: number) {

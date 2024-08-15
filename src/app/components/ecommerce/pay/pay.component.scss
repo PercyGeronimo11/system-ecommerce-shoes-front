@@ -399,3 +399,39 @@ input.form-control {
   font-weight: bold;
   color: #dc3545;
 }
+
+.detail-group {
+  margin-bottom: 15px;
+}
+
+.form-label {
+  font-size: 0.9em; /* Tamaño más pequeño para la etiqueta */
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.custom-select {
+  width: 100%; /* Ajusta el ancho para que ocupe el 100% del contenedor */
+  padding: 6px 12px; /* Reduce el padding para que el select sea más pequeño */
+  font-size: 0.9em; /* Reduce el tamaño de la fuente */
+  border-radius: 5px; /* Bordes redondeados */
+  border: 1px solid #ccc; /* Borde suave */
+  background-color: #f5f5f5; /* Fondo gris claro */
+  appearance: none; /* Remueve el estilo predeterminado del select */
+  -webkit-appearance: none; /* Remueve el estilo predeterminado en Safari */
+  -moz-appearance: none; /* Remueve el estilo predeterminado en Firefox */
+  background-image: url('data:image/svg+xml;base64,...'); /* Icono de flecha personalizada */
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px;
+}
+
+.custom-select:hover, .custom-select:focus {
+  border-color: #666; /* Cambia el color del borde cuando se enfoca o pasa el mouse */
+}
+
+.custom-select option {
+  font-size: 0.9em; /* Ajusta el tamaño de las opciones */
+  padding: 5px; /* Reduce el padding en las opciones */
+}

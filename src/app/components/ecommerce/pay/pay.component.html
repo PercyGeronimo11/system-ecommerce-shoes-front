@@ -66,32 +66,36 @@
   <div class="section-header" (click)="toggleSection('address')">
     <h6>Dirección</h6>
   </div>
+  
+  <form [formGroup]="shipmentForm" >
   <div *ngIf="showAddress" class="section-content">
     <div class="row address-info">
       <div class="col-md-6 detail-group">
         <label for="nombres">Dirección:</label>
-        <input type="text" id="nombres" formControlName="nombres" class="form-control">
+        <input type="text" class="form-control" id="shi_adress" placeholder="Dirección" formControlName="shi_adress" class="form-control">    
       </div>
       <div class="col-md-6 detail-group">
         <label for="additionalInfo">Información adicional:</label>
         <input type="text" id="additionalInfo" formControlName="additionalInfo" class="form-control">
       </div>
       <div class="col-md-6 detail-group">
-        <label for="custDepartment">Departamento:</label>
-        <input type="text" id="additionalInfo" formControlName="custDepartment"  class="form-control">
+        <label for="custDepartment" class="form-label">Departamento:</label>
+        <input type="text" class="form-control" id="shi_department" placeholder="Departamento" formControlName="shi_department" class="form-control">    
       </div>
+      
       <div class="col-md-6 detail-group">
         <label for="custProvince">Provincia:</label>
-        <input type="text" id="custProvince" formControlName="custProvince" class="form-control">
+        <input type="text" class="form-control" id="shi_province" placeholder="Provincia" formControlName="shi_province" class="form-control">    
       </div>
       <div class="col-md-6 detail-group">
         <label for="custCity">Distrito:</label>
-        <input type="text" id="custCity" formControlName="custCity" class="form-control">
+        <input type="text" class="form-control" id="shi_district" placeholder="Distrito" formControlName="shi_district" class="form-control">    
       </div>
     </div>
-    <button class="btn btn-ok" (click)="openNextSection('address')">OK</button>
+    <button class="btn btn-ok" (click)="openNextSection('shipping')">OK</button>
 
   </div>
+</form>
 </div>
 
 <!-- Div Envío -->
@@ -100,6 +104,7 @@
     <h6>Envío</h6>
   </div>
   <div *ngIf="showShipping" class="section-content">
+    <form [formGroup]="shipmentForm" >
     <div class="row shipping-info">
       <div class="col-md-12 detail-group">
         <label for="shippingDays">Días para la entrega:</label>
@@ -112,7 +117,8 @@
         </div>
       </div>
     </div>
-    <button class="btn btn-ok" (click)="openNextSection('address')">OK</button>
+  </form>
+    <button class="btn btn-ok" (click)="openNextSection('payment')">OK</button>
 
   </div>
 </div>
@@ -183,7 +189,6 @@
     </div>
   </div>
 </div>
-
 <!-- Modal para el Pago con BCP -->
 <div class="modal" id="bcpModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -212,12 +217,7 @@
     </div>
   </div>
 </div>
-
-
-
   </div>
-
-
         <div class="col-lg-4 row sales-details">
           <!-- Resumen del Pedido -->
           <div class="summary">

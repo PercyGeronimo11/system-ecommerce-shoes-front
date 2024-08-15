@@ -14,6 +14,7 @@ import { ProductModel, PromoCreateReq } from 'src/app/models/product.model';
 })
 export class PromotionsCreateComponent implements OnInit {
   promotions: any = [];
+  detalles: any = [];
   products: ProductModel[] = [];
   filteredProducts: ProductModel[] = [];
   selectedPromotion: any = null;
@@ -31,8 +32,9 @@ export class PromotionsCreateComponent implements OnInit {
     promDescription: '',
     promUrlImage: '',
     promStatus: false,
-    PromoProductos: this.fb.array([])
-  });
+    PromoProductos: this.fb.array([]),
+  },{ validator: this.dateLessThan('promStartdate', 'promEnddate') }
+);
 
   //modelo de la promocion
   promoCreateReq: PromoCreateReq = {
@@ -89,16 +91,22 @@ export class PromotionsCreateComponent implements OnInit {
     }
   }
 
-  getProducts() {
-    this.promocionService.getProducts().subscribe((products: any) => {
-      this.products = products.data.content;
-      this.filterProducts();
-      console.log("Todos los productos cargados:", products);
-    }, (error) => {
-      this.error = error.message;
-      console.error("Error al cargar todos los productos:", error);
-    });
-  }
+ getProducts(){
+  // Primero obtenemos la lista de detalles
+  this.promocionService.getDetalle().subscribe((resp: any) => {
+      this.detalles = resp.data; // obteniendo lista de detalles
+      this.promocionService.getProducts().subscribe((resp: any) => {
+          // Filtramos los productos que no estén en los detalles
+
+          const detalleProductIds = this.detalles.map((detalle: any) => detalle.product.id);
+          this.products = resp.data.content.filter((product: any) => !detalleProductIds.includes(product.id));
+          console.log("Productos filtrados cargados:", this.products);
+      }, (error) => {
+          this.error = error.message;
+          console.error("Error al cargar todos los productos:", error);
+      });
+  });
+}
 
   submitFormSavepromo() {
     this.promoCreateReq = {

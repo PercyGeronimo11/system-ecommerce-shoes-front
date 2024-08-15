@@ -13,6 +13,7 @@ import { CategoriaService } from '../../../services/categories.service';
 import { Subscription } from 'rxjs';
 import { EcommercePlantilla } from '../base-layout.component';
 
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -32,6 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   error: string | null = null;
   categoria: number = 0;
   numberForm: FormGroup;
+  promociones: { [id: number]: any } = {};
   slides = [
     { image: 'assets/images/baner1.jpg', caption: '', description: '' },
     { image: 'assets/images/baner2.jpg', caption: '', description: '' },
@@ -173,6 +175,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.authService.logoutCustomer();
   }
 
+  //obtengo la promocion x id del producto
+  getpromoxproduct(idproducto: number): void {
+    this.productService.getpromo(idproducto).subscribe((resp: any) => {
+      if (resp && resp.data) {
+        this.promociones[idproducto] = resp.data;
+      } else {
+        this.promociones[idproducto] = null; // No hay promoción para este producto
+      }
+    });
+  }
+
   getProducts(): void {
     this.isLoading = true;
     const fetchProducts = this.categoria === 0
@@ -181,7 +194,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     fetchProducts.subscribe((response: any) => {
       this.products = response.data.content;
       this.isLoading = false;
+      // Determinar el nombre de la categoría seleccionada
       this.NameCate = this.categoria === 0 ? 'Productos' : this.categories.find(cat => cat.id === this.categoria)?.name || 'Categoría';
+
+      // Obtener promociones para todos los productos
+      this.products.forEach(product => this.getpromoxproduct(product.id));
+
       console.log("Productos filtrados por categoría:", this.NameCate);
     }, error => {
       this.error = error.message;
@@ -224,8 +242,18 @@ export class HomeComponent implements OnInit, OnDestroy {
   logout(): void {
     this.authService.logout();
   }
-
+  /*
+    viewProductDetail(product: ProductModel): void {
+      this.router.navigate(['/product', product.id]);
+    }
+  */
   viewProductDetail(product: ProductModel): void {
+
+    if (this.promociones[product.id]?.promPercentage) {
+      const discountPercentage = this.promociones[product.id].promPercentage;
+      product.proUnitPrice = product.proUnitPrice - (product.proUnitPrice * discountPercentage / 100.0);
+    }
+    product.precioDescuento=product.proUnitPrice;
     this.router.navigate(['/product', product.id]);
   }
 
