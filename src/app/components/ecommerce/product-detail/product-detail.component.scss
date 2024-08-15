@@ -414,3 +414,17 @@ body {
   font-weight: bold;
   margin-top: 20px;
 }
+
+.star-rating {
+  display: flex;
+}
+
+.star-rating .fa-star {
+  font-size: 1.5rem;
+  color: gray; /* Color plomo para las estrellas no seleccionadas */
+  cursor: pointer;
+}
+
+.star-rating .fa-star.active {
+  color: gold; /* Color amarillo para las estrellas seleccionadas */
+}

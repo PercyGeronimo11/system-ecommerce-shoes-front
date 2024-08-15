@@ -30,15 +30,6 @@ export class ProductService {
     return this.http.get(`${this.apiUrl}/listaxcate/${idcategoria}`);
   }
 
-  getRatingProductsService(): Observable<ProductCustomer[]> {
-    return this.http.get<ProductCustomer[]>(`${this.apiUrl}/get/rating`);
-  }
-
-  saveRatingProductByCustomer(productCustomer: ProductCustomer){
-    return this.http.post(`${this.apiUrl}/save/rating`, productCustomer);
-  }
-
-
   getProductById(id: string) {
     return this.http.get<any>(`${this.apiUrl}/get/${id}`)
   }

@@ -17,11 +17,11 @@ export interface ProductModel {
   proSize: string | null;
   proStock: number;
   proUrlImage: String;
-
   name: string;
   size: number;
   price: number;
   quantity: number;
+  proAverageRating: number;
   image: String;
 }
 export interface ProductoForm {
@@ -67,8 +67,7 @@ export interface PromoDetailCreateReq{
 
 
 export interface ProductCustomer {
-  id: number;
-  customer_id: number;
+  customer_id: any;
   product_id: number;
   clicks: number;
   rating: number,

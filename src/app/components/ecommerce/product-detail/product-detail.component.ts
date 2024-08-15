@@ -5,22 +5,27 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/components/auth/service/auth.service';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
-import { ProductModel } from '../../../models/product.model';
+import { ProductCustomer, ProductModel } from '../../../models/product.model';
 import { CartService } from '../../../services/cart.service';
 import { CategoriaService } from '../../../services/categories.service';
 import { ProductService } from '../../../services/product.service';
 import { EcommercePlantilla } from '../base-layout.component';
+import { ProductCustomerService } from 'src/app/services/productCustomer.service';
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [RouterModule, CommonModule, SharedModule,EcommercePlantilla],
+  imports: [RouterModule, CommonModule, SharedModule, EcommercePlantilla],
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit, OnDestroy {
   loginResponse: any;
   selectedSize: number | null = null;
+  customerId = localStorage.getItem('idCustomer');
+  productId = this.route.snapshot.paramMap.get('id');
   products: ProductModel[] = [];
+  productCustomers: ProductCustomer[] = [];
+  ratingProduct: number = 0;
   product: ProductModel | undefined;
   categories: any = [];
   NameCate: any = [];
@@ -41,6 +46,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     public categoriaService: CategoriaService,
     private authService: AuthService,
     private productService: ProductService,
+    private productCustomerService: ProductCustomerService,
     private sharedDataService: SharedDataService,
     private cartService: CartService,
     private route: ActivatedRoute,
@@ -59,40 +65,58 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loginResponse = 'Ingresar';
-
-    //obtener usuario
-    /*
-    this.sharedDataService.loginResponse$.subscribe(loginResp => {
-      if (loginResp.error) {
-        console.log('Estos datos son', this.loginResponse);
-      } else {
-        this.loginResponse = loginResp.data.custFirstName;
-        console.log('Estos datos son', this.loginResponse);
-      }
-    });
-*/
-
-
-
     this.getProducts();
     this.categoria == 0;
-
-    // Subscribe to cart item count
     this.cartService.getCartItemCount().subscribe(count => {
       this.cartItemCount = count;
     });
-
     this.cartItemCount = this.cartService.getCartSize();
-
     this.loadProductDetail();
+    this.loadProductRatings();
   }
 
+  loadProductRatings(): void {
+    this.productCustomerService.getRatingProductsService(this.customerId).subscribe(
+      (response: any) => {
+        this.productCustomers = response.data;
+        const productCustomer = this.productCustomers.find(pc => Number(pc.product_id) === Number(this.productId));
+        if (productCustomer) {
+          console.log("El rating es:", productCustomer.rating);
+        } else {
+          console.log("Producto no encontrado, devolviendo 0 como rating.");
+        }
+        this.ratingProduct = productCustomer ? productCustomer.rating : 0;
+      },
+      error => {
+        console.error('Error loading product ratings', error);
+      }
+    );
+  }
+
+  rateProduct(star: number, product: any): void {
+    const productCustomer: ProductCustomer = {
+      customer_id: Number(this.customerId),
+      product_id: Number(this.productId),
+      clicks: 0,
+      rating: star
+    };
+    console.log("los datos enviadossss: ", this.customerId,"  ", this.productId);
+    this.productCustomerService.saveRatingProductService(productCustomer).subscribe(
+      response => {
+        this.loadProductRatings();
+        console.log('Calificación guardada con éxito');
+      },
+      error => {
+        console.error('Error saving product rating', error);
+      }
+    );
+  }
+
+
   loadProductDetail(): void {
-    const productId = this.route.snapshot.paramMap.get('id');
-    if (productId) {
-      this.productService.getProductById(productId).subscribe((response: any) => {
+    if (this.productId) {
+      this.productService.getProductById(this.productId).subscribe((response: any) => {
         this.product = response.data;
-        console.log('Producto cargado:', this.product);
       }, error => {
         console.error("Error al cargar el producto:", error);
       });
@@ -101,7 +125,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     this.categoria = this.numberForm.get('idcategoria')?.value;
-    console.log('Selected category:', this.categoria);
     this.ngOnInit();
   }
 
@@ -112,23 +135,17 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
         this.products = products.data.content;
         this.isLoading = false;
         this.NameCate = "Productos";
-        console.log("Productos filtrados por categoría:", this.NameCate);
-        console.log("Todos los productos cargados:", products);
       }, error => {
         this.error = error.message;
         this.isLoading = false;
-        console.error("Error al cargar todos los productos:", error);
       });
     } else {
       this.productService.getProductsByCategory(this.categoria).subscribe((products: any) => {
         this.products = products.data.content;
         this.isLoading = false;
-        console.log("Productos filtrados por categoría:", this.NameCate);
-        console.log("Productos filtrados por categoría:", products);
       }, error => {
         this.error = error.message;
         this.isLoading = false;
-        console.error("Error al cargar productos por categoría:", error);
       });
     }
   }

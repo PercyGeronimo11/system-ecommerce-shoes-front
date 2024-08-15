@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router, RouterModule,NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, RouterModule, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { AuthService } from '../../../components/auth/service/auth.service';
 import { ProductCustomer, ProductModel } from '../../../models/product.model';
 import { ProductService } from '../../../services/product.service';
+import { ProductCustomerService } from '../../../services/productCustomer.service';
 import { SharedDataService } from '../../../services/shared-data.service';
 import { CategoriaService } from '../../../services/categories.service';
 import { Subscription } from 'rxjs';
@@ -22,6 +23,7 @@ import { EcommercePlantilla } from '../base-layout.component';
 export class HomeComponent implements OnInit, OnDestroy {
   loginResponse: any;
   products: ProductModel[] = [];
+  ratingAverageProduct: number=0;
   productCustomers: ProductCustomer[] = [];
   recommendedProducts: ProductModel[] = [];
   categories: any[] = [];
@@ -40,14 +42,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   userSubscription: Subscription | undefined;
   currentRoute: string = '';
   isRecomendations: boolean = false;
-  isTitleEcommerce:boolean=false;
+  isTitleEcommerce: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     public categoriaService: CategoriaService,
     private authService: AuthService,
     private productService: ProductService,
-    private sharedDataService: SharedDataService,
+    private productCustomerService: ProductCustomerService,
     private cartService: CartService,
     private router: Router,
     private route: ActivatedRoute
@@ -69,10 +71,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.route.queryParams.subscribe(params => {
           if (params['recommendations']) {
             this.getRecommendedProducts();
-            this.isTitleEcommerce=true;
+            this.isTitleEcommerce = true;
           } else {
             this.getProducts();
-            this.isTitleEcommerce=false;
+            this.isTitleEcommerce = false;
           }
         });
       }
@@ -82,63 +84,79 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loginResponse = 'Ingresar';
     console.log(localStorage.getItem('usernamecustomer'));
-    if(localStorage.getItem('usernamecustomer')!=null){
-      this.loginResponse=localStorage.getItem('usernamecustomer');
+    if (localStorage.getItem('usernamecustomer') != null) {
+      this.loginResponse = localStorage.getItem('usernamecustomer');
     }
 
     this.route.queryParams.subscribe(params => {
       if (params['recommendations']) {
         this.getRecommendedProducts();
-        this.isTitleEcommerce=true;
+        this.isTitleEcommerce = true;
       } else {
         this.getProducts();
-        this.isTitleEcommerce=false;
+        this.isTitleEcommerce = false;
       }
     });
 
     this.cartService.getCartItemCount().subscribe(count => {
       this.cartItemCount = count;
     });
-    this.loadProductRatings();
+
+    //this.loadProductRatings();
   }
 
-  loadProductRatings(): void {
-    this.productService.getRatingProductsService().subscribe(
-      response => {
-        this.productCustomers = response;
-        // Puedes realizar otras acciones aquí si es necesario
-      },
-      error => {
-        console.error('Error loading product ratings', error);
-      }
-    );
-  }
+  // loadProductRatings(): void {
+  //   this.productCustomerService.getRatingProductsService(this.customerId).subscribe(
+  //     (response: any) => {
+  //       this.productCustomers = response.data;
+  //       const productCustomer = this.productCustomers.find(pc => Number(pc.product_id) === Number(this.productId));
+  //       if (productCustomer) {
+  //         console.log("El rating es:", productCustomer.rating);
+  //       } else {
+  //         console.log("Producto no encontrado, devolviendo 0 como rating.");
+  //       }
+  //       this.ratingAverageProduct = productCustomer ? productCustomer.rating : 0;
+  //     },
+  //     error => {
+  //       console.error('Error loading product ratings', error);
+  //     }
+  //   );
+  // }
 
   getRatingForProduct(productId: number): number {
-    const productCustomer = this.productCustomers.find(pc => pc.product_id === productId);
+    const productCustomer: ProductCustomer | any = this.productCustomers.find(pc => pc.product_id === productId);
+    if (productCustomer) {
+      console.log("El rating es:", productCustomer.rating);
+    } else {
+      console.log("Producto no encontrado, devolviendo 0 como rating.", productCustomer);
+    }
     return productCustomer ? productCustomer.rating : 0;
   }
 
   rateProduct(star: number, product: any): void {
-    product.rating = star;
-
-    // Crea el objeto que será enviado al servidor
+    let idCustomer = localStorage.getItem('idCustomer');
     const productCustomer: ProductCustomer = {
-      id: 0, // Este campo puede ser autogenerado en el servidor
-      customer_id: 1, // Aquí coloca el ID real del cliente
+      customer_id: idCustomer, // Asegúrate de que esta estructura sea correcta
       product_id: product.id,
-      clicks: 0, // Si tienes lógica para esto, ajústalo según corresponda
+      clicks: 0,
       rating: star
     };
 
-    this.productService.saveRatingProductByCustomer(productCustomer);
+    this.productCustomerService.saveRatingProductService(productCustomer).subscribe(
+      response => {
+        console.log('Calificación guardada con éxito');
+      },
+      error => {
+        console.error('Error saving product rating', error);
+      }
+    );
   }
 
 
   loadProducts(): void {
     if (this.isRecomendations) {
       this.getRecommendedProducts();
-      this.isTitleEcommerce=true;
+      this.isTitleEcommerce = true;
     } else {
       this.getProducts();
     }
@@ -147,8 +165,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     this.categoria = this.numberForm.get('idcategoria')?.value || 0;
     console.log('Selected category:', this.categoria);
-    this.getProducts(); 
-    this.isTitleEcommerce=false;
+    this.getProducts();
+    this.isTitleEcommerce = false;
   }
 
   logoutcustomer(): void {
