@@ -14,6 +14,11 @@ export class PromocionService {
   getProducts() {
     return this.http.get<any>(`${this.apiUrl}/list?search`)
   }
+
+  getDetalle(){
+    return this.http.get(`${this.apiUrl}/detail`);
+  }
+
   getById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }

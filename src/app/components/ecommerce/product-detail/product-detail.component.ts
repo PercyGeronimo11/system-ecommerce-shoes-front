@@ -10,6 +10,7 @@ import { CartService } from '../../../services/cart.service';
 import { CategoriaService } from '../../../services/categories.service';
 import { ProductService } from '../../../services/product.service';
 import { EcommercePlantilla } from '../base-layout.component';
+
 @Component({
   selector: 'app-product-detail',
   standalone: true,
@@ -41,6 +42,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     public categoriaService: CategoriaService,
     private authService: AuthService,
     private productService: ProductService,
+
     private sharedDataService: SharedDataService,
     private cartService: CartService,
     private route: ActivatedRoute,
@@ -48,7 +50,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.numberForm = this.fb.group({
       idcategoria: [0]
     });
-
     this.categoriaService.list().subscribe((resp: any) => {
       this.categories = resp.data;
       console.log(this.categories);
@@ -59,7 +60,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loginResponse = 'Ingresar';
-
     //obtener usuario
     /*
     this.sharedDataService.loginResponse$.subscribe(loginResp => {
@@ -71,8 +71,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       }
     });
 */
-
-
 
     this.getProducts();
     this.categoria == 0;

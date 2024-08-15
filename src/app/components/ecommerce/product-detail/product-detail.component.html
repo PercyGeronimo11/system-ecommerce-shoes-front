@@ -5,7 +5,7 @@
       <div class="loading-message">Agregando producto...</div>
     </div>
     <div class="container-fluid">
-    
+
       <div *ngIf="product" class="product-detail-container">
         <div class="product-image">
           <img [src]="product.proUrlImage" alt="{{ product.proName }}" class="img-fluid">
@@ -25,14 +25,14 @@
           <div class="product-add-to-cart">
             <button class="btn btn-primary" [disabled]="!selectedSize" (click)="addToCart(product)">Agregar al carrito</button>
           </div>
-      
+
           <div *ngIf="!selectedSize">
             Debe seleccionar una talla antes de agregar al carrito.
           </div>
         </div>
       </div>
     </div>
-  
+
   </body>
 </app-base-layout>
 

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router, RouterModule,NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, RouterModule, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { CartService } from '../../../services/cart.service';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { AuthService } from '../../../components/auth/service/auth.service';
@@ -11,6 +11,7 @@ import { SharedDataService } from '../../../services/shared-data.service';
 import { CategoriaService } from '../../../services/categories.service';
 import { Subscription } from 'rxjs';
 import { EcommercePlantilla } from '../base-layout.component';
+
 
 @Component({
   selector: 'app-home',
@@ -40,7 +41,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   userSubscription: Subscription | undefined;
   currentRoute: string = '';
   isRecomendations: boolean = false;
-  isTitleEcommerce:boolean=false;
+  isTitleEcommerce: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -69,10 +70,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.route.queryParams.subscribe(params => {
           if (params['recommendations']) {
             this.getRecommendedProducts();
-            this.isTitleEcommerce=true;
+            this.isTitleEcommerce = true;
           } else {
             this.getProducts();
-            this.isTitleEcommerce=false;
+            this.isTitleEcommerce = false;
           }
         });
       }
@@ -82,17 +83,17 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loginResponse = 'Ingresar';
     console.log(localStorage.getItem('usernamecustomer'));
-    if(localStorage.getItem('usernamecustomer')!=null){
-      this.loginResponse=localStorage.getItem('usernamecustomer');
+    if (localStorage.getItem('usernamecustomer') != null) {
+      this.loginResponse = localStorage.getItem('usernamecustomer');
     }
 
     this.route.queryParams.subscribe(params => {
       if (params['recommendations']) {
         this.getRecommendedProducts();
-        this.isTitleEcommerce=true;
+        this.isTitleEcommerce = true;
       } else {
         this.getProducts();
-        this.isTitleEcommerce=false;
+        this.isTitleEcommerce = false;
       }
     });
 
@@ -105,7 +106,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadProducts(): void {
     if (this.isRecomendations) {
       this.getRecommendedProducts();
-      this.isTitleEcommerce=true;
+      this.isTitleEcommerce = true;
     } else {
       this.getProducts();
     }
@@ -115,7 +116,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.categoria = this.numberForm.get('idcategoria')?.value || 0;
     console.log('Selected category:', this.categoria);
     this.getProducts();
-    this.isTitleEcommerce=false;
+    this.isTitleEcommerce = false;
   }
 
   logoutcustomer(): void {
@@ -143,7 +144,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.isLoading = false;
       // Determinar el nombre de la categoría seleccionada
       this.NameCate = this.categoria === 0 ? 'Productos' : this.categories.find(cat => cat.id === this.categoria)?.name || 'Categoría';
-     // Obtener promociones para todos los productos
+
+      // Obtener promociones para todos los productos
       this.products.forEach(product => this.getpromoxproduct(product.id));
 
       console.log("Productos filtrados por categoría:", this.NameCate);
@@ -188,8 +190,18 @@ export class HomeComponent implements OnInit, OnDestroy {
   logout(): void {
     this.authService.logout();
   }
-
+  /*
+    viewProductDetail(product: ProductModel): void {
+      this.router.navigate(['/product', product.id]);
+    }
+  */
   viewProductDetail(product: ProductModel): void {
+
+    if (this.promociones[product.id]?.promPercentage) {
+      const discountPercentage = this.promociones[product.id].promPercentage;
+      product.proUnitPrice = product.proUnitPrice - (product.proUnitPrice * discountPercentage / 100.0);
+    }
+    product.precioDescuento=product.proUnitPrice;
     this.router.navigate(['/product', product.id]);
   }
 }
