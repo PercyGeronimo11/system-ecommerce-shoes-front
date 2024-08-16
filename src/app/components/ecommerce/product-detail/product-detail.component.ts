@@ -42,7 +42,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   currentSlide = 0;
   slideInterval: any;
   cartItemCount: number = 0;
-  cart: any[] = []; 
+  cart: any[] = [];
 
   constructor(private fb: FormBuilder,
     public categoriaService: CategoriaService,
@@ -58,7 +58,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     });
     this.categoriaService.list().subscribe((resp: any) => {
       this.categories = resp.data;
-      console.log(this.categories);
+      
     });
     this.startAutoSlide();
     this.loadCartFromLocalStorage();
@@ -76,45 +76,48 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.cartItemCount = this.cartService.getCartSize();
     this.loadProductDetail();
     this.loadProductRatings();
-    console.log("el product id es:", this.productId);
-    console.log("el customer id es:", this.customerId);
+    // console.log("el product id es:", this.productId);
+    // console.log("el customer id es:", this.customerId);
   }
 
-  updateClicksProduct(){
-     const productCustomer: ProductCustomer={
+  updateClicksProduct() {
+    const productCustomer: ProductCustomer = {
       customer_id: Number(this.customerId),
       product_id: Number(this.productId),
       clicks: 0,
-      rating: 1
-     } 
-     this.productCustomerService.updateClicksService(productCustomer).subscribe(
-      res=>{
-        console.log("se actualizo los clicks");
-      },
-      error=>{
-        console.log("Error en acualizar los clicks");
-      }
-     );
-
+      rating: 0
+    }
+    if (productCustomer.customer_id > 0) {
+      this.productCustomerService.updateClicksService(productCustomer).subscribe(
+        res => {
+          //console.log("se actualizo los clicks");
+        },
+        error => {
+          console.log("Error en acualizar los clicks");
+        }
+      );
+    }
   }
 
 
   loadProductRatings(): void {
-    this.productCustomerService.getRatingProductsService(this.customerId).subscribe(
-      (response: any) => {
-        this.productCustomers = response.data;
-        const productCustomer = this.productCustomers.find(pc => Number(pc.product_id) === Number(this.productId));
-        if (productCustomer) {
-          console.log("El rating es:", productCustomer.rating);
-        } else {
-          console.log("Producto no encontrado, devolviendo 0 como rating.");
+    if(Number(this.customerId)>0){
+      this.productCustomerService.getRatingProductsService(this.customerId).subscribe(
+        (response: any) => {
+          this.productCustomers = response.data;
+          const productCustomer = this.productCustomers.find(pc => Number(pc.product_id) === Number(this.productId));
+          if (productCustomer) {
+            //console.log("El rating es:", productCustomer.rating);
+          } else {
+            console.log("Producto no encontrado, devolviendo 0 como rating.");
+          }
+          this.ratingProduct = productCustomer ? productCustomer.rating : 0;
+        },
+        error => {
+          console.error('Error loading product ratings', error);
         }
-        this.ratingProduct = productCustomer ? productCustomer.rating : 0;
-      },
-      error => {
-        console.error('Error loading product ratings', error);
-      }
-    );
+      );
+    }
   }
 
   rateProduct(star: number, product: any): void {
@@ -124,16 +127,16 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       clicks: 0,
       rating: star
     };
-    console.log("los datos enviadossss: ", this.customerId,"  ", this.productId);
-    this.productCustomerService.saveRatingProductService(productCustomer).subscribe(
-      response => {
-        this.loadProductRatings();
-        console.log('Calificación guardada con éxito');
-      },
-      error => {
-        console.error('Error saving product rating', error);
-      }
-    );
+    if (productCustomer.customer_id > 0) {
+      this.productCustomerService.saveRatingProductService(productCustomer).subscribe(
+        response => {
+          this.loadProductRatings();
+        },
+        error => {
+          console.error('Error saving product rating', error);
+        }
+      );
+    }
   }
 
 
@@ -212,7 +215,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
       this.cartService.getCartItemCount().subscribe(count => {
         this.cartItemCount = count; // Actualiza el contador local
       });
-      console.log('Producto agregado al carrito:', productToAdd); // Indica que se está agregando un producto
+      //console.log('Producto agregado al carrito:', productToAdd); 
       document.getElementById('loading')?.classList.remove('d-none'); // Muestra el mensaje de carga
       setTimeout(() => {
         window.location.reload(); // Refresca la página después de la animación
