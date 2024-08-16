@@ -20,5 +20,8 @@ export class ProductCustomerService {
   saveRatingProductService(productCustomer: ProductCustomer){
     return this.http.post(`${this.apiUrl}/save/ratings`, productCustomer);
   }
+  updateClicksService(productCustomer: ProductCustomer){
+    return this.http.post(`${this.apiUrl}/update/clicks`, productCustomer)
+  }
 }
 

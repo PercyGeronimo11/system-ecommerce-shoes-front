@@ -194,10 +194,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     fetchProducts.subscribe((response: any) => {
       this.products = response.data.content;
       this.isLoading = false;
-      // Determinar el nombre de la categoría seleccionada
       this.NameCate = this.categoria === 0 ? 'Productos' : this.categories.find(cat => cat.id === this.categoria)?.name || 'Categoría';
 
-      // Obtener promociones para todos los productos
       this.products.forEach(product => this.getpromoxproduct(product.id));
 
       console.log("Productos filtrados por categoría:", this.NameCate);
@@ -242,19 +240,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   logout(): void {
     this.authService.logout();
   }
-  /*
-    viewProductDetail(product: ProductModel): void {
-      this.router.navigate(['/product', product.id]);
-    }
-  */
-  viewProductDetail(product: ProductModel): void {
 
+  viewProductDetail(product: ProductModel): void {
     if (this.promociones[product.id]?.promPercentage) {
       const discountPercentage = this.promociones[product.id].promPercentage;
       product.proUnitPrice = product.proUnitPrice - (product.proUnitPrice * discountPercentage / 100.0);
     }
     product.precioDescuento=product.proUnitPrice;
     this.router.navigate(['/product', product.id]);
+    
   }
 
 

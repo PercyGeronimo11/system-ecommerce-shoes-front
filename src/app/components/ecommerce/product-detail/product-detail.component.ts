@@ -26,6 +26,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   ratingProduct: number = 0;
   products: ProductModel[] = [];
   productCustomers: ProductCustomer[] = [];
+  productCustomer: ProductCustomer | undefined;
   product: ProductModel | undefined;
   categories: any = [];
   NameCate: any = [];
@@ -61,6 +62,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     });
     this.startAutoSlide();
     this.loadCartFromLocalStorage();
+    this.updateClicksProduct();
   }
 
 
@@ -77,6 +79,25 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     console.log("el product id es:", this.productId);
     console.log("el customer id es:", this.customerId);
   }
+
+  updateClicksProduct(){
+     const productCustomer: ProductCustomer={
+      customer_id: Number(this.customerId),
+      product_id: Number(this.productId),
+      clicks: 0,
+      rating: 1
+     } 
+     this.productCustomerService.updateClicksService(productCustomer).subscribe(
+      res=>{
+        console.log("se actualizo los clicks");
+      },
+      error=>{
+        console.log("Error en acualizar los clicks");
+      }
+     );
+
+  }
+
 
   loadProductRatings(): void {
     this.productCustomerService.getRatingProductsService(this.customerId).subscribe(
