@@ -23,9 +23,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   selectedSize: number | null = null;
   customerId = localStorage.getItem('idCustomer');
   productId = this.route.snapshot.paramMap.get('id');
+  ratingProduct: number = 0;
   products: ProductModel[] = [];
   productCustomers: ProductCustomer[] = [];
-  ratingProduct: number = 0;
   product: ProductModel | undefined;
   categories: any = [];
   NameCate: any = [];
@@ -37,20 +37,21 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     { image: 'assets/images/baner1.jpg', caption: '', description: '' },
     { image: 'assets/images/baner2.jpg', caption: '', description: '' },
   ];
+
   currentSlide = 0;
   slideInterval: any;
   cartItemCount: number = 0;
-  cart: any[] = []; // Lista para almacenar los productos agregados al carrito
+  cart: any[] = []; 
 
   constructor(private fb: FormBuilder,
     public categoriaService: CategoriaService,
     private authService: AuthService,
     private productService: ProductService,
     private productCustomerService: ProductCustomerService,
-    private sharedDataService: SharedDataService,
     private cartService: CartService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router
+  ) {
     this.numberForm = this.fb.group({
       idcategoria: [0]
     });
@@ -62,20 +63,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.loadCartFromLocalStorage();
   }
 
+
   ngOnInit(): void {
     this.loginResponse = 'Ingresar';
-    //obtener usuario
-    /*
-    this.sharedDataService.loginResponse$.subscribe(loginResp => {
-      if (loginResp.error) {
-        console.log('Estos datos son', this.loginResponse);
-      } else {
-        this.loginResponse = loginResp.data.custFirstName;
-        console.log('Estos datos son', this.loginResponse);
-      }
-    });
-*/
-
     this.getProducts();
     this.categoria == 0;
     this.cartService.getCartItemCount().subscribe(count => {
@@ -84,6 +74,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     this.cartItemCount = this.cartService.getCartSize();
     this.loadProductDetail();
     this.loadProductRatings();
+    console.log("el product id es:", this.productId);
+    console.log("el customer id es:", this.customerId);
   }
 
   loadProductRatings(): void {

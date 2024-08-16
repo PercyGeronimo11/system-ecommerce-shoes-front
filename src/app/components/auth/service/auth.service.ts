@@ -42,7 +42,7 @@ export class AuthService {
   loginCustomer(credentials: any) {
     this.logoutCustomer();
     return this.http.post(`${this.apiUrl}/auth/login/cliente`, credentials).pipe(
-      tap(() => this.updateStatusLoginService(true)) // Aquí se actualiza el estado de login
+      tap(() => this.updateStatusLoginService(true)) 
     );
   }
 
@@ -56,7 +56,8 @@ export class AuthService {
     localStorage.removeItem('usernamecustomer');
     this.customerSubject.next(null);
     localStorage.removeItem('rolecustomer');
-    localStorage.removeItem('idcustomer');
+    localStorage.removeItem('idUserCustomer');
+    localStorage.removeItem('idCustomer');
     this.updateStatusLoginService(false); 
     this.router.navigate(['/ecommers']);
   }

@@ -9,6 +9,7 @@ import { ecommerceService } from '../../../services/ecomer.service';
 import { SharedDataService } from '../../../services/shared-data.service';
 import { AuthService } from '../../auth/service/auth.service';
 import { EcommercePlantilla } from '../base-layout.component';
+import { CustomerService } from 'src/app/services/customers.service';
 
 @Component({
   selector: 'app-ecommers-ingreso',
@@ -24,6 +25,7 @@ export class EcommersIngresoModule implements OnInit {
     public userService: ecommerceService,
     private fb: FormBuilder,
     private router: Router,
+    private customerService: CustomerService,
     private sharedServ: SharedDataService,
     private authService: AuthService
   ) {
@@ -43,12 +45,13 @@ export class EcommersIngresoModule implements OnInit {
           localStorage.setItem('usernamecustomer', Resp.username);
           localStorage.setItem('rolecustomer', Resp.rol);
           localStorage.setItem('emailcustomer', Resp.email);
-          localStorage.setItem('idCustomer', Resp.usuario.id);
+          localStorage.setItem('idUserCustomer', Resp.usuario.id);
+          localStorage.setItem('idCustomer', Resp.customer_id);
           this.sharedServ.updateUser({
             username: Resp.username,
             role: Resp.rol
           });
-          window.location.href = '/ecommers';
+          //window.location.href = '/ecommers';
         },
         (loginError) => {
           console.error('Error en la autenticación', loginError);

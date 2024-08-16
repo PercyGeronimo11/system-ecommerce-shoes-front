@@ -88,7 +88,8 @@ export class UsersEcoCreateComponent implements OnInit {
               localStorage.setItem('tokencustomer', lgresp.token);
               localStorage.setItem('usernamecustomer', lgresp.username);
               localStorage.setItem('rolecustomer', lgresp.rol);
-              localStorage.setItem('idcustomer', lgresp.id);
+              localStorage.setItem('idUserCustomer', lgresp.id);
+              localStorage.setItem('idCustomer', lgresp.customer_id);
               this.sharedServ.updateUser({
                 username: lgresp.username,
                 role: lgresp.rol,
