@@ -46,4 +46,7 @@ export class NavRightComponent {
   logout(): void {
     this.authService.logout();
   }
+  openEcommerce() {
+    window.open('/ecommers', '_blank');
+  }
 }
