@@ -5,6 +5,8 @@ import { Component, ViewChild } from '@angular/core';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { ApexTheme, NgApexchartsModule } from 'ng-apexcharts';
 import { ProductSaleComponent } from './product-sale/product-sale.component';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 import {
   ChartComponent,
@@ -56,9 +58,12 @@ export default class DashAnalyticsComponent {
   chartOptions_1!: Partial<ChartOptions>;
   chartOptions_2!: Partial<ChartOptions>;
   chartOptions_3!: Partial<ChartOptions>;
+  private apiUrl= environment.apiUrl+"/api/dashboard/index";
+  public data:any;
 
   // constructor
-  constructor() {
+  constructor(private http: HttpClient) {
+    this.list();
     this.chartOptions = {
       chart: {
         height: 205,
@@ -244,6 +249,48 @@ export default class DashAnalyticsComponent {
       }
     };
   }
+
+  list() {
+    this.http.get(this.apiUrl).subscribe((resp:any) => {
+      this.data=resp;
+      console.log(this.data)
+      this.cards = [
+        {
+          background: 'bg-c-blue',
+          title: 'Ingresos totales',
+          icon: 'icon-shopping-cart',
+          text: 'Costos totales',
+          number: this.data.incomeTotal,
+          no: this.data.costTotal
+        },
+        {
+          background: 'bg-c-green',
+          title: 'Cantidad de productos',
+          icon: 'icon-tag',
+          text: 'This Month',
+          number: this.data.numProducts,
+          no: '213'
+        },
+        {
+          background: 'bg-c-yellow',
+          title: 'Cantidad de clientes',
+          icon: 'icon-repeat',
+          text: 'This Month',
+          number: this.data.numCustomers,
+          no: '$5,032'
+        },
+        {
+          background: 'bg-c-red',
+          title: 'Cantidad de ventas',
+          icon: 'icon-shopping-cart',
+          text: 'This Month',
+          number: this.data.numSales,
+          no: '$542'
+        }
+      ]
+    });
+  }
+
   cards = [
     {
       background: 'bg-c-blue',
