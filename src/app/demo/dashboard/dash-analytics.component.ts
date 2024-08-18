@@ -267,25 +267,25 @@ export default class DashAnalyticsComponent {
           background: 'bg-c-green',
           title: 'Cantidad de productos',
           icon: 'icon-tag',
-          text: 'This Month',
+          text: '-',
           number: this.data.numProducts,
-          no: '213'
+          no: '-'
         },
         {
           background: 'bg-c-yellow',
           title: 'Cantidad de clientes',
           icon: 'icon-repeat',
-          text: 'This Month',
+          text: '-',
           number: this.data.numCustomers,
-          no: '$5,032'
+          no: '-'
         },
         {
           background: 'bg-c-red',
           title: 'Cantidad de ventas',
           icon: 'icon-shopping-cart',
-          text: 'This Month',
+          text: '-',
           number: this.data.numSales,
-          no: '$542'
+          no: '-'
         }
       ]
     });
