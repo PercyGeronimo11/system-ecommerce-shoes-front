@@ -4,7 +4,7 @@
   "author": "CodedThemes",
   "scripts": {
     "ng": "ng",
-    "percy": "ng serve --port 4200",
+    "dev": "ng serve --port 4200",
     "build": "ng build",
     "build-prod": "ng build --configuration production --base-href /demos/admin-templates/gradient-able/angular/free/",
     "watch": "ng build --watch --configuration development",
@@ -30,6 +30,8 @@
     "bootstrap": "^5.3.3",
     "hammerjs": "^2.0.8",
     "jquery": "^3.7.1",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "mousetrap": "^1.6.5",

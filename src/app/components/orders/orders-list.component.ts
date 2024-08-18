@@ -1,12 +1,12 @@
 // angular import
 import { Component, OnInit } from '@angular/core';
-
-// project import
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { OrderService } from '../../services/order.service';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-tbl-bootstrap',
@@ -20,24 +20,24 @@ export class OrdersListModule implements OnInit {
   modalDeleteVisible: boolean = false;
   selectedOrder: any = null;
   modalOrderDetail = false;
-  detailOrders: any [] = [];
+  detailOrders: any[] = [];
   modalReviewVisible = false;
   modalCompletedVisible = false;
-  orderSelected:any;
+  orderSelected: any;
   modalObservedVisible = false;
   urlReviewVisible: string | null = null;
   constructor(
     private orderService: OrderService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.listOrders();
   }
 
   listOrders() {
-    this.orderService.list().subscribe((resp:any) => {
-      this.orders=resp.data;
+    this.orderService.list().subscribe((resp: any) => {
+      this.orders = resp.data;
     })
   }
 
@@ -52,7 +52,7 @@ export class OrdersListModule implements OnInit {
           price: orderDetail.odt_price,
           description: orderDetail.odt_description
         }));
-        
+
         this.modalOrderDetail = true;
       } else {
         console.error("No se encontraron detalles de pedido para el pedido seleccionado.");
@@ -80,7 +80,7 @@ export class OrdersListModule implements OnInit {
     this.modalReviewVisible = false;
   }
 
-  ChangeStatusOrder(status:any){
+  ChangeStatusOrder(status: any) {
     var data = {
       status: status
     }
@@ -93,15 +93,15 @@ export class OrdersListModule implements OnInit {
           this.modalCompletedVisible = false;
           break;
       }
-      
+
       this.listOrders();
     }, (error: any) => {
       console.error("Error al obtener los detalles de pedido:", error);
     });
   }
 
-  openCompletedModal(order:any){
-    this.orderSelected=order;
+  openCompletedModal(order: any) {
+    this.orderSelected = order;
     this.modalCompletedVisible = true;
   }
 
@@ -109,7 +109,7 @@ export class OrdersListModule implements OnInit {
     this.modalCompletedVisible = false;
   }
 
-  openObservedModal(){
+  openObservedModal() {
     this.modalReviewVisible = false;
     this.ChangeStatusOrder(3);
     this.modalObservedVisible = true;
@@ -117,5 +117,54 @@ export class OrdersListModule implements OnInit {
 
   closeObservedModal() {
     this.modalObservedVisible = false;
+  }
+
+  generateVoucherPDF(order: any) {
+    if (order) {
+      this.orderService.detail(order.ord_id).subscribe((response: any) => {
+        if (response.status === 200) {
+          const detailOrders = response.data.map((orderDetail: any) => ({
+            product: orderDetail.product,
+            odt_amount: orderDetail.odt_amount,
+            odt_price: orderDetail.odt_price
+          }));
+
+          const doc = new jsPDF();
+
+          // Add title
+          doc.setFontSize(18);
+          doc.text('Comprobante de Venta', 14, 22);
+
+          // Add customer details
+          doc.setFontSize(12);
+          doc.text(`Cliente: ${order.customer.custFirstName} ${order.customer.custLastName}`, 14, 40);
+          doc.text(`Fecha: ${order.ord_date}`, 14, 50);
+          doc.text(`Total: S/${order.ord_total}`, 14, 60);
+
+          // Add table
+          const tableData = detailOrders.map((detail: any) => [
+            detail.product.proName,
+            detail.odt_amount,
+            detail.odt_price,
+            detail.odt_amount * detail.odt_price
+          ]);
+
+          (doc as any).autoTable({
+            head: [['Producto', 'Cantidad', 'Precio', 'Total']],
+            body: tableData,
+            startY: 70
+          });
+
+          // Save the PDF
+          doc.save(`voucher-${order.ord_id}.pdf`);
+        } else {
+          console.error('Error al obtener los detalles de la orden.');
+        }
+      }, (error: any) => {
+        console.error('Error al obtener los detalles de la orden:', error);
+      });
+    } else {
+      console.error('No hay una orden proporcionada.');
+    }
   }
 }

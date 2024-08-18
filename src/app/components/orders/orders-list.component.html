@@ -45,6 +45,9 @@
                 <button *ngIf="order.ord_status === 3" (click)="openReviewModal(order)" class="btn btn-success mb-3">
                   Validar
                 </button>
+                <button  (click)="generateVoucherPDF(order)" class="btn btn-danger mb-3 me-2">
+                  <i class="fa fa-file-pdf-o"></i> Voucher
+                </button>
               </td>
             </tr>
           </tbody>
