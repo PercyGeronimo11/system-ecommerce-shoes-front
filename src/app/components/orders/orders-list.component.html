@@ -26,26 +26,26 @@
                 <b [ngStyle]="{
                   'border-radius': '10px',
                   'padding': '5px',
-                  'background-color': (order.ord_status === 1) ? '#FFA627' : (order.ord_status === 2) ? '#1A85FF' : (order.ord_status === 3) ? 'red' : (order.ord_status === 4) ? '#23BD9E' : 'transparent',
+                  'background-color': (order.ordStatus === 1) ? '#FFA627' : (order.ordStatus === 2) ? '#1A85FF' : (order.ordStatus === 3) ? 'red' : (order.ordStatus === 4) ? '#23BD9E' : 'transparent',
                   'color': 'white'
                 }">
-                  {{ order.ord_status === 1 ? 'Pendiente' : order.ord_status === 2 ? 'Pagado' : order.ord_status === 3 ? 'Observado' : order.ord_status === 4 ? 'Completado' : '' }}
+                  {{ order.ordStatus === 1 ? 'Pendiente' : order.ordStatus === 2 ? 'Pagado' : order.ordStatus === 3 ? 'Observado' : order.ordStatus === 4 ? 'Completado' : '' }}
                 </b>
               </td>
               <td>
                 <button (click)="selectOrder(order)" class="btn btn-warning mb-3 me-2">
                   <i class="fa fa-eye"></i>
                 </button>
-                <button *ngIf="order.ord_status === 1" (click)="openReviewModal(order)" class="btn btn-success mb-3">
+                <button *ngIf="order.ordStatus === 1" (click)="openReviewModal(order)" class="btn btn-success mb-3">
                   Validar
                 </button>
-                <button *ngIf="order.ord_status === 2" (click)="openCompletedModal(order)" class="btn btn-primary mb-3">
+                <button *ngIf="order.ordStatus === 2" (click)="openCompletedModal(order)" class="btn btn-primary mb-3">
                   Completar
                 </button>
-                <button *ngIf="order.ord_status === 3" (click)="openReviewModal(order)" class="btn btn-success mb-3">
+                <button *ngIf="order.ordStatus === 3" (click)="openReviewModal(order)" class="btn btn-success mb-3">
                   Validar
                 </button>
-                <button *ngIf="(order.ord_status === 2 || order.ord_status===4)" (click)="generateVoucherPDF(order)" class="btn btn-danger mb-3 me-2">
+                <button *ngIf="(order.ordStatus === 2 || order.ordStatus===4)" (click)="generateVoucherPDF(order)" class="btn btn-danger mb-3 me-2">
                   <i class="fa fa-file-pdf-o"></i> Voucher
                 </button>
               </td>
