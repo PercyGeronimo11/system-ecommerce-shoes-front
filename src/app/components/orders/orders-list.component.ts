@@ -124,38 +124,62 @@ export class OrdersListModule implements OnInit {
       this.orderService.detail(order.ord_id).subscribe((response: any) => {
         if (response.status === 200) {
           const detailOrders = response.data.map((orderDetail: any) => ({
-            product: orderDetail.product,
+            product: orderDetail.product.proName,
             odt_amount: orderDetail.odt_amount,
-            odt_price: orderDetail.odt_price
+            odt_price: orderDetail.odt_price,
+            total: orderDetail.odt_amount * orderDetail.odt_price
           }));
-
-          const doc = new jsPDF();
-
-          // Add title
-          doc.setFontSize(18);
-          doc.text('Comprobante de Venta', 14, 22);
-
-          // Add customer details
-          doc.setFontSize(12);
-          doc.text(`Cliente: ${order.customer.custFirstName} ${order.customer.custLastName}`, 14, 40);
-          doc.text(`Fecha: ${order.ord_date}`, 14, 50);
-          doc.text(`Total: S/${order.ord_total}`, 14, 60);
-
-          // Add table
-          const tableData = detailOrders.map((detail: any) => [
-            detail.product.proName,
-            detail.odt_amount,
-            detail.odt_price,
-            detail.odt_amount * detail.odt_price
-          ]);
-
-          (doc as any).autoTable({
-            head: [['Producto', 'Cantidad', 'Precio', 'Total']],
-            body: tableData,
-            startY: 70
+  
+          const doc = new jsPDF({
+            format: [100, 160] 
           });
-
-          // Save the PDF
+  
+          // Título del comprobante
+          doc.setFontSize(14);
+          doc.setFont("helvetica", "bold");
+          doc.text('Comprobante de Venta', 40, 10, { align: 'center' });
+  
+          // Detalles del cliente
+          doc.setFontSize(10);
+          doc.setFont("helvetica", "normal");
+          doc.text(`Cliente: ${order.customer.custFirstName} ${order.customer.custLastName}`, 5, 20);
+          doc.text(`Fecha: ${order.ord_date}`, 5, 26);
+          doc.text(`Total: S/${order.ord_total}`, 5, 32);
+  
+          // Espacio antes de la tabla
+          doc.text('Detalles de la compra:', 5, 40);
+  
+          // Crear tabla
+          const tableData = detailOrders.map((detail: any) => [
+            detail.product,
+            detail.odt_amount,
+            `S/${detail.odt_price.toFixed(2)}`,
+            `S/${detail.total.toFixed(2)}`
+          ]);
+  
+          (doc as any).autoTable({
+            head: [['Producto', 'Cant.', 'Precio', 'Total']],
+            body: tableData,
+            startY: 45,
+            theme: 'striped',
+            styles: {
+              fontSize: 8,
+              cellPadding: 2
+            },
+            columnStyles: {
+              0: { cellWidth: 40 }, // Producto
+              1: { cellWidth: 10 }, // Cantidad
+              2: { cellWidth: 15 }, // Precio Unitario
+              3: { cellWidth: 15 }  // Total
+            }
+          });
+  
+          // Mostrar total final
+          const finalY = (doc as any).lastAutoTable.finalY; // Posición final de la tabla
+          doc.setFontSize(10);
+          doc.text(`Monto Total: S/${order.ord_total.toFixed(2)}`, 5, finalY + 10);
+  
+          // Guardar PDF
           doc.save(`voucher-${order.ord_id}.pdf`);
         } else {
           console.error('Error al obtener los detalles de la orden.');
@@ -167,4 +191,5 @@ export class OrdersListModule implements OnInit {
       console.error('No hay una orden proporcionada.');
     }
   }
+  
 }
