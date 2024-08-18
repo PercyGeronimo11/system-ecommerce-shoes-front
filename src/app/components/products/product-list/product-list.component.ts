@@ -19,6 +19,7 @@ export class ProductListComponent implements OnInit {
   products: ProductModel[] = [];
   isLoading = false;
   error: string | null = null;
+  selectedProduct: any = null;
   modalRef: NgbModal | null=null;
   demandPrediction:any;
   nameProduct:any;
@@ -42,17 +43,6 @@ export class ProductListComponent implements OnInit {
         this.isLoading = false;
         console.log("error:", error);
       });
-  }
-
-  deleteProduct(id: number): void {
-    this.productService.deleteProduct(id).subscribe(
-      () => {
-        //this.getProducts(); // Refresh the list after deletion
-      },
-      (error) => {
-        console.error('Error deleting product', error);
-      }
-    );
   }
 
   openModalCreateProduct(){

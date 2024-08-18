@@ -33,9 +33,6 @@
                 <a [routerLink]="['/products/edit/', product.id]" class="btn btn-warning mb-3 me-2">
                   <i class="fa fa-edit"></i>
                 </a>
-                <button (click)="deleteProduct(product.id)" class="btn btn-danger mb-3 me-2">
-                  <i class="fa fa-trash"></i>
-                </button>
                 <button (click)="PredictDemandProduct(product.id, product.proName)" class="btn btn-danger mb-3 me-2">
                   <i class="fa fa-chart-line"></i>
                 </button>
@@ -48,8 +45,6 @@
   </div>
 </div>
 
-
-<!-- Modal para eliminar material -->
 <div id="deleteModal" class="modal" [ngStyle]="{'display': modalPredictionVisible ? 'block' : 'none'}">
   <div class="modal-content modal-content-delete">
     <span class="close" (click)="closePredictionModal()">&times;</span>
