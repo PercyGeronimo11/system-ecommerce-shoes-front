@@ -15,8 +15,8 @@
   }
   <!-- order-card end -->
 
-  <!-- <div class="col-xl-6 col-md-12">
-    <app-card cardTitle="Unique Visitor" [options]="false">
+  <div class="col-xl-8 col-md-12">
+    <app-card cardTitle="Ventas de la ultima semana" [options]="false">
       <apx-chart
         [chart]="chartOptions.chart!"
         [dataLabels]="chartOptions.dataLabels!"
@@ -29,18 +29,20 @@
         [yaxis]="chartOptions.yaxis!"
       ></apx-chart>
     </app-card>
-  </div> -->
-  <!-- <div class="col-xl-6 col-md-12">
+  </div>
+  
+  
+  <div class="col-xl-4 col-md-12">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <app-card [hidHeader]="true">
           <div class="row">
             <div class="col-auto">
-              <span>Customers</span>
+              <span><b>Clientes nuevos en la semana</b></span>
             </div>
             <div class="col text-end">
-              <h2 class="mb-0">826</h2>
-              <span class="text-c-green">8.2%<i class="feather icon-trending-up ms-1"></i></span>
+              <h2 class="mb-0">{{this.data.numCustomers}}</h2>
+              <span class="text-c-green">{{percentNewCustomer}}%<i class="feather icon-trending-up ms-1"></i></span>
             </div>
           </div>
           <apx-chart
@@ -59,17 +61,17 @@
           </apx-chart>
           <div class="row mt-3 text-center">
             <div class="col">
-              <h3 class="m-0"><i class="fas fa-circle f-10 m-r-5 text-success"></i>674</h3>
-              <span class="ms-3">New</span>
+              <h3 class="m-0"><i class="fas fa-circle f-10 m-r-5 text-success"></i>{{this.data.numCustomerNew}}</h3>
+              <span class="ms-3">Nuevos</span>
             </div>
             <div class="col">
-              <h3 class="m-0"><i class="fas fa-circle text-primary f-10 m-r-5"></i>182</h3>
-              <span class="ms-3">Return</span>
+              <h3 class="m-0"><i class="fas fa-circle text-primary f-10 m-r-5"></i>{{customerReturn}}</h3>
+              <span class="ms-3">Antiguos</span>
             </div>
           </div>
         </app-card>
       </div>
-      <div class="col-md-6">
+      <!-- <div class="col-md-6">
         <app-card [hidHeader]="true" cardClass="bg-primary text-white">
           <div class="row">
             <div class="col-auto">
@@ -98,15 +100,15 @@
           <div class="row mt-3 text-center">
             <div class="col">
               <h3 class="m-0 text-white"><i class="fas fa-circle f-10 m-r-5 text-white"></i>674</h3>
-              <span class="ms-3">New</span>
+              <span class="ms-3">Nuevos</span>
             </div>
             <div class="col">
               <h3 class="m-0 text-white"><i class="fas fa-circle text-white f-10 m-r-5"></i>182</h3>
-              <span class="ms-3">Return</span>
+              <span class="ms-3">Antiguos</span>
             </div>
           </div>
         </app-card>
-      </div>
+      </div> -->
     </div>
-  </div> -->
+  </div>
 </div>

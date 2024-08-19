@@ -60,106 +60,15 @@ export default class DashAnalyticsComponent {
   chartOptions_3!: Partial<ChartOptions>;
   private apiUrl= environment.apiUrl+"/api/dashboard/index";
   public data:any;
+  public incomes: number[] = [];
+  public customerReturn:any
+  public percentNewCustomer=0
 
   // constructor
   constructor(private http: HttpClient) {
     this.list();
-    this.chartOptions = {
-      chart: {
-        height: 205,
-        type: 'line',
-        toolbar: {
-          show: false
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        width: 2,
-        curve: 'smooth'
-      },
-      series: [
-        {
-          name: 'Arts',
-          data: [20, 50, 30, 60, 30, 50]
-        },
-        {
-          name: 'Commerce',
-          data: [60, 30, 65, 45, 67, 35]
-        }
-      ],
-      legend: {
-        position: 'top'
-      },
-      xaxis: {
-        type: 'datetime',
-        categories: ['1/11/2000', '2/11/2000', '3/11/2000', '4/11/2000', '5/11/2000', '6/11/2000'],
-        axisBorder: {
-          show: false
-        }
-      },
-      yaxis: {
-        show: true,
-        min: 10,
-        max: 70
-      },
-      colors: ['#73b4ff', '#59e0c5'],
-      fill: {
-        type: 'gradient',
-        gradient: {
-          shade: 'light',
-          gradientToColors: ['#4099ff', '#2ed8b6'],
-          shadeIntensity: 0.5,
-          type: 'horizontal',
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [0, 100]
-        }
-      },
-      grid: {
-        borderColor: '#cccccc3b'
-      }
-    };
-    this.chartOptions_1 = {
-      chart: {
-        height: 150,
-        type: 'donut'
-      },
-      dataLabels: {
-        enabled: false
-      },
-      plotOptions: {
-        pie: {
-          donut: {
-            size: '75%'
-          }
-        }
-      },
-      labels: ['New', 'Return'],
-      series: [39, 10],
-      legend: {
-        show: false
-      },
-      tooltip: {
-        theme: 'dark'
-      },
-      grid: {
-        padding: {
-          top: 20,
-          right: 0,
-          bottom: 0,
-          left: 0
-        }
-      },
-      colors: ['#4680ff', '#2ed8b6'],
-      fill: {
-        opacity: [1, 1]
-      },
-      stroke: {
-        width: 0
-      }
-    };
+    console.log(this.incomes)
+    
     this.chartOptions_2 = {
       chart: {
         height: 150,
@@ -288,6 +197,101 @@ export default class DashAnalyticsComponent {
           no: '-'
         }
       ]
+      this.incomes = this.data['weekly-income'].map((item: any) => Math.round(item.income));
+      this.chartOptions = {
+        chart: {
+          height: 205,
+          type: 'line',
+          toolbar: {
+            show: false
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        stroke: {
+          width: 2,
+          curve: 'smooth'
+        },
+        series: [
+          {
+            name: 'Ventas',
+            data: this.incomes
+          }
+        ],
+        legend: {
+          position: 'top'
+        },
+        xaxis: {
+          type: 'category',
+          categories: ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'],
+          axisBorder: {
+            show: false
+          }
+        },
+        yaxis: {
+          show: true,
+          min: 10,
+          max: 400
+        },
+        colors: ['#73b4ff', '#59e0c5'],
+        fill: {
+          type: 'gradient',
+          gradient: {
+            shade: 'light',
+            gradientToColors: ['#4099ff', '#2ed8b6'],
+            shadeIntensity: 0.5,
+            type: 'horizontal',
+            opacityFrom: 1,
+            opacityTo: 1,
+            stops: [0, 100]
+          }
+        },
+        grid: {
+          borderColor: '#cccccc3b'
+        }
+      };
+      this.customerReturn=this.data.numCustomers-this.data.numCustomerNew
+      this.percentNewCustomer=this.data.numCustomerNew/this.data.numCustomers
+      this.chartOptions_1 = {
+        chart: {
+          height: 150,
+          type: 'donut'
+        },
+        dataLabels: {
+          enabled: false
+        },
+        plotOptions: {
+          pie: {
+            donut: {
+              size: '75%'
+            }
+          }
+        },
+        labels: ['New', 'Return'],
+        series: [this.customerReturn, this.data.numCustomerNew],
+        legend: {
+          show: false
+        },
+        tooltip: {
+          theme: 'dark'
+        },
+        grid: {
+          padding: {
+            top: 20,
+            right: 0,
+            bottom: 0,
+            left: 0
+          }
+        },
+        colors: ['#4680ff', '#2ed8b6'],
+        fill: {
+          opacity: [1, 1]
+        },
+        stroke: {
+          width: 0
+        }
+      };
     });
   }
 
