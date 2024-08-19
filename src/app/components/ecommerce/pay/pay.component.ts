@@ -371,6 +371,7 @@ openPaymentModal(paymentMethod: string) {
     const cart = localStorage.getItem('cart');
     if (cart) {
       this.cart = JSON.parse(cart);
+      console.log(this.cart);
   
       this.customerService.getByEmail(this.userEmail).subscribe((customerData: any) => {
         const customerId = customerData.data.id;
@@ -389,7 +390,7 @@ openPaymentModal(paymentMethod: string) {
           (orderResponse: any) => {
             const orderId = orderResponse.data.ord_id;
   
-            let orderDetails = this.cart.map((item: any) => ({
+            let orderDetails = this.groupedCartItemsArray.map((item: any) => ({
               "odt_amount": item.quantity,
               "odt_price": item.price,
               "odt_status": 1,
@@ -399,7 +400,8 @@ openPaymentModal(paymentMethod: string) {
               },
               "product": {
                 "id": item.id
-              }
+              },
+
             }));
   
             this.orderService.createDetails(orderDetails).subscribe(
