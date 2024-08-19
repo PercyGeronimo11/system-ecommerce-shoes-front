@@ -20,7 +20,7 @@
             <tr *ngFor="let order of orders; let i = index">
               <th scope="row">{{ i + 1 }}</th>
               <td>{{ order.customer.custFirstName }}</td>
-              <td>{{ order.ord_date }}</td>
+              <td>{{ order.ordDate }}</td>
               <td>S/{{ order.ord_total }}</td>
               <td>
                 <b [ngStyle]="{

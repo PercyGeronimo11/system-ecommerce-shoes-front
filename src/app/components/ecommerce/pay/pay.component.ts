@@ -378,7 +378,7 @@ openPaymentModal(paymentMethod: string) {
         const formattedDate = currentDate.toISOString().split('T')[0];
   
         const orderData = {
-          ord_date: formattedDate,
+          ordDate: formattedDate,
           ord_total: this.totalAmount,
           customer: {
             id: customerId

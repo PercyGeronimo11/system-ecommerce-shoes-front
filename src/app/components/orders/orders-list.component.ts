@@ -143,7 +143,7 @@ export class OrdersListModule implements OnInit {
           doc.setFontSize(10);
           doc.setFont("helvetica", "normal");
           doc.text(`Cliente: ${order.customer.custFirstName} ${order.customer.custLastName}`, 5, 20);
-          doc.text(`Fecha: ${order.ord_date}`, 5, 26);
+          doc.text(`Fecha: ${order.ordDate}`, 5, 26);
           doc.text(`Total: S/${order.ord_total}`, 5, 32);
   
           // Espacio antes de la tabla
