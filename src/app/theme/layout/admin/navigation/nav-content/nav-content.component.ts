@@ -13,21 +13,18 @@ import { AuthService } from '../../../../../components/auth/service/auth.service
   styleUrls: ['./nav-content.component.scss']
 })
 export class NavContentComponent implements OnInit {
-  // version
   title = 'Demo application for version numbering';
   currentApplicationVersion = environment.appVersion;
 
-  // public pops
   navigations: NavigationItem[];
   wrapperWidth!: number;
   windowWidth: number;
 
   @Output() NavMobCollapse = new EventEmitter();
-  // constructor
+
   constructor(
     private location: Location,
     private locationStrategy: LocationStrategy,
-    private authService: AuthService
   ) {
     this.windowWidth = window.innerWidth;
     this.navigations = NavigationItems;
@@ -52,8 +49,6 @@ export class NavContentComponent implements OnInit {
       return true;
     }
   }
-
-  // public method
 
   navMob() {
     if (this.windowWidth < 992 && document.querySelector('app-navigation.pcoded-navbar')?.classList.contains('mob-open')) {
@@ -85,6 +80,5 @@ export class NavContentComponent implements OnInit {
       }
     }
   }
-
 
 }

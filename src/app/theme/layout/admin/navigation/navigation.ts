@@ -21,7 +21,7 @@ export interface NavigationItem {
 export const NavigationItems: NavigationItem[] = [
   {
     id: 'navigation',
-    title: 'Navigation',
+    title: 'Principal',
     type: 'group',
     icon: 'icon-group',
     children: [
@@ -33,32 +33,40 @@ export const NavigationItems: NavigationItem[] = [
         icon: 'feather icon-home'
       },
       {
-        id: 'Ecommerce',
-        title: 'Ecommerce',
-        type: 'item',
-        url: '/ecommers',
-        icon: 'feather icon-home'
-      }
-    ]
-
-  },
-  {
-    id: 'users',
-    title: 'MODULO DE USUARIOS',
-    type: 'group',
-    icon: 'icon-group',
-    children: [
-      {
         id: 'user',
         title: 'Usuarios',
         type: 'item',
         url: '/users',
         icon: 'feather icon-box'
       }
+      // {
+      //   id: 'Ecommerce',
+      //   title: 'Ecommerce',
+      //   type: 'item',
+      //   url: '/ecommers',
+      //   icon: 'feather icon-home'
+      // }
     ]
-  }, {
+
+  },
+  // {
+  //   id: 'users',
+  //   title: 'MODULO DE USUARIOS',
+  //   type: 'group',
+  //   icon: 'icon-group',
+  //   children: [
+  //     {
+  //       id: 'user',
+  //       title: 'Usuarios',
+  //       type: 'item',
+  //       url: '/users',
+  //       icon: 'feather icon-box'
+  //     }
+  //   ]
+  // }, 
+  {
     id: 'Catalogo',
-    title: 'CATALOGO',
+    title: 'CATÁLOGO',
     type: 'group',
     icon: 'icon-group',
     children: [
@@ -86,28 +94,6 @@ export const NavigationItems: NavigationItem[] = [
     ]
   },
   {
-    id: 'inventory',
-    title: 'INVENTARIO',
-    type: 'group',
-    icon: 'icon-group',
-    children: [
-      {
-        id: 'material',
-        title: 'Materiales',
-        type: 'item',
-        url: '/materials',
-        icon: 'feather icon-box'
-      },
-      {
-        id: 'lots',
-        title: 'lotes',
-        type: 'item',
-        url: '/lots/list',
-        icon: 'feather icon-home'
-      },
-    ]
-  },
-  {
     id: 'ventas',
     title: 'MÓDULO DE VENTAS',
     type: 'group',
@@ -126,6 +112,28 @@ export const NavigationItems: NavigationItem[] = [
         type: 'item',
         url: '/orders',
         icon: 'feather icon-box'
+      },
+    ]
+  },
+  {
+    id: 'inventory',
+    title: 'INVENTARIO',
+    type: 'group',
+    icon: 'icon-group',
+    children: [
+      {
+        id: 'material',
+        title: 'Materiales',
+        type: 'item',
+        url: '/materials',
+        icon: 'feather icon-box'
+      },
+      {
+        id: 'lots',
+        title: 'lotes',
+        type: 'item',
+        url: '/lots/list',
+        icon: 'feather icon-home'
       },
     ]
   },

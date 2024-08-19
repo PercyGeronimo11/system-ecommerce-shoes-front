@@ -1,5 +1,10 @@
 <ul class="navbar-nav ms-auto">
   <li>
+    <button (click)="openEcommerce()" class="btn btn-dark btn-ml">
+      Ir al e-commerce
+    </button>
+  </li>
+  <li>
     <div class="dropdown drp-user" ngbDropdown placement="auto">
       <a href="javascript:" ngbDropdownToggle>
         <img src="assets/images/user/avatar-1.jpg" class="img-radius wid-40" alt="User-Profile-Image" />
@@ -13,12 +18,9 @@
           </a>
         </div>
         <ul class="pro-body">
-          <li
-            >
-
+          <li>
             <a href="javascript:" (click)="logout()" class="dropdown-item"><i class="feather icon-user"></i> Salir</a>
-            </li
-          >
+          </li>
         </ul>
       </div>
     </div>
